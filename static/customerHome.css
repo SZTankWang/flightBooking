@@ -1,0 +1,186 @@
+body{
+	font-family: Helvetica;
+}
+
+.holder{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	min-height:30vh;
+	width:100%;
+/*	background: #D7D7D7;
+*/}
+
+#search-form-holder{
+/*	padding-top:30.85%;
+*/	height:40vh;
+	justify-content:space-around;
+	width:100%;
+/*	height:30vh;
+*/	background-image: url('/static/background_flight.jpg');
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	transform: rotateY(180deg);
+}
+
+#search-area-container{
+	width:fit-content;
+	height:30vh;
+	background: white;
+	transform: rotateY(180deg);
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+/*	align-items: center;
+*/	position:absolute;
+	right:5rem;
+}
+
+#search-area-title{
+	height:20%;
+	width:fit-content;
+	border-left:4px solid orange;
+	padding-left: 1%;
+	padding-right: 5%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+
+#search-area-title h3{
+	font-size:1rem;
+}
+
+#search-form-container{
+	height:inherit;
+	width:fit-content;
+/*	background: grey;
+*/	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	padding-top: 1rem;
+	padding-left: 1rem;
+	padding-right: 1rem;
+
+}
+
+.search-form-sub-part{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	height:fit-content;
+	width:50%;
+	padding-left: 1rem;
+}
+
+#search-left-sub{
+	justify-content: space-between;
+	height:81%;
+}
+#search-btn-container{
+	margin-left: auto;
+}
+
+#search{
+	background:orange;
+	color:white;
+}
+
+#search:active{
+	color:grey;
+}
+
+input{
+	width:100%;
+}
+
+#info-area-holder{
+/*
+*/	padding:2rem;
+	flex-direction: row;
+/*	justify-content: 
+*/}
+
+.info-area-sub-holder{
+	display: flex;
+	flex-direction: column;
+	height: inherit;
+	width:50%;
+}
+
+#recommend-title{
+	width:100%;
+	height: fit-content;
+}
+
+.recommend-row-holder{
+	height:8rem;	
+/*	width:40%	;
+*/	display: flex;
+	flex-direction: row;
+/*	flex-wrap: wrap;
+*/	align-items: center;
+	justify-content: space-around;
+	margin-top:1rem;
+/*	padding:3rem;
+*/}
+
+.recommend{
+	height:8rem;
+	width:10rem;
+	background: white;
+	text-align: center;
+	margin-left: 1rem;
+	border:1px solid #d7d7d7;
+}
+
+.info-title{
+	border-left:3px solid orange;
+	padding-left: 0.5rem;
+}
+
+#recent-schedule-holder{
+	padding-left: 5rem;
+}
+
+#trip-record-container{
+	height:18rem;
+	width:80%;
+	background: white;
+	margin-top: 1rem;
+	padding:2rem;
+    border: 1px solid #d7d7d7;
+}
+
+.record-card{
+	width:85%;
+/*	height: 30%;
+*/	/*background: grey;*/
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 0.5rem;
+	border:1px solid grey;
+}
+
+.record-text-holder{
+	padding-left:0.5rem;
+}
+
+.record-row-wrapper{
+	width:100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.record-row-wrapper h3{
+	font-size:1.4rem;
+}
+
+.flight-state{
+	position: relative;
+	left:36%;
+	bottom: 2rem;
+}
