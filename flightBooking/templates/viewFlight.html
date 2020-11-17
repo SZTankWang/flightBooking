@@ -6,11 +6,128 @@
 
 {% block content %}
 <div class="content-wrapper" id="search-condition-outer-wrapper">
-	<div class="content-wrapper" id="input-wrapper">
-		<input id="departure" name="departure">
+	<div class="content-wrapper input-outer-wrapper" id="">
+		<div class="content-wrapper input-inner-wrapper">
+			<span class="icon-label" id='departure-icon'></span>
+			<input id="departure" name="departure">
+		</div>
+		<div class="content-wrapper input-inner-wrapper">
+			<span class = "icon-label" id='arrival-icon'></span>
+			<input id="arrival" name="arrival">
+		</div>	
+	
 	</div>
-	<div class="content-wrapper" id="input-wrapper"></div>
-	<div class="content-wrapper" id="input-wrapper"></div>
+	<div class="content-wrapper input-outer-wrapper" id="">
+		<div class="content-wrapper input-inner-wrapper" id="departure-time-wrapper">
+			<span class = "icon-label" id='calendar-icon'></span>			
+			<input type="text" id="departure-time">
+		</div>
+	</div>
+	<div class="content-wrapper input-outer-wrapper" id="">
+		<button id="search-btn">Search</button>
+	</div>
 
 </div>
+
+<div class="content-wrapper main-info-wrapper">
+	<div class="content-wrapper main-info-sub-container" id="filter-container">
+		<h4 id="filter-title">filter</h4>
+		
+			<ul id='filter-menu'>
+				<li><div>起飞时间段</div></li>
+				<li><div>航空公司</div>
+					<ul>
+						<li><div>深圳航空</div></li>
+					</ul>
+ 
+
+				</li>
+				<li><div>机场</div></li>
+
+			</ul>
+			
+	</div>  	
+	<div class="content-wrapper main-info-sub-container" id="card-outer-container">
+		<div class="content-wrapper sort-field-container">
+			<a href="#" class='sort-field-link'id="flightInfo">航班信息</a>
+			<a href="#" class='sort-field-link' id="sortByDepartTime">起飞时间</a>
+			<a href="#" class='sort-field-link' id="sortByArriveTime">到达时间</a>			
+			<a href="#" class='sort-field-link' id="sortByPrice">价格</a>
+			<a href="#" class='sort-field-link' id=""></a>
+
+		</div>
+		<div class="flight-card-container">
+			<div class="flight-card-wrapper">
+				<div class="flight-card">
+					<div class="card-flight-info">flight</div>
+					<div class="card-flight-info card-flight-depart-info">
+						<div class=" flight-depart-time"><strong>出发时间</strong></div>
+						<div class=" flight-depart-airport airport">出发机场</div>
+					</div>
+					<div class="card-flight-info card-flight-arrival-info">
+						<div class="card-flight-arrive-time"><strong>到达时间</strong></div>
+						<div class="card-flight-arrive-airport airport">到达机场</div>
+
+					</div>
+					<div class=" card-flight-info card-flight-price-info">price</div>
+					<div class="card-flight-info card-flight-book"><button class="ui-button ui-widget ui-corner-all book-btn">订票</button></div>
+
+				</div>
+			</div>
+
+			<div class="flight-card-wrapper">
+				<div class="flight-card">
+					<div class="card-flight-info">flight</div>
+					<div class="card-flight-info card-flight-depart-info">
+						<div class=" flight-depart-time"><strong>出发时间</strong></div>
+						<div class=" flight-depart-airport airport">出发机场</div>
+					</div>
+					<div class="card-flight-info card-flight-arrival-info">
+						<div class="card-flight-arrive-time"><strong>到达时间</strong></div>
+						<div class="card-flight-arrive-airport airport">到达机场</div>
+
+					</div>
+					<div class=" card-flight-info card-flight-price-info">price</div>
+					<div class="card-flight-info card-flight-book"><button class="ui-button ui-widget ui-corner-all book-btn">订票</button></div>
+
+				</div>
+			</div>
+			<div class="flight-card-wrapper">
+				<div class="flight-card">
+					<div class="card-flight-info">flight</div>
+					<div class="card-flight-info card-flight-depart-info">
+						<div class=" flight-depart-time"><strong>出发时间</strong></div>
+						<div class=" flight-depart-airport airport">出发机场</div>
+					</div>
+					<div class="card-flight-info card-flight-arrival-info">
+						<div class="card-flight-arrive-time"><strong>到达时间</strong></div>
+						<div class="card-flight-arrive-airport airport">到达机场</div>
+
+					</div>
+					<div class=" card-flight-info card-flight-price-info">price</div>
+					<div class="card-flight-info card-flight-book"><button class="ui-button ui-widget ui-corner-all book-btn">订票</button></div>
+
+				</div>
+			</div>
+			<div class="flight-card-wrapper">
+				<div class="flight-card">
+					<div class="card-flight-info">flight</div>
+					<div class="card-flight-info card-flight-depart-info">
+						<div class=" flight-depart-time"><strong>出发时间</strong></div>
+						<div class=" flight-depart-airport airport">出发机场</div>
+					</div>
+					<div class="card-flight-info card-flight-arrival-info">
+						<div class="card-flight-arrive-time"><strong>到达时间</strong></div>
+						<div class="card-flight-arrive-airport airport">到达机场</div>
+
+					</div>
+					<div class=" card-flight-info card-flight-price-info">price</div>
+					<div class="card-flight-info card-flight-book"><button class="ui-button ui-widget ui-corner-all book-btn">订票</button></div>
+
+				</div>
+			</div>			
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="/static/viewFlight.js"></script>
 {% endblock %}
