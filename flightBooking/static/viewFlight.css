@@ -1,0 +1,27 @@
+:root{
+	font-family: Helvetica;
+}
+
+.content-wrapper{
+	display: flex;
+	flex-direction: row;
+	background: grey;
+	align-items: center;
+
+/*	padding:2rem;
+*/}
+
+#search-condition-outer-wrapper{
+	width:100vw;
+	height:9vh;
+	padding:0.9rem;
+	justify-content: space-between;
+	flex-wrap: wrap;
+}
+
+#input-wrapper{
+	height:2rem;
+	width:30%;
+	padding:0.3rem;
+	background: white;	
+}
