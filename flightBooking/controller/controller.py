@@ -10,3 +10,8 @@ def Hello():
 @app.route('/eFlight/viewFlight')
 def viewFlight():
     return render_template('viewFlight.html')
+
+
+@app.route('/eFlight/confirmOrder')
+def confirmOrder():
+    return render_template('confirmOrder.html')
