@@ -5,3 +5,5 @@
 #### Tips:  
 运行系统: 建立一个文件夹,将代码clone到该文件夹。现在该路径下应该有: flightBooking, runserver.py  
 python runserver.py即可
+
+db file: https://docs.google.com/document/d/1gEv6GZ5u-IMvp1OosebRKsxZy8FSZ2lH3R2EBz9xfuE/edit
