@@ -4,6 +4,35 @@
 <link rel="stylesheet" href="/static/confirmOrder.css">
 {% endblock %}
 
+{% block header %}
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+	    <span class="navbar-toggler-icon"></span>
+	  </button>
+
+	  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+	    <ul class="navbar-nav ml-auto">
+	      <li class="nav-item active">
+	      	{%if user%}
+	        <a class="nav-link" href="#">{{user}} </span></a>
+	        {%else%}
+	        <a class="nav-link" href="#">您好请登录 </a>
+			{%endif%}
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="#">注册</a>
+	      </li>
+
+
+	    </ul>
+
+	  </div>
+	</nav>
+	{{super()}}
+
+{% endblock %}
+
+
 {% block content %}
 <div class="order-view-container">
 	<div class="order-view-sub-container order-view-left">

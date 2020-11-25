@@ -74,11 +74,11 @@ body{
 
 .main-info-wrapper{
 	height:60vh;
-	width:100%;
+	width:80%;
 	margin-top: 3rem;
 	background: #f1f1f1;
 	padding:2rem;
-	justify-content: space-between;
+	justify-content: center;
 }
 
 .main-info-sub-container{
