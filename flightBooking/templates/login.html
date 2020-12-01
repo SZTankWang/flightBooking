@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="/static/css/login.css">
+{% endblock %}
+
+{% block content %}
+<div class="my-container outer-container">
+	<div class="my-container login-container">
+		<div class="my-container login-title">
+			<h2>Login</h2>
+		</div>
+
+		<!-- 输入框 -->
+		<div class="my-container form-row-wrapper">
+			<div class="my-container login-sub-title"><p>customer/agent entry</p>
+
+				<div class="href-wrapper">
+					<a class="entry-href" id="stuff-href" href="#" onclick="switchLogin(this)"><p>stuff login</p></a>
+					<a class="entry-href" id="norm-href" href="#"onclick="switchLogin(this)"><p>customer/agent login</p></a>
+				</div>
+
+
+			</div>
+			<div class="my-container form-row name-input">
+				<input type="text" name="userName" id="userName" placeholder="enter email">
+			</div>
+			<div class="my-container form-row pass-input">
+				<input type="text" name="password" id="password" placeholder="enter password">
+			</div>		
+		</div>
+
+		<div class="my-container login-btn-wrapper">
+			<button id="login" class="login-btn">Login</button>
+		</div>
+
+		<div class="my-container register-link-wrapper">
+			<a href="#"><p>register</p></a>
+		</div>
+
+	</div>
+</div>
+
+<div class="my-container foot-container">
+	<p>Copyright© "Eflight" Zhenming Wang 2020</p>
+</div>
+
+
+<script type="text/javascript" src="/static/js/login.js"></script>
+<script type="text/javascript">
+	$('#login').button();
+</script>
+{% endblock %}

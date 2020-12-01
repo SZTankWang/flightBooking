@@ -2,10 +2,21 @@ from flightBooking import app
 from flask import render_template
 
 
+
+
+
 @app.route('/eFlight')
 def Hello():
     print('Hi')
     return render_template('customerHome.html')
+
+@app.route('/eFlight/login')
+def login():
+    return render_template('login.html')
+
+@app.route('/eFlight/register')
+def register():
+    return render_template('register.html')
 
 @app.route('/eFlight/viewFlight')
 def viewFlight():
