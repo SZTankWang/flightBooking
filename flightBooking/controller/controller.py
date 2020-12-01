@@ -14,6 +14,10 @@ def Hello():
 def login():
     return render_template('login.html')
 
+@app.route('/eFlight/register')
+def register():
+    return render_template('register.html')
+
 @app.route('/eFlight/viewFlight')
 def viewFlight():
     return render_template('viewFlight.html')

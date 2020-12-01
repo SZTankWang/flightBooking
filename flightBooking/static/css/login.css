@@ -1,0 +1,114 @@
+.my-container{
+	display: flex;
+	align-items: center;
+
+}
+
+
+
+.outer-container{
+	margin-top: 4rem;
+	flex-direction: row;
+	width:100%;
+	height:65%;
+	background: #f1f1f1;
+	background-image: url(/static/svg/welcomeBG.svg);
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+
+.login-container{
+	padding:1rem;
+	height:24rem;
+	width:24rem;
+	background: white;
+	position: absolute;
+	right:3rem;
+	flex-direction: column;
+}
+
+.login-title{
+	font-size:1.8rem;
+	width:100%;
+	padding-left: 1rem;
+}
+
+.login-title > h2{
+	font-weight: initial;
+
+}
+
+.login-sub-title{
+	width:100%;
+	padding-left: 1.2rem;
+	padding-right: 1.2rem;
+	justify-content: space-between;
+}
+
+/*.login-entry{
+	margin-left:1.4rem;
+}
+*/
+#norm-href{
+	display: none;
+}
+
+.href-wrapper{
+/*	margin-left:1rem;
+*/	width:fit-content;
+	display: flex;
+	flex-direction: row-reverse;
+
+}
+
+.form-row-wrapper{
+    margin-top: 2rem;
+    flex-direction: column;
+    width: 100%;
+    height: 25%;
+    justify-content: space-around;
+}
+
+.form-row{
+	width:100%;
+	justify-content: center;
+}
+
+.pass-input{
+	margin-top:1rem;
+}
+
+input{
+    width: 85%;
+    border: 1px solid #ccc;
+    outline: none;
+    height: 2rem;
+    color: #333;
+}
+
+.login-btn-wrapper{
+	width:85%;
+	margin-top: 4rem;
+}
+
+.login-btn{
+	width:100%;
+	height: 2.4rem;
+}
+
+.register-link-wrapper{
+	margin-top: 1.6rem;
+    margin-left: 15rem;
+}
+
+.foot-container{
+    width: 100%;
+    height: 20%;
+    font-size: smaller;
+    justify-content: center;
+}
+
+.foot-container > p{
+    position: absolute;
+    bottom: 0;
+}

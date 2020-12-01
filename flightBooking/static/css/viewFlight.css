@@ -49,15 +49,15 @@ body{
 }
 
 #departure-icon{
-	background-image: url("/static/departure.svg");
+	background-image: url("/static/svg/departure.svg");
 }
 
 #arrival-icon{
-	background-image: url("/static/arrival.svg");
+	background-image: url("/static/svg/arrival.svg");
 }
 
 #calendar-icon{
-	background-image: url("/static/calendar.svg");
+	background-image: url("/static/svg/calendar.svg");
 }
 
 .icon-label{
