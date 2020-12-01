@@ -4,8 +4,154 @@
 <link rel="stylesheet" href="/static/css/register.css">
 {% endblock %}
 
-div.my-container
 
 
 {% block content %}
+<div class="my-container outer-container">
+	<div class="my-container input-fields-container">
+		<div class="my-container switch-panel">
+			{% if type == 'customer' %}
+			<p>customer register</p>
+			<a href="http://localhost:5000/eFlight/register/staff" class="switch-link" id="staff-link">airline staff register</a>
+			<a href="http://localhost:5000/eFlight/register/agent" class="switch-link" id="agent-link">booking agent register </a>
+			{% elif type == 'agent' %}
+			<p>booking agent register</p>
+			<a href="http://localhost:5000/eFlight/register/customer" class="switch-link" id="agent-link">customer register </a>
+
+			<a href="http://localhost:5000/eFlight/register/staff" class="switch-link" id="staff-link">airline staff register</a>
+			{% elif type == 'staff' %}
+			<p>airline staff register</p>
+			<a href="http://localhost:5000/eFlight/register/customer" class="switch-link" id="agent-link">customer register </a>
+
+			<a href="http://localhost:5000/eFlight/register/agent" class="switch-link" id="staff-link">booking agent register</a>
+			{% endif %}
+		</div>
+
+
+
+
+		<div class="my-container input-row-wrapper">
+			{% if type != 'staff' %}
+			<div class="my-container input-field-row">
+			
+			<div class="input-title"><p>email&nbsp</p></div>
+			<input type="text" name="customerEmail" id="customerEmail">
+			</div>
+			{% endif %}
+
+			{% if type == 'agent' %}
+			<div class="my-container input-field-row">
+				<div class="input-title"><p>password&nbsp</p></div>
+				<input type="text" name="password" id="passport_country">
+			</div>
+
+			<div class="my-container input-field-row">
+				<div class="input-title"><p>booking agent id&nbsp</p></div>
+				<input type="text" name="booking_agent_id" id="booking_agent_id">
+			</div>
+
+			{% endif %}
+
+			{% if type == 'customer' %}
+			<div class="my-container input-field-row">
+				<div class="input-title"><p>name&nbsp</p></div>
+				<input type="text" name="customerName" id="customerName">
+				
+			</div>
+
+			<div class="my-container input-field-row">
+				<div class="input-title"><p>password&nbsp</p></div>
+				<input type="text" name="password" id="password">
+			</div>
+
+			<div class="my-container input-field-row">
+				<div class="input-title"><p>building number&nbsp</p></div>
+				<input type="text" name="building_number" id="building_number">
+			</div>
+
+			<div class="my-container input-field-row">
+				<div class="input-title"><p>street&nbsp</p></div>
+				<input type="text" name="street" id="street">
+			</div>
+
+
+			<div class="my-container input-field-row">
+				<div class="input-title"><p>city&nbsp</p></div>
+				<input type="text" name="city" id="city">
+			</div>
+
+			<div class="my-container input-field-row">
+				<div class="input-title"><p>state&nbsp</p></div>
+				<input type="text" name="state" id="state">
+			</div>
+
+
+			<div class="my-container input-field-row">
+				<div class="input-title"><p>phone&nbsp</p></div>
+				<input type="text" name="customerPhone" id="customerPhone">
+			</div>
+
+			<div class="my-container input-field-row">
+				<div class="input-title"><p>passport number&nbsp</p></div>
+				<input type="text" name="passport_number" id="passport_number">
+			</div>
+
+			<div class="my-container input-field-row">
+				<div class="input-title"><p>passport expiration &nbsp</p></div>
+				<input type="text" name="passport_expiration" id="passport_expiration">
+			</div>
+
+			<div class="my-container input-field-row">
+			<div class="input-title"><p>passport country&nbsp</p></div>
+			<input type="text" name="passport_country" id="passport_country">
+			</div>
+
+			{% endif %}
+
+			{% if type == 'staff' %}
+			<div class="my-container input-field-row">
+				<div class="input-title"><p>username&nbsp</p></div>
+				<input type="text" name="username" id="username">
+			</div>
+
+			<div class="my-container input-field-row">
+				<div class="input-title"><p>password&nbsp</p></div>
+				<input type="text" name="password" id="password">
+			</div>
+
+			<div class="my-container input-field-row">
+				<div class="input-title"><p>first name&nbsp</p></div>
+				<input type="text" name="first_name" id="first_name">
+			</div>
+
+			<div class="my-container input-field-row">
+				<div class="input-title"><p>last name&nbsp</p></div>
+				<input type="text" name="last_name" id="last_name">
+			</div>
+
+			{% endif %}
+
+		{% if type != 'agent' %}
+		<div class="my-container input-field-row">
+			<div class="input-title"><p>date of birth&nbsp</p></div>
+			<input type="text" name="date_of_birth" id="date_of_birth">
+		</div>
+		{% endif %}
+
+		{% if type == 'staff' %}
+		<div class="my-container input-field-row">
+			<div class="input-title"><p>airline&nbsp</p></div>
+			<input type="text" name="airline_name" id="airline_name">
+		</div>
+
+
+		{% endif %}
+		</div>
+
+	</div>
+
+	<div class="my-container register-btn-wrapper"><button id="register-btn">register</button></div>
+</div>
+
+<script type="text/javascript" src="/static/js/register.js"></script>
 {% endblock %}

@@ -14,9 +14,12 @@ def Hello():
 def login():
     return render_template('login.html')
 
-@app.route('/eFlight/register')
-def register():
-    return render_template('register.html')
+@app.route('/eFlight/register/<type>')
+def register(type):
+        if type == 'agent':
+            ''' 查询系统记录中的airline name, 放入 airline_names 变量中
+            ''' 
+        return render_template('register.html',type=type, airline_name=None)
 
 @app.route('/eFlight/viewFlight')
 def viewFlight():
