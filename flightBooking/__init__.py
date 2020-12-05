@@ -9,9 +9,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['MAX_CONTENT_LENGTH'] = 1024*1024
 app.secret_key = "secretkey"
 CORS(app, supports_credentials=True)
-login = LoginManager(app)
-login.login_view = 'login' # force user to login
-login.login_message = "Please login first"
 app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://SE:mysql@8.129.182.214:3306/eflight"
 db = SQLAlchemy(app)
 from flightBooking.controller import controller
