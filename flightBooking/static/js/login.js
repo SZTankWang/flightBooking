@@ -1,6 +1,10 @@
 $(document).ready(function(){
 
+	console.log($('#login-type').val());
 
+	$('#login').click(function(){
+		doLogin();
+	})
 
 
 
@@ -8,35 +12,33 @@ $(document).ready(function(){
 })
 
 
-function switchLogin(th){
-
-	//判断当前所处登录类型
-	if($(th).attr('id')=='stuff-href'){
-		console.log('true');
-		//切换到员工登录
-		document.getElementById('stuff-href').style.display='none';
-
-		document.getElementById('norm-href').style.display='block';
-		switchToStuff();
-	}
-
-	if($(th).attr('id') == 'norm-href'){
-		document.getElementById('norm-href').style.display='none';
-
-		document.getElementById('stuff-href').style.display='block';
-		switchToCustomer();
-	}
-
-
+function getLoginData(th){
+	var username = $('#userName').val();
+	var password = $('#password').val();
+	data = {'userName':username,'password':password};
+	return data;
 }
 
-function switchToStuff(){
-	$('.login-sub-title').children('p').text('stuff entry');
-	$('#userName').attr('placeholder','enter username');
+function infoChecker(data){
+	if (data['userName'] == '' || data['password']==''){
+		return -1;
+	}
+	return 0;
 }
 
-function switchToCustomer(){
-	$('.login-sub-title').children('p').text('customer/agent entry');
-	$('#userName').attr('placeholder','enter email');
+function doLogin(){
+	var data = getLoginData();
+	var type = $('#login-type').val();
+	data['type'] = type;
+	if(infoChecker(data)==0){
+		$.ajax({
+			url:'http://localhost:5000/eFlight/doLogin',
+			type:'POST',
+			data:data,
+			success:function(){
+				console.log(200);
+			}
+		})		
+	}
 
 }

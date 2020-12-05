@@ -49,16 +49,17 @@
 	margin-left:1.4rem;
 }
 */
-#norm-href{
-	display: none;
-}
 
 .href-wrapper{
-/*	margin-left:1rem;
-*/	width:fit-content;
-	display: flex;
-	flex-direction: row-reverse;
+    width: 11rem;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-around;
+    font-size: small;
+}
 
+.entry-href{
+	border-right:1.5px solid #f1f1f1;
 }
 
 .form-row-wrapper{
