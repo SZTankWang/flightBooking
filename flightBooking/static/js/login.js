@@ -27,6 +27,7 @@ function infoChecker(data){
 }
 
 function doLogin(){
+	$('body').LoadingOverlay("show");
 	var data = getLoginData();
 	var type = $('#login-type').val();
 	data['type'] = type;
@@ -35,8 +36,11 @@ function doLogin(){
 			url:'http://localhost:5000/eFlight/doLogin',
 			type:'POST',
 			data:data,
-			success:function(){
-				console.log(200);
+			success:function(data){
+				if(data['code']==0){
+					console.log('验证成功');
+					$('body').LoadingOverlay("hide");
+				}
 			}
 		})		
 	}
