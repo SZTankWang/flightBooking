@@ -1,4 +1,6 @@
 $(document).ready(function(){
+	$('#back-to-login').button();
+
 	$('#passport_expiration').datepicker();
 
 	$('#date_of_birth').datepicker();
@@ -11,3 +13,7 @@ $(document).ready(function(){
 		source:availAirlines
 	});
 })
+
+function backToLogin(th){
+	window.location.replace("http://localhost:5000/eFlight/login/customer")
+}

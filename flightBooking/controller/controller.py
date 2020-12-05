@@ -10,9 +10,9 @@ def Hello():
     print('Hi')
     return render_template('customerHome.html')
 
-@app.route('/eFlight/login')
-def login():
-    return render_template('login.html')
+@app.route('/eFlight/login/<type>')
+def login(type):
+    return render_template('login.html',type=type)
 
 @app.route('/eFlight/register/<type>')
 def register(type):

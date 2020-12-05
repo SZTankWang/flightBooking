@@ -5,6 +5,9 @@
 {% endblock %}
 
 {% block content %}
+<form id="type-form" style="display: none;">
+	<input type="text" id="login-type" value={{type}}>
+</form>
 <div class="my-container outer-container">
 	<div class="my-container login-container">
 		<div class="my-container login-title">
@@ -13,18 +16,41 @@
 
 		<!-- 输入框 -->
 		<div class="my-container form-row-wrapper">
-			<div class="my-container login-sub-title"><p>customer/agent entry</p>
+			<div class="my-container login-sub-title">
+				{% if type== 'customer' %}
+				<p>customer entry</p>
 
 				<div class="href-wrapper">
-					<a class="entry-href" id="stuff-href" href="#" onclick="switchLogin(this)"><p>stuff login</p></a>
-					<a class="entry-href" id="norm-href" href="#"onclick="switchLogin(this)"><p>customer/agent login</p></a>
+					<a class="entry-href" id="stuff-href" href="http://localhost:5000/eFlight/login/staff" ><p>staff login</p></a>
+					<a class="entry-href" id="agent-href" href="http://localhost:5000/eFlight/login/agent"><p>agent login</p></a>
+				</div>
+				{% elif type == 'agent'  %}
+				<p>agent entry</p>
+
+				<div class="href-wrapper">
+					<a class="entry-href" id="stuff-href" href="http://localhost:5000/eFlight/login/staff" ><p>staff login</p></a>
+					<a class="entry-href" id="customer-href" href="http://localhost:5000/eFlight/login/customer"><p>customer login</p></a>
 				</div>
 
 
+				{% elif type == 'staff'  %}
+				<p>staff entry</p>
+
+				<div class="href-wrapper">
+					<a class="entry-href" id="agent-href" href="http://localhost:5000/eFlight/login/agent" ><p>agent login</p></a>
+					<a class="entry-href" id="customer-href" href="http://localhost:5000/eFlight/login/customer"><p>customer login</p></a>
+				</div>
+				{% endif %}
 			</div>
+			{% if type == 'staff' %}
+			<div class="my-container form-row name-input">
+				<input type="text" name="userName" id="userName" placeholder="enter username">
+			</div>
+			{% else %}
 			<div class="my-container form-row name-input">
 				<input type="text" name="userName" id="userName" placeholder="enter email">
 			</div>
+			{% endif %}
 			<div class="my-container form-row pass-input">
 				<input type="text" name="password" id="password" placeholder="enter password">
 			</div>		
@@ -35,7 +61,7 @@
 		</div>
 
 		<div class="my-container register-link-wrapper">
-			<a href="#"><p>register</p></a>
+			<a href="http://localhost:5000/eFlight/register/customer"><p>register</p></a>
 		</div>
 
 	</div>
@@ -46,7 +72,7 @@
 </div>
 
 
-<script type="text/javascript" src="/static/js/login.js"></script>
+<script type="text/javascript" src="/static/js/login.js" value={{ type}}></script>
 <script type="text/javascript">
 	$('#login').button();
 </script>

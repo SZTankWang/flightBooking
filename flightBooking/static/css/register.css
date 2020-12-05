@@ -35,10 +35,17 @@ a{
 	padding-left: 0.7rem;
 	padding-bottom: 1rem;
 	border-bottom: 1px solid grey;
+	position:relative;
+}
+
+.back-btn-wrapper{
+	position:absolute;
+	right:0;
 }
 
 .switch-panel > p{
 	font-size:1.2rem;
+	margin-bottom: 0.3rem;
 }
 
 .switch-link{
