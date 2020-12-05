@@ -1,3 +1,5 @@
+from sqlalchemy import text
+
 from flightBooking import app,db
 import collections
 from datetime import timedelta
@@ -23,14 +25,17 @@ def Hello():
 def gologin(type):
     return render_template('login.html',type=type)
 
-@app.route('/eFlight/dologin/<type>')
-def dologin(type):
-    id = request.form['id']
+@app.route('/eFlight/doLogin',methods=['POST'])
+def dologin():
+    id = request.form['userName']
+    type = request.form['type']
     password = request.form['password']
     db.session.execute(text("set @msg = '0'"))
     db.session.execute(text("CALL eflight.login_check(:p1,:p2,:p3,@msg)"),{"p1":type,"p2":id,"p3":password})
     result = db.session.execute(text("select @msg")).fetchone()
-    return result
+
+    # 这里result不能直接用 要按Index取，然后jsonify之后回到前端
+    return jsonify(response=result[0])
 
 @app.route('/eFlight/register/<type>')
 def register(type):
