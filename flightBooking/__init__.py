@@ -17,12 +17,3 @@ db = SQLAlchemy(app)
 from flightBooking.controller import controller
 from flightBooking.models import model
 
-'''
-def dologin(type,id,password):
-    if type == "customer":
-        db.session.execute(text("set @msg = '0'"))
-        db.session.execute(text("CALL eflight.login_check(:p1,:p2,:p3,@msg)"),{"p1":type,"p2":id,"p3":password})
-        result = db.session.execute(text("select @msg")).fetchone()
-        print(result[0])
-dologin('customer','123','123')
-'''

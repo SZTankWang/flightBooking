@@ -1,4 +1,4 @@
-from flightBooking import app
+from flightBooking import app,db
 import collections
 from datetime import timedelta
 from itertools import count
@@ -19,9 +19,9 @@ def Hello():
     print('Hi')
     return render_template('customerHome.html')
 
-@app.route('/eFlight/gologin')
-def gologin():
-    return render_template('login.html')
+@app.route('/eFlight/login/<type>')
+def gologin(type):
+    return render_template('login.html',type=type)
 
 @app.route('/eFlight/dologin/<type>')
 def dologin(type):

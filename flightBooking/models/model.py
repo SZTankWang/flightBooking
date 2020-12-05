@@ -10,6 +10,6 @@ import enum
 from sqlalchemy import Enum
 from flask_sqlalchemy import SQLAlchemy
 
-@login.user_loader
-def load_user(id):
-    return User.query.get(id)
+# @login.user_loader
+# def load_user(id):
+#     return User.query.get(id)
