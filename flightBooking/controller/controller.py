@@ -12,7 +12,7 @@ from flask_login import login_user, logout_user, current_user, login_required
 from numpy.core.arrayprint import TimedeltaFormat
 from numpy.lib.function_base import select
 from sqlalchemy.util.langhelpers import methods_equivalent
-
+from flightBooking.service import customerService
 
 
 
@@ -27,15 +27,13 @@ def gologin(type):
 
 @app.route('/eFlight/doLogin',methods=['POST'])
 def dologin():
-    id = request.form['userName']
+    userName = request.form['userName']
     type = request.form['type']
     password = request.form['password']
-    db.session.execute(text("set @msg = '0'"))
-    db.session.execute(text("CALL eflight.login_check(:p1,:p2,:p3,@msg)"),{"p1":type,"p2":id,"p3":password})
-    result = db.session.execute(text("select @msg")).fetchone()
+    result = customerService.checkLogin(type,userName,password)
 
     # 这里result不能直接用 要按Index取，然后jsonify之后回到前端
-    return jsonify(response=result[0])
+    return jsonify(response=result)
 
 @app.route('/eFlight/register/<type>')
 def register(type):
