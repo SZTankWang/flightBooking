@@ -30,10 +30,10 @@ def dologin():
     userName = request.form['userName']
     type = request.form['type']
     password = request.form['password']
-    result = customerService.checkLogin(type,userName,password)
+    result,code = customerService.checkLogin(type,userName,password)
 
     # 这里result不能直接用 要按Index取，然后jsonify之后回到前端
-    return jsonify(response=result)
+    return jsonify(response=result,code=code)
 
 @app.route('/eFlight/register/<type>')
 def register(type):
