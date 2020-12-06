@@ -34,13 +34,14 @@ def publicInfo():
         return render_template('publicInfo.html',pageType="publicView")
 
 
-@app.route('/eFlight/login/<type>/<next>')
-def gologin(type,next):
-    return render_template('login.html',type=type,next=next)
+@app.route('/eFlight/login/<type>')
+def gologin(type):
+    # next = request.args.get('next')
+    return render_template('login.html',type=type)
 
 @app.route('/eFlight/doLogin',methods=['POST'])
 def dologin():
-    next = request.form['next']
+    # next = request.form['next']
     userName = request.form['userName']
     type = request.form['type']
     password = request.form['password']
@@ -49,7 +50,7 @@ def dologin():
         session['username'] = userName
         token = session.get('username')
         session.permanent = True
-    return jsonify(response=result,code=code,next = next)
+    return jsonify(response=result,code=code)
 
 @app.route('/eFlight/register/<type>')
 def register(type):
@@ -90,3 +91,10 @@ def purchaseSearch():
 @app.route('/eFlight/search')
 def publicSearch():
     pass
+
+#记录页入口
+#type 暂时供给customer / agent
+@app.route('/eFlight/record/<type>')
+def record(type):
+    if type == "customer":
+        return render_template('record.html',type=type)

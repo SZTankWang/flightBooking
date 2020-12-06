@@ -42,7 +42,7 @@ function doLogin(){
 				if(data['code']==0){
 					console.log('验证成功');
 					$('body').LoadingOverlay("hide");
-					window.location.replace('http://127.0.0.1:5000/eFlight/'+next);
+					window.location.replace('http://127.0.0.1:5000/eFlight/home/'+type);
 				}else{
 					console.log('密码错误');
 					$('body').LoadingOverlay("hide");

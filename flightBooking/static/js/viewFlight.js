@@ -30,6 +30,9 @@ $(document).ready(function(){
 
 	if($('#pageType').val() == 'purchaseFlightView'){
 		console.log('搜索');
+		$('#search-btn').click(function(){
+			loadData();
+		})
 	}
 
 })
@@ -58,6 +61,11 @@ function getData(){
 }
 
 
+//购票搜索页模板
+function purchaseListTemplate(data){
+	var html = "";
+	
+}
 
 // 公共搜索入口
 //搜索先决条件：按照什么搜索
