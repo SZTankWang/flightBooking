@@ -16,10 +16,11 @@ from flightBooking.service import customerService
 
 
 
-@app.route('/eFlight')
-def Hello():
-    print('Hi')
-    return render_template('customerHome.html')
+@app.route('/eFlight/home/<type>')
+def renderHome(type):
+    if type == 'customer':
+        return render_template('customerHome.html')
+
 
 @app.route('/eFlight/login/<type>')
 def gologin(type):
