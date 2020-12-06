@@ -14,14 +14,14 @@
 	  <div class="collapse navbar-collapse" id="navbarSupportedContent">
 	    <ul class="navbar-nav ml-auto">
 	      <li class="nav-item active">
-	      	{%if userName%}
-	        <a class="nav-link" href="#">{{userName}} </span></a>
+	      	{%if username%}
+	        <a class="nav-link" href="#">{{username}} </span></a>
 	        {%else%}
-	        <a class="nav-link" href="#">您好请登录 </a>
+	        <a class="nav-link" href="http://127.0.0.1:5000/eFlight/login/customer">您好请登录 </a>
 			{%endif%}
 	      </li>
 	      <li class="nav-item">
-	        <a class="nav-link" href="#">注册</a>
+	        <a class="nav-link" href="http://127.0.0.1:5000/eFlight/register/customer">注册</a>
 	      </li>
 
 
@@ -49,7 +49,7 @@ http://127.0.0.1:5000/eFlight/home/customer">Home</a></div>
 					<p>出发城市<input type="text" id="departure-city"></p>
 				</div>
 				<div class="input-container">
-					<p>到达城市<input type="text" id="arrival-time"></p>
+					<p>到达城市<input type="text" id="arrival-city"></p>
 				</div>
 			</div>
 			<div class="search-form-sub-part" id='search-left-sub'>

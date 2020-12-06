@@ -35,7 +35,7 @@ $(document).ready(function(){
 
 function searchFlight(){
 	var type = $('#search-type').val();
-	console.log(type);
+	doSearch();
 
 }
 
@@ -43,7 +43,7 @@ function searchType(){
 	return $('#search-type').val();
 }
 
-function getSearchArg(){
+function doSearch(){
 	type = searchType();
 	if(type == 0){
 		var data = flightNumSearch();
@@ -72,6 +72,7 @@ function getSearchArg(){
 function flightNumSearch(){
 		var flightNum = $('#flight-num').val();
 		var date = $('#departure-time').datepicker("getDate");
+		date = $.datepicker.formatDate( "yy-mm-dd", date);
 		return {'flightNum':flightNum,'departureDate':date};
 }
 
@@ -79,6 +80,8 @@ function placeSearch(){
 	var departure = $('#departure').val();
 	var arrival = $('#arrival').val();
 	var date = $('#departure-time').datepicker("getDate");
+	date = $.datepicker.formatDate( "yy-mm-dd", date);
+
 	return {'departure':departure,'arrival':arrival,'departureDate':date};
 
 

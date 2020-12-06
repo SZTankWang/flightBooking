@@ -14,11 +14,11 @@ from sqlalchemy.util.langhelpers import methods_equivalent
 from flightBooking.service import customerService
 
 
-
 @app.route('/eFlight/home/<type>')
 def renderHome(type):
+    a = session.get('username')
     try:
-        userName = session['username']
+        userName = session.get('username')
         if type == 'customer':
             return render_template('customerHome.html',username=userName)
     except:
@@ -41,6 +41,8 @@ def dologin():
     result,code = customerService.checkLogin(type,userName,password)
     if code == 0:
         session['username'] = userName
+        token = session.get('username')
+        session.permanent = True
     return jsonify(response=result,code=code)
 
 @app.route('/eFlight/register/<type>')
