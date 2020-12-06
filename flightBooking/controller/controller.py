@@ -51,14 +51,11 @@ def dologin():
 
 @app.route('/eFlight/register/<type>')
 def goregister(type):
-        if type == 'staff':
-            ''' 查询系统记录中的airline name, 放入 airline_names 变量中
-            '''
-            airline_list = customerService.getairlines()
-            #airline_list = jsonify(airline_name = customerService.getairlines())
-        else:
-            airline_list = None
-        return render_template('register.html',type=type, airline_name=airline_list)
+    airline_list = None
+    if type == 'staff':
+        airline_list = customerService.getairlines()
+        #airline_list = jsonify(airline_name = customerService.getairlines())
+    return render_template('register.html',type=type, airline_name=airline_list)
 
 @app.route('/eFlight/viewFlight')
 def viewFlight():
