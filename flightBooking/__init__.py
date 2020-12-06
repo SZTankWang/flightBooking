@@ -13,4 +13,3 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://SE:mysql@8.129.182.214:
 db = SQLAlchemy(app)
 from flightBooking.controller import controller
 from flightBooking.models import model
-

@@ -8,7 +8,6 @@ from time import strftime
 from flask import Flask, render_template, redirect, url_for, request, json, jsonify, session, flash, make_response
 from flask.signals import appcontext_tearing_down
 from flask_login.utils import logout_user
-from flask_login import login_user, logout_user, current_user, login_required
 from numpy.core.arrayprint import TimedeltaFormat
 from numpy.lib.function_base import select
 from sqlalchemy.util.langhelpers import methods_equivalent
@@ -18,7 +17,11 @@ from flightBooking.service import customerService
 
 @app.route('/eFlight/home/<type>')
 def renderHome(type):
-    if type == 'customer':
+    try:
+        userName = session['username']
+        if type == 'customer':
+            return render_template('customerHome.html',username=userName)
+    except:
         return render_template('customerHome.html')
 
 
@@ -32,6 +35,8 @@ def dologin():
     type = request.form['type']
     password = request.form['password']
     result,code = customerService.checkLogin(type,userName,password)
+    if code == 0:
+        session['username'] = userName
     return jsonify(response=result,code=code)
 
 @app.route('/eFlight/register/<type>')
@@ -43,7 +48,8 @@ def register(type):
 
 @app.route('/eFlight/viewFlight')
 def viewFlight():
-    return render_template('viewFlight.html')
+    username = session['username']
+    return render_template('viewFlight.html',username=username)
 
 
 @app.route('/eFlight/confirmOrder')

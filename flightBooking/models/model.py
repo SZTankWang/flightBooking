@@ -9,5 +9,3 @@ from flask_login import UserMixin # UserMixin conains four useful login function
 import enum
 from sqlalchemy import Enum
 from flask_sqlalchemy import SQLAlchemy
-
-

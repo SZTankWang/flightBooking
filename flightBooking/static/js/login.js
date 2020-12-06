@@ -46,7 +46,7 @@ function doLogin(){
 					$('body').LoadingOverlay("hide");
 				}
 			}
-		})		
+		})
 	}
 
 }
