@@ -12,6 +12,7 @@ from numpy.core.arrayprint import TimedeltaFormat
 from numpy.lib.function_base import select
 from sqlalchemy.util.langhelpers import methods_equivalent
 from flightBooking.service import customerService
+import datetime
 
 
 @app.route('/eFlight/home/<type>')
@@ -56,8 +57,8 @@ def goregister(type):
 
 @app.route("/eFlight/loadAirlineData")
 def loadAirlineData():
-    return jsonify(customerService.getairlines())
-    
+    return jsonify(customerService.get_airlines())
+
 @app.route('/eFlight/viewFlight')
 def viewFlight():
     departure = request.args.get('departure')
@@ -79,7 +80,13 @@ def confirmOrder():
 # home 页 search入口
 @app.route('/eFlight/purchaseSearch')
 def purchaseSearch():
-    pass
+    type = request.args.get('type')
+    departure_date = request.args.get('departureDate')
+    date = datetime.datetime.strptime(departure_date,'%Y-%m-%d')
+    departure_city = request.args.get('departure')
+    arrival_city = request.args.get('arrival')
+    results = customerService.search_by_city(departure_city,arrival_city,date)
+    return jsonify(results)
 
 
 #公共搜索页入口
@@ -89,7 +96,27 @@ def purchaseSearch():
 #同时两者都有deoartureDate这一参数 出发日期
 @app.route('/eFlight/search')
 def publicSearch():
-    pass
+    type = request.args.get('type')
+    departure_date = request.args.get('departureDate')
+    date = datetime.datetime.strptime(departure_date,'%Y-%m-%d')
+    if type == "0":
+        flight_number = int(request.args.get('flightNum'))
+        results = customerService.search_by_num(flight_number,date)
+        return jsonify(results)
+        '''
+        [{'flight_num': 100,
+        'departure_airport': 'PVG',
+        'departure_time': "2020-11-22 15:09:48",
+        'arrival_airport': 'JFK'
+        'arrival_time': "2020-11-13 13:30:34",
+        'status': '0'}]
+        '''
+    elif type == "1":
+        departure_city = request.args.get('departure')
+        arrival_city = request.args.get('arrival')
+        results = customerService.search_by_city(departure_city,arrival_city,date)
+        return jsonify(results)
+
 
 #记录页入口
 #type 暂时供给customer / agent
