@@ -61,3 +61,19 @@ def viewFlight():
 @app.route('/eFlight/confirmOrder')
 def confirmOrder():
     return render_template('confirmOrder.html')
+
+
+# home 页 search入口
+@app.route('/eFlight/purchaseSearch')
+def purchaseSearch():
+    pass
+
+
+#公共搜索页入口
+#参数：type 0:按照flightNum搜索 // 1:按照起飞降落地点搜索
+# type为0时 会有flightNum参数 指航班号
+#type 为1时 会有departure arrival 指出发目的地
+#同时两者都有deoartureDate这一参数 出发日期
+@app.route('/eFlight/search')
+def publicSearch():
+    pass
