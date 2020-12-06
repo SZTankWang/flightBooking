@@ -81,8 +81,11 @@ def confirmOrder():
 @app.route('/eFlight/purchaseSearch')
 def purchaseSearch():
     type = request.args.get('type')
-    departure_date = request.args.get('departureDate')
-    date = datetime.datetime.strptime(departure_date,'%Y-%m-%d')
+    departure_date = request.args.get('departDate')
+    date = datetime.datetime.strptime(departure_date,'%m/%d/%Y')
+    '''
+    最好能统一成'%Y-%m-%d'，这里date格式和下面不一样
+    '''
     departure_city = request.args.get('departure')
     arrival_city = request.args.get('arrival')
     results = customerService.search_by_city(departure_city,arrival_city,date)
