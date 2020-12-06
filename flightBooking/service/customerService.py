@@ -8,3 +8,7 @@ def checkLogin(type,userName,password):
     db.session.execute(text("CALL eflight.login_check(:p1,:p2,:p3,@msg,@code)"),{"p1":type,"p2":userName,"p3":password})
     result = db.session.execute(text("select @msg,@code")).fetchone()
     return result
+
+def getairlines():
+    results = db.session.execute(text("SELECT * FROM eflight.airline")).fetchall()
+    return [result[0] for result in results]
