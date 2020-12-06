@@ -51,12 +51,12 @@ def dologin():
 
 @app.route('/eFlight/register/<type>')
 def goregister(type):
-    airline_list = None
-    if type == 'staff':
-        airline_list = customerService.getairlines()
-        #airline_list = jsonify(airline_name = customerService.getairlines())
-    return render_template('register.html',type=type, airline_name=airline_list)
+    return render_template('register.html',type=type)
 
+@app.route("/eFlight/loadAirlineData")
+def loadAirlineData():
+    return jsonify(customerService.getairlines())
+    
 @app.route('/eFlight/viewFlight')
 def viewFlight():
     departure = request.args.get('departure')
