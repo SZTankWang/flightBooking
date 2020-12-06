@@ -33,7 +33,7 @@ function doLogin(){
 	data['type'] = type;
 	if(infoChecker(data)==0){
 		$.ajax({
-			url:'http://localhost:5000/eFlight/doLogin',
+			url:'http://127.0.0.1:5000/eFlight/doLogin',
 			type:'POST',
 			data:data,
 			success:function(data){

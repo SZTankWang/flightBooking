@@ -21,6 +21,10 @@ def renderHome(type):
     if type == 'customer':
         return render_template('customerHome.html')
 
+@app.route('/eFlight/publicInfo')
+def publicInfo():
+    return render_template('publicInfo.html')
+
 
 @app.route('/eFlight/login/<type>')
 def gologin(type):

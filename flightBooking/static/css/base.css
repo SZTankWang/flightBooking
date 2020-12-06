@@ -9,6 +9,16 @@ body{
 	height:100vh;
 }
 
+a{
+	text-decoration: none;
+
+}
+
+p,h1,h2,h3,h4,h5{
+	padding:0;
+	margin:0;
+}
+
 .nav{
 	width:100%;
 }
@@ -16,4 +26,9 @@ body{
 .my-container{
 	display: flex;
 	align-items: center;
+	width:100%;
+}
+
+input{
+	border:1px solid #f1f1f1;
 }

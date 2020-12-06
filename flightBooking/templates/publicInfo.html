@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+{% block title %}public Info {% endblock %}
+{% block head %}
+{{super()}}
+<link rel="stylesheet" href="/static/css/publicInfo.css">
+{% endblock %}
+
+	
+	{% block header %}
+	<form id="public-info-search-form" style="display: none">
+		<input type="text" name="search-type" id= "search-type">
+	</form>
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+	    <span class="navbar-toggler-icon"></span>
+	  </button>
+
+	  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+	    <ul class="navbar-nav ml-auto">
+	      <li class="nav-item active">
+	      	{%if userName%}
+	        <a class="nav-link" href="#">{{userName}} </span></a>
+	        {%else%}
+	        <a class="nav-link" href="#">您好请登录 </a>
+			{%endif%}
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="#">注册</a>
+	      </li>
+
+
+	    </ul>
+
+	  </div>
+	</nav>
+	{{super()}}
+	{% endblock %}
+
+	{% block content %}
+	<div class="my-container outer-wrapper">
+		<div class="my-container public-search-panel">
+			<div class="my-container">
+				<h3>
+					Flight Info
+				</h3>
+			</div>
+			<div class="my-container search-area-holder">
+				<div class="my-container radio-holder">
+						<input type="radio" class="radio" name="radio" id="flight-num-radio" value=0 checked="checked">
+
+						<label for="flight-num-radio">search flight number</label>
+						<input type="radio" class="radio" name="radio"
+						id="place-search-radio" value=1>
+						<label for="place-search-radio">search by departure/arrival</label>
+
+
+				</div>
+				<div class="my-container input-area">
+					<div class="my-container input-container flight-input-container">
+
+						<input type="text" name="flight-num" id='flight-num' placeholder="enter flight num" >
+						
+						<div class="my-container input-container" id="search-by-place-holder" style="display: none">
+							<input type="text" class="city-input" name="departure" id="departure" placeholder="departure city">
+							<input type="text" class="city-input" name="arrival" id="arrival" placeholder="arrival city">
+
+						</div>
+
+					</div>
+
+					<div class="my-container input-container date-input-container">
+						<input type="text" name="date" id="departure-time" placeholder="departure date">
+					</div>
+
+
+				</div>
+
+				<div class="my-container input-container button-container">
+						<button id="search-btn">search</button>
+					</div>
+
+			</div>
+		</div>		
+
+
+		<!-- 列表部分 -->
+		<div class="my-container result-view-holder">
+			<div class="my-container  search-result-view">
+				<div class="my-container search-info-row search-info-title">
+					<div class="my-container text-container">
+						<h4 id="departure-info">departure</h4>
+						<div class="my-container icon-container rightarrow"></div>
+						<h4 id="arrival-info">arrival</h4>
+
+						<p id="departure-date-info" class="info">YYYY-MM-DD</p>
+						<p id="search-result-count" class="info">result count</p>
+					</div>
+
+
+				</div>
+
+				<!-- 题头 -->
+				<div class="my-container search-info-row search-info-header">
+					<div class="my-container text-container"><p>flight number</p></div>
+					<div class="my-container text-container">
+						<p>planned departure</p>
+					</div>
+
+					<div class="my-container text-container">
+						<p>planned arrival</p>
+					</div>
+					<div class="my-container text-container">
+						<p>flight status</p>
+					</div>
+
+				</div>
+
+				<!--  -->
+
+				<!-- 查询结果部分 -->
+				<div class="my-container search-result-list search-info-row">
+					<div class="my-container serach-info-row list-item">
+						<div class="my-container list-item-sub-container">
+							<div class="my-container text-container"><p>flight num</p></div>
+						</div>
+						<div class="my-container list-item-sub-container">
+							<div class="my-container text-container"><p>departure time</p></div>
+							<div class="my-container text-container"><p>departure airport</p></div>
+
+						</div>
+
+						<div class="my-container list-item-sub-container">
+							<div class="my-container text-container"><p>arrival time</p></div>
+							<div class="my-container text-container"><p>arrival airport</p></div>
+
+						</div>
+						<div class="my-container list-item-sub-container">		<div class="my-container text-container">
+								<p>status</p>
+							</div>
+						</div>
+
+	
+
+					</div>
+
+				</div>
+				<!--  -->
+			</div>
+		</div>
+
+
+	</div>
+
+	<script type="text/javascript" src="/static/js/viewFlight.js"></script>
+
+	{% endblock %}
