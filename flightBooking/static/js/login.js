@@ -15,7 +15,8 @@ $(document).ready(function(){
 function getLoginData(th){
 	var username = $('#userName').val();
 	var password = $('#password').val();
-	data = {'userName':username,'password':password};
+	var next = $('#next').val();
+	data = {'userName':username,'password':password,'next':next};
 	return data;
 }
 
@@ -30,6 +31,7 @@ function doLogin(){
 	$('body').LoadingOverlay("show");
 	var data = getLoginData();
 	var type = $('#login-type').val();
+	var next = $('#next').val();
 	data['type'] = type;
 	if(infoChecker(data)==0){
 		$.ajax({
@@ -40,7 +42,7 @@ function doLogin(){
 				if(data['code']==0){
 					console.log('验证成功');
 					$('body').LoadingOverlay("hide");
-					window.location.replace('http://127.0.0.1:5000/eFlight/home/'+type);
+					window.location.replace('http://127.0.0.1:5000/eFlight/'+next);
 				}else{
 					console.log('密码错误');
 					$('body').LoadingOverlay("hide");

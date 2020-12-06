@@ -28,9 +28,38 @@ $(document).ready(function(){
 		searchFlight();
 	})
 
+	if($('#pageType').val() == 'purchaseFlightView'){
+		console.log('搜索');
+	}
+
 })
 
+//购票入口搜索机票
+function loadData(){
+	var data = getData();
 
+	$.ajax({
+		url:'http://127.0.0.1:5000/eFlight/purchaseSearch',
+		data:data,
+		type:'GET',
+		success:function(data){
+			console.log(data);
+		}
+	})
+}
+
+
+//购票搜索页获取搜索参数
+function getData(){
+	var departure = $('#departure_arg').val();
+	var arrival = $('#arrival_arg').val();
+	var departDate = $('#departDate_arg').val();
+	return {'departure':departure,'arrival':arrival,'departDate':departDate};
+}
+
+
+
+// 公共搜索入口
 //搜索先决条件：按照什么搜索
 
 function searchFlight(){

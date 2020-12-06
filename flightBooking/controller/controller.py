@@ -26,15 +26,21 @@ def renderHome(type):
 
 @app.route('/eFlight/publicInfo')
 def publicInfo():
-    return render_template('publicInfo.html')
+    a = session.get('username')
+    try:
+        userName = session.get('username')
+        return render_template('publicInfo.html',username=userName,pageType="publicView")
+    except:
+        return render_template('publicInfo.html',pageType="publicView")
 
 
-@app.route('/eFlight/login/<type>')
-def gologin(type):
-    return render_template('login.html',type=type)
+@app.route('/eFlight/login/<type>/<next>')
+def gologin(type,next):
+    return render_template('login.html',type=type,next=next)
 
 @app.route('/eFlight/doLogin',methods=['POST'])
 def dologin():
+    next = request.form['next']
     userName = request.form['userName']
     type = request.form['type']
     password = request.form['password']
@@ -43,7 +49,7 @@ def dologin():
         session['username'] = userName
         token = session.get('username')
         session.permanent = True
-    return jsonify(response=result,code=code)
+    return jsonify(response=result,code=code,next = next)
 
 @app.route('/eFlight/register/<type>')
 def register(type):
@@ -54,9 +60,16 @@ def register(type):
 
 @app.route('/eFlight/viewFlight')
 def viewFlight():
-    username = session['username']
-    return render_template('viewFlight.html',username=username)
-
+    departure = request.args.get('departure')
+    arrival = request.args.get('arrival')
+    departDate = request.args.get('departDate')
+    try:
+        username = session['username']
+        return render_template('viewFlight.html',username=username,pageType="purchaseFlightView",departure=departure,
+                               arrival=arrival,departDate=departDate)
+    except:
+        return render_template('viewFlight.html',pageType="purchaseFlightView",departure=departure,
+                               arrival=arrival,departDate=departDate)
 
 @app.route('/eFlight/confirmOrder')
 def confirmOrder():

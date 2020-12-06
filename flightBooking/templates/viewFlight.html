@@ -13,16 +13,24 @@
 
 	  <div class="collapse navbar-collapse" id="navbarSupportedContent">
 	    <ul class="navbar-nav ml-auto">
-	      <li class="nav-item active">
-	      	{%if user%}
-	        <a class="nav-link" href="#">{{user}} </span></a>
-	        {%else%}
-	        <a class="nav-link" href="#">您好请登录 </a>
-			{%endif%}
-	      </li>
+	    	{%if username%}
 	      <li class="nav-item">
-	        <a class="nav-link" href="#">注册</a>
-	      </li>
+	      	
+	        <a class="nav-link" href="#">{{username}} </span></a>
+		    </li>
+	        {%else%}
+	        <li class="nav-item">
+		        <a class="nav-link" href="http://127.0.0.1:5000/eFlight/login/customer/viewFlight">您好请登录 </a>
+	        	
+	        </li>
+
+	        <li class="nav-item">
+		        <a class="nav-link" href="http://127.0.0.1:5000/eFlight/register/customer">注册</a>
+        	
+	        </li>
+
+			{%endif%}
+	      
 
 
 	    </ul>
@@ -33,6 +41,14 @@
 {% endblock %}
 
 {% block content %}
+<form style="display: none;">
+	<input type="text" id="pageType" value= {{ pageType }}>
+	<input type="text" id="departure_arg" value={{departure}}>
+	<input type="text" id="arrival_arg" value={{arrival}}>
+	<input type="text" id="departDate_arg" value={{departDate}}>
+
+</form>
+
 <div class="content-wrapper" id="search-condition-outer-wrapper">
 	<div class="content-wrapper input-outer-wrapper" id="">
 		<div class="content-wrapper input-inner-wrapper">
