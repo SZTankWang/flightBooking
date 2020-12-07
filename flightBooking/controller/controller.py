@@ -55,7 +55,7 @@ def dologin():
     if code == 0:
         user = User.query.get(userName)
         login_user(user)
-    return jsonify(response=current_user.get_id(),code=code)
+    return jsonify(response=result,code=code)
 
 
 @app.route('/eFlight/register/<type>')
