@@ -104,3 +104,14 @@ input{
 .list-item-title{
 	background: #f6f6f6;
 }
+
+.pagination-wrapper{
+	position:absolute;
+	right:0;
+	width: fit-content;
+}
+
+.footer{
+	margin-top:2rem;
+	position: relative;
+}
