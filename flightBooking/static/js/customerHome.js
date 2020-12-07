@@ -35,8 +35,9 @@ function doSearch(){
 		})
 	}
 	else{
-		window.loaction.replace('http://127.0.0.1:5000/eFlight/login/customer')
-
+		
+		window.location.replace('http://localhost:5000/eFlight/viewFlight?departure='+data['departure']+'&arrival='+data['arrival']+'&departDate='+data['departDate']);	
+		
 
 	}
 

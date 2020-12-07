@@ -76,11 +76,13 @@ def viewFlight():
     departDate = request.args.get('departDate')
     try:
         userName = current_user.get_id()
-        return render_template('viewFlight.html',username=username,pageType="purchaseFlightView",departure=departure,
+        return render_template('viewFlight.html',username=userName,pageType="purchaseFlightView",departure=departure,
                                arrival=arrival,departDate=departDate)
     except:
         return render_template('viewFlight.html',pageType="purchaseFlightView",departure=departure,
                                arrival=arrival,departDate=departDate)
+
+
 
 @app.route('/eFlight/confirmOrder')
 @login_required
@@ -140,4 +142,4 @@ def record():
     if current_user.type == "customer" or current_user.type == "agent":
         return render_template('record.html',type=current_user.type)
 
-@app.route
+# @app.route
