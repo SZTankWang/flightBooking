@@ -42,6 +42,7 @@
 	width:100%;
 	padding-left: 1.2rem;
 	padding-right: 1.2rem;
+	padding-bottom:0.6rem;
 	justify-content: space-between;
 }
 
@@ -99,7 +100,7 @@ input{
 
 .register-link-wrapper{
 	margin-top: 1.6rem;
-    margin-left: 15rem;
+    margin-left: 33.9rem;
 }
 
 .foot-container{

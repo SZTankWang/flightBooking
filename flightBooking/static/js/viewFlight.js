@@ -35,12 +35,15 @@ $(document).ready(function(){
 		})
 	}
 
+	if($('#pageType').val()=="publicView"){
+	}
+
 })
 
 //购票入口搜索机票
 function loadData(){
 	var data = getData();
-
+	console.log(data);
 	$.ajax({
 		url:'http://127.0.0.1:5000/eFlight/purchaseSearch',
 		data:data,
@@ -57,6 +60,7 @@ function getData(){
 	var departure = $('#departure_arg').val();
 	var arrival = $('#arrival_arg').val();
 	var departDate = $('#departDate_arg').val();
+
 	return {'departure':departure,'arrival':arrival,'departDate':departDate};
 }
 
@@ -64,7 +68,7 @@ function getData(){
 //购票搜索页模板
 function purchaseListTemplate(data){
 	var html = "";
-	
+
 }
 
 // 公共搜索入口
@@ -81,15 +85,28 @@ function searchType(){
 }
 
 function doSearch(){
+	$('.outer-wrapper').LoadingOverlay("show");
 	type = searchType();
 	if(type == 0){
 		var data = flightNumSearch();
 		data['type'] = 0;
+
+		var date = moment(data['departureDate']).format("MMMM DD dddd");
+		$('#departure-date-info').html(date);
+
 		$.ajax({
 			url:'http://127.0.0.1:5000/eFlight/search',
 			data:data,
 			success:function(data){
 				console.log(data);
+				$('.search-result-list').empty();
+				$('#search-result-count').html('result count '+data.length);
+				for(var i=0;i<data.length;i++){
+					var html = listItemTemplate(data[i]);
+					$('.search-result-list').append(html);
+				}
+				$('.outer-wrapper').LoadingOverlay("hide");
+	
 			}
 		})
 	}else if(type == 1){
@@ -100,6 +117,8 @@ function doSearch(){
 			data:data,
 			success:function(data){
 				console.log(data);
+				$('.list-item').empty();
+
 			}
 		})
 
@@ -129,22 +148,41 @@ function listItemTemplate(data){
 	html += '<div class="my-container serach-info-row list-item">';
 	html += '<div class="my-container list-item-sub-container">';
 	html += '<div class="my-container text-container"><p>';
-	html += data['flightNum'];
+	html += data['flight_num'];
 	html += '</p></div></div><div class="my-container list-item-sub-container">';
+	html += '<div class="my-container text-container"><h4>';
+	html += moment(data['departure_time']).format('h:mm');
+	html += '</h4></div>';
 	html += '<div class="my-container text-container"><p>';
-	html += data['departureTime'];
-	html += '</p></div>';
-	html += '<div class="my-container text-container"><p>';
-	html += data['departure'];
+	html += data['departure_airport'];
 	html += '</p></div></div><div class="my-container list-item-sub-container">';
-	html += '<div class="my-container text-container"><p>';
-	html +=  data['arrivalTime'];
-	html += '</p></div><div class="my-container text-container"><p>';
-	html += data['arrival'];
+	html += '<div class="my-container text-container"><h4>';
+	html +=  moment(data['arrival_time']).format('h:mm');;
+	html += '</h4></div><div class="my-container text-container"><p>';
+	html += data['arrival_airport']
 	html += '</p></div></div><div class="my-container list-item-sub-container"><div class="my-container text-container"><p>';
-	html += data['status'];
+	html += flightStatusParser(data['status']);
 	html += '</p></div></div></div>';
 	return html;
 
 
+}
+
+function flightStatusParser(status){
+	if(status == '0'){
+		return "未出发";
+	}
+	if(status == '1'){
+		return "已出发";
+	}
+	if(status == '2'){
+		return "已到达";
+
+	}
+	if(status = "3"){
+		return "延误";
+	}
+	if(status == "4"){
+		return "已取消";
+	}
 }
