@@ -49,7 +49,9 @@
 
 	{% if username %}
 	<div class="my-container href-container">
-		<a href="http://127.0.0.1:5000/eFlight/customerRecord">My Record</a>
+		{% if type == "customer" %}
+		<a href="http://127.0.0.1:5000/eFlight/record/customer">My Record</a>
+		{% endif %}
 	</div>
 	{% endif %}
 

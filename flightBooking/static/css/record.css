@@ -1,0 +1,117 @@
+.outer-wrapper{
+	flex-direction: column;
+	width:100%;
+	height: 100%;
+	justify-content: center;
+	background-color:white;
+}
+
+.view-wrapper{
+	width:45rem;
+	height:100%;
+	flex-direction: column;
+}
+
+.record-content{
+	width:100%;
+}
+
+.record-filter-header{
+    height: 5.1rem;
+    margin-bottom: 1rem;
+    width: fit-content;
+    padding-right: 4rem;
+    padding-left: 1rem;
+    padding-top: 0.8rem;
+    padding-bottom: 0.5rem;
+    background:#f1f1f1 ;
+}
+
+
+
+.page-title{
+	height:3rem;
+    padding-left: 2.4rem;
+    font-size: 1.4rem;
+}
+
+.record-filter-container{
+	flex-direction: row;
+	margin-left:1rem;
+	width:12rem;
+}
+
+.filter-text-wrapper{
+	font-size:0.6rem;
+	width:fit-content;
+
+}
+
+input{
+	width:7rem;
+}
+
+#search-btn{
+	width: 3.5rem;
+    height: 1.6rem;
+    font-size: 0.6rem;
+}
+
+.record-list-container{
+	min-height:20rem;
+	min-width:60rem;
+	padding:1rem;
+	flex-direction: column;
+	border:1px solid #999;
+	background: #f1f1f1;
+}
+
+.list-item{
+	height:6.7rem;
+	width:100%;
+/*	background:wheat;
+*/	flex-direction: column;
+	background: white;
+	border:1px solid #d9d9d9;
+
+/*	border:1px solid blue;
+*/}
+
+.list-row{
+	flex-direction: row;
+	background: unset;
+	height:3rem;
+/*	padding-left:1rem;
+*/
+/*	border:1px solid blue;
+*/}
+
+.list-text-wrapper{
+	width:fit-content;
+	margin-left:2rem;
+	font-size:0.8rem;
+}
+
+.right-arrow{
+	height:1rem;
+	width: 1rem;
+	background-image: url(/static/svg/arrow.svg);
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	margin-left:2rem;
+}
+
+.list-item-title{
+	background: #f6f6f6;
+}
+
+.pagination-wrapper{
+	position:absolute;
+	right:0;
+	width: fit-content;
+}
+
+.footer{
+	margin-top:2rem;
+	position: relative;
+}
