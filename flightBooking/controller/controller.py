@@ -32,9 +32,8 @@ def renderHome():
 
 @app.route('/eFlight/publicInfo')
 def publicInfo():
-    a = session.get('username')
     try:
-        userName = session.get('username')
+        userName = current_user.get_id()
         return render_template('publicInfo.html',username=userName,pageType="publicView")
     except:
         return render_template('publicInfo.html',pageType="publicView")
@@ -57,6 +56,10 @@ def dologin():
         login_user(user)
     return jsonify(response=result,code=code)
 
+@app.route('/eFlight/logout', methods=['GET'])
+def logout():
+	logout_user()
+	return redirect(url_for('home'))
 
 @app.route('/eFlight/register/<type>')
 def goregister(type):
@@ -72,7 +75,7 @@ def viewFlight():
     arrival = request.args.get('arrival')
     departDate = request.args.get('departDate')
     try:
-        username = session['username']
+        userName = current_user.get_id()
         return render_template('viewFlight.html',username=username,pageType="purchaseFlightView",departure=departure,
                                arrival=arrival,departDate=departDate)
     except:
@@ -80,6 +83,7 @@ def viewFlight():
                                arrival=arrival,departDate=departDate)
 
 @app.route('/eFlight/confirmOrder')
+@login_required
 def confirmOrder():
     return render_template('confirmOrder.html')
 
@@ -130,7 +134,8 @@ def publicSearch():
 
 #记录页入口
 #type 暂时供给customer / agent
-@app.route('/eFlight/record/<type>')
-def record(type):
-    if type == "customer":
-        return render_template('record.html',type=type)
+@app.route('/eFlight/record')
+@login_required
+def record():
+    if current_user.type == "customer" or current_user.type == "agent":
+        return render_template('record.html',type=current_user.type)
