@@ -59,7 +59,7 @@ def dologin():
 @app.route('/eFlight/logout', methods=['GET'])
 def logout():
 	logout_user()
-	return redirect(url_for('home'))
+	return redirect(url_for('renderHome'))
 
 @app.route('/eFlight/register/<type>')
 def goregister(type):
