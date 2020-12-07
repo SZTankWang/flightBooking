@@ -21,9 +21,12 @@ from flightBooking.models.model import *
 def renderHome():
     try:
         userName = current_user.get_id()
-        type = current_user.type
-        if type == 'customer':
-            return render_template('customerHome.html',username=userName,type="customer")
+        if current_user.type == 'customer':
+            return render_template('customerHome.html',username=userName)
+        elif current_user.type == 'staff':
+            return staffHome
+        elif current_user.type == 'agent':
+            return agentHome
     except:
         return render_template('customerHome.html')
 
@@ -52,7 +55,7 @@ def dologin():
     if code == 0:
         user = User.query.get(userName)
         login_user(user)
-    return jsonify(response=current_user.get_id(),code=code)
+    return jsonify(response=result,code=code)
 
 
 @app.route('/eFlight/register/<type>')
