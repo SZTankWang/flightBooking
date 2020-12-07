@@ -12,7 +12,9 @@ $(document).ready(function(){
 		dataSource:'http://localhost:5000/eFlight/record'+type,
 		ajax:{data:{userName: userName}},
 		pageSize:5,
-		totalNumberLocator:'total'
+		totalNumberLocator:function(response){
+			return response['total'];
+		}
 })
 
 })

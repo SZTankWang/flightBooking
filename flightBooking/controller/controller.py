@@ -17,10 +17,11 @@ import datetime
 from flightBooking.models.model import *
 
 
-@app.route('/eFlight/home/<type>')
-def renderHome(type):
+@app.route('/eFlight/home')
+def renderHome():
     try:
         userName = current_user.get_id()
+        type = current_user.type
         if type == 'customer':
             return render_template('customerHome.html',username=userName,type="customer")
     except:
