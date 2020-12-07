@@ -36,7 +36,7 @@ function doSearch(){
 	}
 	else{
 		
-		window.location.replace('http://localhost:5000/eFlight/viewFlight?departure='+data['departure']+'&arrival='+data['arrival']+'&departDate='+data['departDate']);	
+		window.location.href='http://localhost:5000/eFlight/viewFlight?departure='+data['departure']+'&arrival='+data['arrival']+'&departDate='+data['departDate'];	
 		
 
 	}

@@ -8,9 +8,14 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 @login.user_loader
 def load_user(id):
-    return User.query.get(id)
+    show_id = id
+    return User.query.get(show_id)
 
 class User(UserMixin,db.Model):
-    id = db.Column(db.String(50), primary_key=True, nullable=False)
-    password = db.Column(db.String(50), nullable=False)
-    type = db.Column(db.String(50), nullable=False)
+    def __init__(self,id,password,type):
+        self.id = db.Column(db.String(50), primary_key=True, nullable=False)
+        self.password = db.Column(db.String(50), nullable=False)
+        self.type = db.Column(db.String(50), nullable=False)
+
+    def get_id(self):
+        return self.id

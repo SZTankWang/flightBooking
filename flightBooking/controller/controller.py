@@ -44,6 +44,10 @@ def gologin(type):
     # next = request.args.get('next')
     return render_template('login.html',type=type)
 
+@app.route('/')
+def bringToLogin():
+    return render_template('login.html',type="customer")
+
 @app.route('/eFlight/doLogin',methods=['POST'])
 def dologin():
     # next = request.form['next']
@@ -53,7 +57,7 @@ def dologin():
     result,code = customerService.checkLogin(type,userName,password)
     if code == 0:
         user = User.query.get(userName)
-        login_user(user)
+        login_user(user,remember=True,force=True)
     return jsonify(response=result,code=code)
 
 @app.route('/eFlight/logout', methods=['GET'])
@@ -75,7 +79,7 @@ def viewFlight():
     arrival = request.args.get('arrival')
     departDate = request.args.get('departDate')
     try:
-        userName = current_user.get_id()
+        userName = current_user.get_id();
         return render_template('viewFlight.html',username=userName,pageType="purchaseFlightView",departure=departure,
                                arrival=arrival,departDate=departDate)
     except:
