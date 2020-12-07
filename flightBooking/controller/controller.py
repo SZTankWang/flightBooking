@@ -20,7 +20,7 @@ def renderHome(type):
     try:
         userName = session.get('username')
         if type == 'customer':
-            return render_template('customerHome.html',username=userName)
+            return render_template('customerHome.html',username=userName,type="customer")
     except:
         return render_template('customerHome.html')
 

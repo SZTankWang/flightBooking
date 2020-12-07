@@ -4,3 +4,117 @@
 {{super()}}
 <link rel="stylesheet" href="/static/css/record.css">
 {% endblock %}
+{% block content %}
+<form style="display: none;">
+	<input type="text" id="pageType">
+	<input type="text" id="userName" value = {{ userName }}>
+</form>
+
+<div class="my-container outer-wrapper">
+	<div class="my-container page-title">
+		<div class="my-container text-wrapper"><p>Record</p></div>
+	</div>
+	<div class="my-container view-wrapper">
+		<div class="my-container record-content  record-filter-header">
+			<div class="my-container record-filter-container">
+				<div class="my-container filter-text-wrapper">
+					<p>purchase ID</p>
+				</div>
+				<input type="text" name="purchaseID" id="purchaseID">
+			</div>
+
+			<div class="my-container record-filter-container">
+				<div class="my-container filter-text-wrapper">
+					<p>departure time</p>				
+				</div>
+				<input type="text" name="departureTime" id="departureTime">
+			</div>
+
+
+			<div class="my-container record-filter-container">
+				<div class="my-container filter-text-wrapper">
+					<p>arrival Time</p>		
+				</div>
+				<input type="text" name="arrivalTime" id="arrivalTime">
+			</div>
+
+
+			<div class="my-container record-filter-container">
+				<div class="my-container filter-text-wrapper">
+					<p>status</p>
+				</div>
+				<input type="text" name="status" id="status">
+			</div>
+
+			<div class="my-container record-filter-container">
+				<button id="search-btn">search</button>
+			</div>
+		</div>
+		<div class="my-container record-content record-list-container">
+			<div class="my-container record-content list-item">
+				<div class="my-container record-content list-row list-item-title">
+					<div class="my-container text-wrapper list-text-wrapper">
+						<p>purchase ID</p>
+					</div>
+
+					<div class="my-container list-text-wrapper">
+						<p>purchase date</p>
+					</div>
+
+				</div>
+
+				<div class="my-container record-content list-row">
+					<div class="my-container text-wrapper list-text-wrapper">
+						<h4>departure</h4>
+					</div>
+					<div class="my-container icon-wrapper right-arrow">
+					</div>
+
+
+					<div class="my-container text-wrapper list-text-wrapper">
+						<h4>arrival</h4>
+					</div>					
+				</div>
+
+
+				<div class="my-container record-content list-row">
+					<div class="my-container text-wrapper list-text-wrapper">
+						<p>departure time</p>
+					</div>
+					<div class="my-container text-wrapper list-text-wrapper">
+						<p>time</p>
+					</div>		
+
+					<div class="my-container text-wrapper list-text-wrapper">
+						<p>airline</p>
+					</div>
+
+					<div class="my-container text-wrapper list-text-wrapper">
+						<p>flight num</p>
+					</div>															
+				</div>
+
+
+				<div class="my-container record-content list-row">
+					<div class="my-container text-wrapper list-text-wrapper">
+						<p>passenger</p>
+					</div>
+					<div class="my-container text-wrapper list-text-wrapper">
+						<p>passenger names</p>
+					</div>															
+				</div>									
+			</div>
+
+		</div>
+
+		<!-- footer -->
+		<div class="my-container record-content footer">
+			<div class="my-container pagination-wrapper"></div>
+		</div>
+		<!--  -->
+	</div>
+
+</div>
+
+<script type="text/javascript" src="/static/js/record.js"></script>
+{% endblock %}
