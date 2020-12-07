@@ -14,7 +14,7 @@ def get_airlines():
     return [result[0] for result in results]
 
 def search_by_num(flight_num,date):
-    resultproxy = db.session.execute(text("CALL eflight.searchby_num(:p1,:p2)"),{"p1":flight_num,"p2":date})
+    resultproxy = db.session.execute(text("CALL eflight.search_by_num(:p1,:p2)"),{"p1":flight_num,"p2":date})
     return [{column: value for column, value in rowproxy.items()} for rowproxy in resultproxy]
 
 def search_by_city(depart,arrival,date):

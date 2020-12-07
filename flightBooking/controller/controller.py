@@ -78,6 +78,7 @@ def viewFlight():
     departure = request.args.get('departure')
     arrival = request.args.get('arrival')
     departDate = request.args.get('departDate')
+    userName = current_user.get_id()
     try:
         userName = current_user.get_id();
         return render_template('viewFlight.html',username=userName,pageType="purchaseFlightView",departure=departure,

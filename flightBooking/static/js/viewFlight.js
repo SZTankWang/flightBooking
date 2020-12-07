@@ -28,8 +28,19 @@ $(document).ready(function(){
 		searchFlight();
 	})
 
+
+	//购票搜索页 初始先请求
 	if($('#pageType').val() == 'purchaseFlightView'){
 		console.log('搜索');
+		var departure = $('#departure_arg').val();
+		var arrival = $('#arrival_arg').val();
+		var departDate = $('#departDate_arg').val();
+
+		//填写搜索框
+		$('#departure').val(departure);
+		$('#arrival').val(arrival);
+		$("#departure-time").datepicker("setDate",departDate);
+		loadData();
 		$('#search-btn').click(function(){
 			loadData();
 		})
@@ -42,6 +53,8 @@ $(document).ready(function(){
 
 //购票入口搜索机票
 function loadData(){
+	$(".main-info-wrapper").LoadingOverlay("show");
+	// $('.flight-card-container').empty();
 	var data = getData();
 	console.log(data);
 	$.ajax({
@@ -50,6 +63,11 @@ function loadData(){
 		type:'GET',
 		success:function(data){
 			console.log(data);
+			for(var i=0;i<data.length;i++){
+				var html = purchaseListTemplate(data[i])
+				$('.flight-card-container').append(html);
+			}
+			$(".main-info-wrapper").LoadingOverlay("hide");
 		}
 	})
 }
@@ -57,9 +75,9 @@ function loadData(){
 
 //购票搜索页获取搜索参数
 function getData(){
-	var departure = $('#departure_arg').val();
-	var arrival = $('#arrival_arg').val();
-	var departDate = $('#departDate_arg').val();
+	var departure = $('#departure').val();
+	var arrival = $('#arrival').val();
+	var departDate = $('#departure-time').val();
 
 	return {'departure':departure,'arrival':arrival,'departDate':departDate};
 }
@@ -68,6 +86,29 @@ function getData(){
 //购票搜索页模板
 function purchaseListTemplate(data){
 	var html = "";
+	html += '<div class="flight-card-wrapper"><div class="flight-card">';
+	html += '<div class="card-flight-info">';
+	html += data['airline'];
+	html+= data['flight_num'];
+	html += "</div>";
+	html += '<div class="card-flight-info card-flight-depart-info">';
+	html += '<div class=" flight-depart-time"><strong>';
+	html += moment(data['departure_time']).format("HH:MM");
+	html += '</strong></div>';
+	html += '<div class=" flight-depart-airport airport">';
+	html += data['departure_airport'];
+	html += '</div></div><div class="card-flight-info card-flight-arrival-info">';
+	html += '<div class="card-flight-arrive-time"><strong>';
+	html += moment(data['arrival_time']).format("HH:MM");
+	html += '</strong></div><div class="card-flight-arrive-airport airport">';
+	html += data['arrival_airport'];
+	html += '</div></div><div class=" card-flight-info card-flight-price-info">';
+	html += data['price'];
+	html += '</div><div class="card-flight-info card-flight-book"><button class="ui-button ui-widget ui-corner-all book-btn">';
+	html += 'Book</button></div></div></div>';
+	return html
+
+
 
 }
 
