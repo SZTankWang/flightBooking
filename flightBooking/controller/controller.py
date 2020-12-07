@@ -149,6 +149,7 @@ def record():
     else:
         return redirect(url_for('renderHome'))
 
+#暂时customer用
 @app.route('/eFlight/viewMyFlights')
 @login_required
 def viewMyFlights():

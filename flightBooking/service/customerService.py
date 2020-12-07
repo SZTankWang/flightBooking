@@ -18,8 +18,9 @@ def search_by_num(flight_num,date):
     return [{column: value for column, value in rowproxy.items()} for rowproxy in resultproxy]
 
 def search_by_city(depart,arrival,date):
-    resultproxy = db.session.execute(text("CALL eflight.searchby_city(:p1,:p2,:p3)"),{"p1":depart,"p2":arrival,"p3":date})
+    resultproxy = db.session.execute(text("CALL eflight.search_by_city(:p1,:p2,:p3)"),{"p1":depart,"p2":arrival,"p3":date})
     return [{column: value for column, value in rowproxy.items()} for rowproxy in resultproxy]
 
 def view_my_flights(id):
-    resultproxy = db.session.execute(text("CALL"))
+    resultproxy = db.session.execute(text("CALL eflight.customer_view_flights(:p1)"),{"p1":id})
+    return [{column: value for column, value in rowproxy.items()} for rowproxy in resultproxy]
