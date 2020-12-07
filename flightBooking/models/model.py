@@ -11,6 +11,6 @@ def load_user(id):
     return User.query.get(id)
 
 class User(UserMixin,db.Model):
-	id = db.Column(db.String(50), primary_key=True, nullable=False)
-	password = db.Column(db.String(50), nullable=False)
+    id = db.Column(db.String(50), primary_key=True, nullable=False)
+    password = db.Column(db.String(50), nullable=False)
     type = db.Column(db.String(50), nullable=False)
