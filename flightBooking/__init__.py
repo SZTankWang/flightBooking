@@ -15,6 +15,12 @@ app.secret_key = "secretkey"
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=5)
 CORS(app, supports_credentials=True)
 app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://SE:mysql@8.129.182.214:3306/eflight"
+
+
+login = LoginManager(app)
+login.login_view = 'login' # force user to login
+login.login_message = "Please login first"
+
 db = SQLAlchemy(app)
 from flightBooking.controller import controller
 from flightBooking.models import model
