@@ -141,5 +141,12 @@ def publicSearch():
 def record():
     if current_user.type == "customer" or current_user.type == "agent":
         return render_template('record.html',type=current_user.type)
+    else:
+        return redirect(url_for('renderHome'))
 
-# @app.route
+@app.route('/eFlight/viewMyFlights')
+@login_required
+def viewMyFlights():
+    id = current_user.get_id()
+    results = customerService.view_my_flights(id)
+    return jsonify(results)

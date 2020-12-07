@@ -15,23 +15,11 @@ def get_airlines():
 
 def search_by_num(flight_num,date):
     resultproxy = db.session.execute(text("CALL eflight.searchby_num(:p1,:p2)"),{"p1":flight_num,"p2":date})
-    # results = resultproxy.fetchall()
-    # return [{'flight_num': result[0],
-    #     'departure_airport': result[1],
-    #     'departure_time': result[2].strftime("%Y-%m-%d %H:%M:%S"),
-    #     'arrival_airport': result[3],
-    #     'arrival_time': result[4].strftime("%Y-%m-%d %H:%M:%S"),
-    #     'status': result[5]}
-    #     for result in results]
     return [{column: value for column, value in rowproxy.items()} for rowproxy in resultproxy]
 
 def search_by_city(depart,arrival,date):
     resultproxy = db.session.execute(text("CALL eflight.searchby_city(:p1,:p2,:p3)"),{"p1":depart,"p2":arrival,"p3":date})
-    results = resultproxy.fetchall()
-    return [{'flight_num': result[0],
-        'departure_airport': result[1],
-        'departure_time': result[2].strftime("%Y-%m-%d %H:%M:%S"),
-        'arrival_airport': result[3],
-        'arrival_time': result[4].strftime("%Y-%m-%d %H:%M:%S"),
-        'status': result[5]}
-        for result in results]
+    return [{column: value for column, value in rowproxy.items()} for rowproxy in resultproxy]
+
+def view_my_flights(id):
+    resultproxy = db.session.execute(text("CALL"))
