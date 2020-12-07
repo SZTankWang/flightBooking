@@ -139,3 +139,5 @@ def publicSearch():
 def record():
     if current_user.type == "customer" or current_user.type == "agent":
         return render_template('record.html',type=current_user.type)
+
+@app.route
