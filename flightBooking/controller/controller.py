@@ -12,7 +12,7 @@ from flask_login import login_user, logout_user, current_user, login_required
 from numpy.core.arrayprint import TimedeltaFormat
 from numpy.lib.function_base import select
 from sqlalchemy.util.langhelpers import methods_equivalent
-from flightBooking.service import customerService
+from flightBooking.service import customerService,agentService
 import datetime
 from flightBooking.models.model import *
 
@@ -55,10 +55,10 @@ def dologin():
     userName = request.form['userName']
     type = request.form['type']
     password = request.form['password']
-    result,code = customerService.checkLogin(type,userName,password)
+    result,code = customerService.check_login(type,userName,password)
     if code == 0:
         user = User.query.get(userName)
-        result = login_user(user,force=True,remember=True)
+        login_user(user)
     return jsonify(response=result,code=code)
 
 @app.route('/eFlight/logout', methods=['GET'])
@@ -94,7 +94,7 @@ def viewFlight():
 @login_required
 def confirmOrder():
     username = current_user.get_id()
-    return render_template('confirmOrder.html',username=username)
+    return render_template('confirmOrder.html',username=username,type = current_user.type)
 
 
 # home 页 search入口
@@ -143,9 +143,9 @@ def publicSearch():
 
 #记录页入口
 #type 暂时供给customer / agent
-@app.route('/eFlight/record/<type>')
+@app.route('/eFlight/record/<pageType>')
 @login_required
-def record(type):
+def record(pageType):
     if current_user.type == "customer" or current_user.type == "agent":
         userName = current_user.get_id()
         return render_template('record.html',type=current_user.type,pageType=type)
@@ -169,3 +169,38 @@ def viewMyFlights():
     id = current_user.get_id()
     results = customerService.view_my_flights(id)
     return jsonify(results)
+
+
+@app.route('/eFlight/purchaseTicket')
+@login_required
+def purchaseTicket():
+    passenger_name_list = request.args.get('passenger_name_list')
+    passenger_id_list = request.args.get('passenger_id_list')
+    passgener_phone_list = request.args.get('passenger_phone_list')
+    customer_email = request.args.get('customer_email')
+    airline_name = request.args.get('airline_name')
+    flight_number = request.args.get('flight_number')
+
+    if current_user.type == 'agent':
+        result,code = agentService.purchase_ticket(passenger_name_list,passenger_id_list,passenger_phone_list,customer_email,airline_name,flight_number,agentService.get_id_by_email(current_user.get_id()))
+        return jsonify(result = result, code = code)
+    elif current_user.type == 'customer':
+        result,code = agentService.purchase_ticket(passenger_name_list,passenger_id_list,passenger_phone_list,customer_email,airline_name,flight_number,0)
+        return jsonify(result = result, code = code)
+
+
+@app.route('/eFlight/viewRecord')
+@login_required
+def viewRecord():
+    purchase_id = request.args.get('purchase_id')
+    departDate = request.args.get('departDate')
+    arriveDate = request.args.get('arriveDate')
+    status = request.args.get('status')
+    current_id = current_user.get_id()
+    if current_user.type == 'customer':
+        results = customerService.view_record(current_id,purchase_id,departDate,arriveDate,status)
+        return jsonify(results)
+    elif current_user.type == 'agent':
+        customer_email = request.args.get('customer_email')
+        results = agentService.view_record(current_id,customer_email,purchase_id,departDate,arriveDate,status)
+        return jsonify(results)
