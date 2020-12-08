@@ -47,15 +47,15 @@
 {% block content %}
 <div class="my-container switch-panel">
 	<div class="my-container href-container"><a href="
-	http://127.0.0.1:5000/eFlight/home/customer">Home</a></div>
+	http://127.0.0.1:5000/eFlight/home">Home</a></div>
 	<div class="my-container href-container">
 		<a href="http://127.0.0.1:5000/eFlight/publicInfo">Flight Info</a>
 	</div>
 
 	{% if username %}
 	<div class="my-container href-container">
+		<a href="http://127.0.0.1:5000/eFlight/record/purchaseRecord">My Record</a>
 
-		<a href="http://127.0.0.1:5000/eFlight/record">My Record</a>
 	</div>
 	{% endif %}
 

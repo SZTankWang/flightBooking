@@ -21,12 +21,13 @@ from flightBooking.models.model import *
 def renderHome():
     try:
         userName = current_user.get_id()
+        userType = current_user.type
         if current_user.type == 'customer':
-            return render_template('customerHome.html',username=userName)
+            return render_template('customerHome.html',username=userName,userType = userType)
         elif current_user.type == 'staff':
-            return staffHome
+            return render_template('staffHome.html',username=userName)
         elif current_user.type == 'agent':
-            return agentHome
+            return render_template('customerHome.html',username=userName,userType = userType)
     except:
         return render_template('customerHome.html')
 
@@ -57,7 +58,7 @@ def dologin():
     result,code = customerService.checkLogin(type,userName,password)
     if code == 0:
         user = User.query.get(userName)
-        login_user(user,remember=True,force=True)
+        result = login_user(user,force=True,remember=True)
     return jsonify(response=result,code=code)
 
 @app.route('/eFlight/logout', methods=['GET'])
@@ -146,9 +147,20 @@ def publicSearch():
 @login_required
 def record(type):
     if current_user.type == "customer" or current_user.type == "agent":
-        return render_template('record.html',type=current_user.type,pageType="purchaseRecord")
+        userName = current_user.get_id()
+        return render_template('record.html',type=current_user.type,pageType=type)
     else:
         return redirect(url_for('renderHome'))
+
+##查询purchase记录接口 -- 乘客/agent
+##是否有需要区分角色？
+@app.route('/eFlight/queryPurchaseRecord')
+@login_required
+def queryPurchaseRecord():
+    userName = request.args.get('userName')
+
+
+
 
 #暂时customer用
 @app.route('/eFlight/viewMyFlights')

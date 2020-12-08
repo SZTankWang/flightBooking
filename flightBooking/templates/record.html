@@ -8,14 +8,17 @@
 <form style="display: none;">
 	<input type="text" id="pageType">
 	<input type="text" id="userType" value = {{ type }}>
+	<input type="text" id= "userName" value = {{ userName }}>
+	<input type="text" id="pageNumber" value=1>
+	<input type="text" id="pageSize" value=5>
 </form>
 
 <div class="my-container outer-wrapper">
 	<div class="my-container page-title">
 		<div class="my-container text-wrapper"><p>Record</p></div>
 		{% if type == 'customer' %}
-		<div class="my-container text-wrapper record-link-wrapper"><a href="" class="record-link"><p>my purchase record</p></a></div>
-		<div class="my-container text-wrapper record-link-wrapper"><a href="" class="record-link"><p>my spending</p></a></div>
+		<div class="my-container text-wrapper record-link-wrapper"><a href="http://127.0.0.1:5000/eFlight/record/purchaseRecord" class="record-link"><p>my purchase record</p></a></div>
+		<div class="my-container text-wrapper record-link-wrapper"><a href="http://127.0.0.1:5000/eFlight/record/customerSpending" class="record-link"><p>my spending</p></a></div>
 		{% endif %}
 
 
@@ -62,7 +65,7 @@
 			</div>
 
 			<div class="my-container record-filter-container">
-				<button id="search-btn">search</button>
+				<button id="search-btn" onclick="search()">search</button>
 			</div>
 
 			{% elif pageType == "customerSpending" %}
@@ -70,7 +73,7 @@
 
 			<div class="my-container record-filter-container">
 				<div class="my-container filter-text-wrapper">
-					<p>departure time</p>				
+					<p>start time</p>				
 				</div>
 				<input type="text" name="departureTime" id="departureTime">
 			</div>
@@ -78,7 +81,7 @@
 
 			<div class="my-container record-filter-container">
 				<div class="my-container filter-text-wrapper">
-					<p>arrival Time</p>		
+					<p>end time</p>		
 				</div>
 				<input type="text" name="arrivalTime" id="arrivalTime">
 			</div>
@@ -90,6 +93,8 @@
 
 		</div>
 		<div class="my-container record-content record-list-container">
+			<!-- 订单展示 -->
+			{% if pageType == "purchaseRecord" %}
 			<div class="my-container record-content list-item">
 				<div class="my-container record-content list-row list-item-title">
 					<div class="my-container text-wrapper list-text-wrapper">
@@ -143,13 +148,19 @@
 					</div>															
 				</div>									
 			</div>
-
+		<!--  -->
+		<!-- 顾客开销 -->
+		{% elif pageType == "customerSpending" %}
+		<!--  -->
+		{% endif %}
 		</div>
 
 		<!-- footer -->
+		{% if pageType == "purchaseRecord" %}
 		<div class="my-container record-content footer">
 			<div class="my-container pagination-wrapper"></div>
 		</div>
+		{% endif %}
 		<!--  -->
 	</div>
 

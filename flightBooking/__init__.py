@@ -11,7 +11,7 @@ from sqlalchemy.sql import text
 app = Flask(__name__)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['MAX_CONTENT_LENGTH'] = 1024*1024
-app.secret_key = "eFlight"
+app.secret_key = "eFlight1"
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=365)
 CORS(app, supports_credentials=True)
 app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://SE:mysql@8.129.182.214:3306/eflight"
