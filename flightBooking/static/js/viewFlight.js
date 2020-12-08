@@ -28,6 +28,9 @@ $(document).ready(function(){
 		searchFlight();
 	})
 
+	//预定机票点击按钮
+
+
 
 	//购票搜索页 初始先请求
 	if($('#pageType').val() == 'purchaseFlightView'){
@@ -54,6 +57,10 @@ $(document).ready(function(){
 //购票入口搜索机票
 function loadData(){
 	$(".main-info-wrapper").LoadingOverlay("show");
+	if($('.place-holder')){
+		$('.place-holder').remove();
+		}
+	$('.flight-card-container').empty();
 	// $('.flight-card-container').empty();
 	var data = getData();
 	console.log(data);
@@ -63,15 +70,29 @@ function loadData(){
 		type:'GET',
 		success:function(data){
 			console.log(data);
-			for(var i=0;i<data.length;i++){
-				var html = purchaseListTemplate(data[i])
-				$('.flight-card-container').append(html);
+			if(data.length >0){
+				for(var i=0;i<data.length;i++){
+					var html = purchaseListTemplate(data[i])
+					$('.flight-card-container').append(html);
+				}				
+			}else{
+
+				var html = addPlaceHolder();
+				$('#card-outer-container').append(html);
 			}
+
 			$(".main-info-wrapper").LoadingOverlay("hide");
 		}
 	})
 }
 
+function addPlaceHolder(){
+	var html = '';
+	html += '<div class="content-wrapper place-holder">';
+	html += '<p>Less price, better experience</p>';
+	html += '</div>';
+	return html;
+}
 
 //购票搜索页获取搜索参数
 function getData(){
@@ -86,31 +107,41 @@ function getData(){
 //购票搜索页模板
 function purchaseListTemplate(data){
 	var html = "";
-	html += '<div class="flight-card-wrapper"><div class="flight-card">';
+	html += '<div class="flight-card-wrapper"><form class="flight-info-form" style="display:none;"><input class="flightNum" name="flightNum" value='+data['flight_num']+'><input class="airline" name="airline_name" value= '+data['airline_name']+'></form><div class="flight-card">';
 	html += '<div class="card-flight-info">';
-	html += data['airline'];
-	html+= data['flight_num'];
+	html += '<div>' + data['airline_name'] +data['flight_num']+ '</div>';
 	html += "</div>";
 	html += '<div class="card-flight-info card-flight-depart-info">';
-	html += '<div class=" flight-depart-time"><strong>';
+	html += '<div class=" flight-depart-time strong-container"><strong>';
 	html += moment(data['departure_time']).format("HH:MM");
 	html += '</strong></div>';
-	html += '<div class=" flight-depart-airport airport">';
+	html += '<div class=" flight-depart-airport airport">' + data['departure_city'] + ' ';
 	html += data['departure_airport'];
 	html += '</div></div><div class="card-flight-info card-flight-arrival-info">';
-	html += '<div class="card-flight-arrive-time"><strong>';
+	html += '<div class="card-flight-arrive-time strong-container"><strong>';
 	html += moment(data['arrival_time']).format("HH:MM");
-	html += '</strong></div><div class="card-flight-arrive-airport airport">';
+	html += '</strong></div><div class="card-flight-arrive-airport airport">'+data['arrival_city'] + ' ';
 	html += data['arrival_airport'];
 	html += '</div></div><div class=" card-flight-info card-flight-price-info">';
 	html += data['price'];
-	html += '</div><div class="card-flight-info card-flight-book"><button class="ui-button ui-widget ui-corner-all book-btn">';
+	html += '</div><div class="card-flight-info card-flight-book"><button class="ui-button ui-widget ui-corner-all book-btn" onclick="goConfirmOrder(this)" airline='+data['airline_name']+' flightNum='+data['flight_num']+'>';
 	html += 'Book</button></div></div></div>';
 	return html
 
 
 
 }
+
+function goConfirmOrder(th){
+	console.log($(th).attr('flightnum'));
+	var flight_num = $(th).attr('flightnum');
+	var airline_name = $(th).attr('airline');
+	window.location.href = 'http://127.0.0.1:5000/eFlight/confirmOrder?flight_num='+flight_num+'&airline_name='+airline_name;
+
+}
+
+
+
 
 // 公共搜索入口
 //搜索先决条件：按照什么搜索

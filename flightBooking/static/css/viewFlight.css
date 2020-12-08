@@ -74,7 +74,7 @@ body{
 
 .main-info-wrapper{
 	height:60vh;
-	width:80%;
+	width:90%;
 	margin-top: 3rem;
 	background: #f1f1f1;
 	padding:2rem;
@@ -126,7 +126,7 @@ li > div{
 
 #card-outer-container{
 	width:70rem;
-	align-items: unset;
+	align-items: center;
 	flex-direction: column;
 	padding:0.8rem;
 	overflow-y: scroll;
@@ -188,6 +188,15 @@ li > div{
 
 .card-flight-info{
 	width:10rem;
+	font-size:0.6rem;
+}
+
+.card-flight-book{
+	font-size:1rem;
+}
+
+.strong-container{
+	font-size:1rem;
 }
 
 .card-flight-info-sub-container{
@@ -207,4 +216,12 @@ li > div{
 .book-btn:hover{
 	background: orange;
 	color:white;
+}
+
+.place-holder{
+    width: fit-content;
+    font-weight: 500;
+    font-size: 2rem;
+    margin-top: 7rem;
+    color: #999;
 }

@@ -92,7 +92,8 @@ def viewFlight():
 @app.route('/eFlight/confirmOrder')
 @login_required
 def confirmOrder():
-    return render_template('confirmOrder.html')
+    username = current_user.get_id()
+    return render_template('confirmOrder.html',username=username)
 
 
 # home 页 search入口
