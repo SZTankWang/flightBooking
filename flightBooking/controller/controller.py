@@ -142,11 +142,11 @@ def publicSearch():
 
 #记录页入口
 #type 暂时供给customer / agent
-@app.route('/eFlight/record')
+@app.route('/eFlight/record/<type>')
 @login_required
-def record():
+def record(type):
     if current_user.type == "customer" or current_user.type == "agent":
-        return render_template('record.html',type=current_user.type)
+        return render_template('record.html',type=current_user.type,pageType="purchaseRecord")
     else:
         return redirect(url_for('renderHome'))
 

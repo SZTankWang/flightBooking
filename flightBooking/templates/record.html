@@ -7,15 +7,30 @@
 {% block content %}
 <form style="display: none;">
 	<input type="text" id="pageType">
-	<input type="text" id="userName" value = {{ userName }}>
+	<input type="text" id="userType" value = {{ type }}>
 </form>
 
 <div class="my-container outer-wrapper">
 	<div class="my-container page-title">
 		<div class="my-container text-wrapper"><p>Record</p></div>
+		{% if type == 'customer' %}
+		<div class="my-container text-wrapper record-link-wrapper"><a href="" class="record-link"><p>my purchase record</p></a></div>
+		<div class="my-container text-wrapper record-link-wrapper"><a href="" class="record-link"><p>my spending</p></a></div>
+		{% endif %}
+
+
+		{% if type == "agent" %}
+		<div class="my-container text-wrapper record-link-wrapper"><a href="" class="record-link"><p>my purchase record</p></a></div>
+		<div class="my-container text-wrapper record-link-wrapper"><a href="" class="record-link"><p>my commision</p></a></div>
+		<div class="my-container text-wrapper record-link-wrapper"><a href="" class="record-link"><p>my top customer</p></a></div>
+
+		{% endif %}
 	</div>
 	<div class="my-container view-wrapper">
 		<div class="my-container record-content  record-filter-header">
+
+			{% if pageType == "purchaseRecord" %}
+			<!--查看购买记录  -->
 			<div class="my-container record-filter-container">
 				<div class="my-container filter-text-wrapper">
 					<p>purchase ID</p>
@@ -49,6 +64,30 @@
 			<div class="my-container record-filter-container">
 				<button id="search-btn">search</button>
 			</div>
+
+			{% elif pageType == "customerSpending" %}
+			<!-- 乘客spending -->
+
+			<div class="my-container record-filter-container">
+				<div class="my-container filter-text-wrapper">
+					<p>departure time</p>				
+				</div>
+				<input type="text" name="departureTime" id="departureTime">
+			</div>
+
+
+			<div class="my-container record-filter-container">
+				<div class="my-container filter-text-wrapper">
+					<p>arrival Time</p>		
+				</div>
+				<input type="text" name="arrivalTime" id="arrivalTime">
+			</div>
+
+
+			{% endif %}
+
+
+
 		</div>
 		<div class="my-container record-content record-list-container">
 			<div class="my-container record-content list-item">
