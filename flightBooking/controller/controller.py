@@ -435,9 +435,18 @@ def changeStatus():
     new_status = request.args.get("new_status")
     flight_number = request.args.get("flight_number")
     msg,code = db.session.execute(text("CALL eflight.change_status(:p1,:p2,:p3)"),{"p1":staffID,"p2":flight_number,"p3":new_status}).fetchone()
-    if code == '0':
+    if code == 0:
         db.session.commit()
     return jsonify(response=msg,code=code)
+
+@app.route('/eFlight/getInfo')
+@login_required
+def getInfo():
+    staffID = current_user.get_id()
+    flight_number = request.args.get("flight_number")
+    resultproxy = db.session.execute(text("CALL eflight.get_passengers_by_flight(:p1,:p2)"),{"p1":staffID,"p2":flight_number})
+    result = [{column: float(value) if type(value) == decimal.Decimal else value for column, value in rowproxy.items()} for rowproxy in resultproxy]
+    return jsonify(result)
 
 @app.route("/eFlight/addNewAirplane")
 @login_required
@@ -445,7 +454,7 @@ def addNewAirplane():
     seats = request.args.get("seats")
     staffID = current_user.get_id()
     msg,code = db.session.execute(text("CALL eflight.create_airplane(:p1,:p2)"),{"p1":staffID,"p2":seats}).fetchone()
-    if code == '0':
+    if code == 0:
         db.session.commit()
     return jsonify(response=msg,code=code)
 
@@ -455,6 +464,6 @@ def addNewAirport():
     airport_name = request.args.get("airport_name")
     airport_city = request.args.get("airport_city")
     msg,code = db.session.execute(text("CALL eflight.create_airport(:p1,:p2)"),{"p1":airport_name,"p2":airport_city}).fetchone()
-    if code == '0':
+    if code == 0:
         db.session.commit()
     return jsonify(response=msg,code=code)
