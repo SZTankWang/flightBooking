@@ -4,7 +4,7 @@ from flightBooking import db
 
 def view_my_flights(staffID,startDate="",endDate="",departure_city="",arrival_city="",status=""):
     sql_statement =  'SELECT airline_name,flight_num,departure_airport,return_city(departure_airport) as departure_city, departure_time,arrival_airport,return_city(arrival_airport) as arrival_city,arrival_time, status, price FROM flight NATURAL JOIN airline_staff WHERE username = (:staffID)'
-    if startDate == "" and endDate == "":
+    if startDate == "" and endDate == "" and departure_city =="" and arrival_city == "" and status == "":
         sql_statement += " AND (datediff(DATE(departure_time),DATE(now())) between 0 and 30)"
     elif startDate == "":
         sql_statement += " AND (DATE(departure_time) <= (:endDate))"
@@ -19,7 +19,7 @@ def view_my_flights(staffID,startDate="",endDate="",departure_city="",arrival_ci
     resultproxy = db.session.execute(text(sql_statement),{"staffID":staffID,"startDate":startDate,"endDate":endDate,"departure_city":departure_city,"arrival_city":arrival_city,"status":status})
     return [{column: float(value) if type(value) == decimal.Decimal else value for column, value in rowproxy.items()} for rowproxy in resultproxy]
 
-def create_new_flights(staffID,departure_airport,departure_time,arrival_airport,arrival_time,price,status,airplane_id)):
+def create_new_flights(staffID,departure_airport,departure_time,arrival_airport,arrival_time,price,status,airplane_id):
     result = db.session.execute(text("CALL eflight.create_flight(staffID,departure_airport,departure_time,arrival_airport,arrival_time,price,status,airplane_id)"),{"staffID":staffID,"departure_airport":departure_airport,"departure_time":departure_time,"arrival_airport":arrival_airport,"arrival_time":arrival_time,"price":price,"status":status,"airplane_id":airplane_id}).fetchone()
     db.session.commit()
     return result
