@@ -169,6 +169,15 @@ def queryPurchaseRecord():
         status = request.args.get('status')
         result = customerService.view_record(current_id=userName,purchaseID=purchase_id,departDate=departure_time,
                                              arriveDate=arrival_time,flight_status=status)
+    elif type == 'agent':
+        userName = current_user.get_id()
+        customer_email = request.args.get('customer_email')
+        purchase_id = request.args.get('purchase_id')
+        departure_time = request.args.get('departure_time')
+        arrival_time = request.args.get('arrival_time')
+        status = request.args.get('status')
+        result = agentService.view_record(current_id=userName,customerEmail = customer_email,purchaseID=purchase_id,departDate=departure_time,
+                                             arriveDate=arrival_time,flight_status=status)
     return jsonify(result)
 
 
@@ -201,7 +210,7 @@ def purchaseTicket():
         db.session.commit
         return jsonify(result = result, code = code)
 
-
+#customer/agent
 @app.route('/eFlight/viewRecord')
 @login_required
 def viewRecord():
@@ -217,6 +226,17 @@ def viewRecord():
         customer_email = request.args.get('customer_email')
         results = agentService.view_record(current_id,customer_email,purchase_id,departDate,arriveDate,status)
         return jsonify(results)
+
+#customer
+@app.route('/eFlight/trackSpending')
+@login_required
+def trackSpending():
+    customerID = current_user.get_id()
+    startMonth = request.args.get("startMonth")
+    endMonth = request.args.get("endMonth")
+    result_total = total_spending(customerID)
+    result_month = month_spending(customerID,startMonth,endMonth)
+    return jsonify(result_total = result_total, result_month = result_month)
 
 #agent
 @app.route('/eFlight/viewCommission')
@@ -287,16 +307,29 @@ def viewDateReport():
     result = [{column: float(value) if type(value) == decimal.Decimal else value for column, value in rowproxy.items()} for rowproxy in resultproxy][0]
     return jsonify(result)
 
-#customer
-@app.route('/eFlight/trackSpending')
+#staff
+@app.route('/eFlight/compareRevenue')
 @login_required
-def trackSpending():
-    customerID = current_user.get_id()
-    startMonth = request.args.get("startMonth")
-    endMonth = request.args.get("endMonth")
-    result_total = total_spending(customerID)
-    result_month = month_spending(customerID,startMonth,endMonth)
-    return jsonify(result_total = result_total, result_month = result_month)
+def compareRevenue():
+    staffID = current_user.get_id()
+    resultproxy1 = db.session.execute(text("CALL eflight.revenue(30,:p1)"),{"p1":number})
+    month_result = [{column: float(value) if type(value) == decimal.Decimal else value for column, value in rowproxy.items()} for rowproxy in resultproxy1]
+    resultproxy2 = db.session.execute(text("CALL eflight.revenue(365,:p1)"),{"p1":staffID})
+    year_result = [{column: float(value) if type(value) == decimal.Decimal else value for column, value in rowproxy.items()} for rowproxy in resultproxy2]
+    return jsonify(month_result = month_result,year_result = year_result)
+
+#staff
+@app.route('/eFlight/viewTopDestinations')
+@login_required
+def viewTopDestinations():
+    try:
+        number = request.args.get("number")
+    except:
+        number = 3
+    resultproxy = db.session.execute(text("CALL eflight.get_top_destinations(30,:p1)"),{"p1":staffID,"p2":number})
+    result = [{column: float(value) if type(value) == decimal.Decimal else value for column, value in rowproxy.items()} for rowproxy in resultproxy]
+    return jsonify(result)
+
 
 #staff
 @app.route('/eFlight/create/<type>')
@@ -317,3 +350,6 @@ def view(type):
     username = current_user.get_id()
     if userType == 'staff':
         return render_template('view.html',pageType=type,username=username)
+
+
+#agent
