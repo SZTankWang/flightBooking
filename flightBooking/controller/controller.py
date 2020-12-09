@@ -353,4 +353,14 @@ def view(type):
         return render_template('view.html',pageType=type,username=username)
 
 
-#agent
+@app.route('/eFlight/staffViewFlights')
+@login_required
+def staffViewFlights():
+    startDate = request.args.get("startDate")
+    endDate = request.args.get("endDate")
+    departure = request.args.get("departure")
+    arrival = request.args.get("arrival")
+    status = request.args.get("status")
+    staffID =current_user.get_id()
+    result = staffService.view_my_flights(staffID,startDate=startDate,endDate=endDate,departure_city=departure,arrival_city=arrival,status=status)
+    return jsonify(result)
