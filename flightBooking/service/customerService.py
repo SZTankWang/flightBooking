@@ -47,3 +47,15 @@ def view_record(current_id,purchaseID,departDate,arriveDate,flight_status):
 
     resultproxy = db.session.execute(text(sql_statement),{"current_id":current_id,"purchaseID":purchaseID,"departDate":departDate,"arriveDate":arriveDate,"status":flight_status})
     return [{column: value for column, value in rowproxy.items()} for rowproxy in resultproxy]
+
+def total_spending(current_id):
+    result = db.session.execute(text("SELECT eflight.return_total_spending(:p1)"),{"p1":current_id}).fetchone()
+    return result
+
+def month_spending(current_id,startMonth,endMonth):
+    resultproxy = db.session.execute(text("CALL eflight.get_month_spending(:p1,:p2,:p3)"),{"p1":current_id,"p2":startMonth,"p3":endMonth})
+    return [{column: value if type(value) == str else float(value) for column, value in rowproxy.items()} for rowproxy in resultproxy]
+
+def view_flight(airline_name,flight_number):
+    resultproxy = db.session.execute(text("SELECT airline_name,flight_num,departure_airport,return_city(departure_airport) as departure_city, departure_time,arrival_airport,return_city(arrival_airport) as arrival_city, arrival_time, status, price FROM flight WHERE flight_num = (:flight_number)AND airline_name = (:airline_name)"),{"flight_number":flight_number,"airline_name":airline_name})
+    return [{column: float(value) if type(value) == decimal.Decimal else value for column, value in rowproxy.items()} for rowproxy in resultproxy][0]
