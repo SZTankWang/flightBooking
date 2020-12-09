@@ -12,7 +12,9 @@ def purchase_ticket(passenger_name_list,passenger_id_list,passenger_phone_list,c
     return result
 
 def view_record(current_id,customerEmail,purchaseID,departDate,arriveDate,flight_status):
-    sql_statement = 'SELECT purchase_id,purchase_date,airline_name,flight_num,departure_airport,return_city(departure_airport) as departure_city,departure_time,arrival_airport,return_city(arrival_airport) as arrival_city,arrival_time,status,cast(price*return_passenger_num(purchase_id) as char(11)) as price,return_passenger_num(purchase_id) as passenger_num, return_passenger_list(purchase_id) as passenger_list FROM purchases NATURAL JOIN ticket NATURAL JOIN flight WHERE customer_email=(:customerEmail) AND booking_agent_id =(:current_id)'
+    sql_statement = 'SELECT DISTINCT purchase_id,purchase_date,airline_name,flight_num,departure_airport,return_city(departure_airport) as departure_city,departure_time,arrival_airport,return_city(arrival_airport) as arrival_city,arrival_time,status,cast(price*return_passenger_num(purchase_id) as char(11)) as price,return_passenger_num(purchase_id) as passenger_num, return_passenger_list(purchase_id) as passenger_list FROM purchases NATURAL JOIN ticket NATURAL JOIN flight WHERE booking_agent_id =(:current_id)'
+    if customerEmail != "":
+        sql_statement += "AND customer_email=(:customerEmail)"
     if purchaseID != "":
         sql_statement += "AND purchase_id = (:purchaseID)"
     if departDate != "":

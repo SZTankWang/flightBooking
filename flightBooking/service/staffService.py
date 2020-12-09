@@ -18,3 +18,11 @@ def view_my_flights(staffID,startDate="",endDate="",departure_city="",arrival_ci
         sql_statement += " AND status = (:status)"
     resultproxy = db.session.execute(text(sql_statement),{"staffID":staffID,"startDate":startDate,"endDate":endDate,"departure_city":departure_city,"arrival_city":arrival_city,"status":status})
     return [{column: float(value) if type(value) == decimal.Decimal else value for column, value in rowproxy.items()} for rowproxy in resultproxy]
+
+def create_new_flights(staffID,departure_airport,departure_time,arrival_airport,arrival_time,price,status,airplane_id)):
+    result = db.session.execute(text("CALL eflight.create_flight(staffID,departure_airport,departure_time,arrival_airport,arrival_time,price,status,airplane_id)"),{"staffID":staffID,"departure_airport":departure_airport,"departure_time":departure_time,"arrival_airport":arrival_airport,"arrival_time":arrival_time,"price":price,"status":status,"airplane_id":airplane_id}).fetchone()
+    db.session.commit()
+    return result
+
+def change_status(staffID,flight_number,status):
+    pass
