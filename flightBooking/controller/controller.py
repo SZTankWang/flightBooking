@@ -78,8 +78,12 @@ def doregister():
         msg = db.session.execute(text("CALL eflight.create_staff(:username,:password,:first_name,:last_name,:birth,:airline)"),{"username":username,"password":password,"first_name":first_name,"last_name":last_name,"birth":date_of_birth,"airline":airline_name})
     if msg == "registered successfully":
         db.session.commit()
-    return jsonify(response = msg, code = 0)
-    
+        code = 0
+    else:
+        db.session.rollback()
+        code = -1
+    return jsonify(response = msg, code = code)
+
 @app.route('/eFlight/login/<type>')
 def gologin(type):
     # next = request.args.get('next')
