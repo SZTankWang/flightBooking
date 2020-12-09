@@ -1,6 +1,6 @@
 .view-container{
-	padding-left:3rem;
 	flex-direction: row;
+	justify-content: center;
 }
 
 .agent-view-container{
@@ -11,11 +11,40 @@
 
 .booking-agent-list-container{
 	flex-direction: column;
-	width:10rem;
+	width:17rem;
 	min-height:17rem;
 	background: grey;
 }
 
 .agent-container{
 	height:2rem;
+	flex-direction: row;
+}
+
+.filter-container{
+	height:3rem;
+	background:wheat;
+	width:fit-content;
+}
+
+.view-sub-part{
+	font-size:0.7rem;
+	flex-direction: column;
+}
+
+.btn{
+	font-size:0.7rem;
+	background: white;
+}
+
+.my-container{
+	margin-left:1rem;
+}
+
+.report-container{
+	min-height:19rem;
+	width:80%;
+	background: wheat;
+	margin-top:2rem;
+	flex-direction: column;
 }

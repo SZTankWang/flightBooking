@@ -74,18 +74,95 @@
 
 	<div class="my-container agent-view-container">
 		<p>Top 5 agents last month</p>
-		<div class="my-container booking-agent-list-container">
-			<div class="my-container agent-container">
-				<p>agent id</p>
-			</div>
+		<div class="my-container booking-agent-list-container month-result-container">
+
 
 			<div class="my-container agent-container">
-				<p>agent id</p>
+				
 			</div>			
 		</div>
+
 	</div>
+
+
+	<div class="my-container agent-view-container">
+		<p>Top 5 agents last year</p>
+		<div class="my-container booking-agent-list-container year-result-container">
+
+
+			<div class="my-container agent-container">
+				
+			</div>			
+		</div>
+
+	</div>
+
+	<div class="my-container agent-view-container">
+		<p>Top 5 agents last month</p>
+		<div class="my-container booking-agent-list-container commission-result-container">
+
+
+			<div class="my-container agent-container">
+				
+			</div>			
+		</div>
+
+	</div>		
 	{% endif %}
 
+	{% if pageType == 'report' %}
+	<div class="my-container view-sub-part">
+		<div class="my-container filter-container">
+			<div class="my-container">
+				<p>start date </p>
+				<input type="text" placeholder="YYYY-MM-DD" id="leftStartDate">
+			</div>
+
+			<div class="my-container">
+				<p>start date </p>
+				<input type="text" placeholder="YYYY-MM-DD" id="leftEndDate">
+			</div>		
+
+			<div class="my-container">
+				<button class="btn left-search">apply</button>
+			</div>
+
+		</div>	
+
+		<div class="my-container report-container">
+			<h5>total amount of ticket sold</h5>
+			<div class="my-container result-container">
+				<h5 id="amount-of-ticket"></h5>
+			</div>
+		</div>	
+	</div>
+
+	<div class="my-container view-sub-part">
+		<div class="my-container filter-container">
+			<div class="my-container">
+				<p>start date </p>
+				<input type="text" placeholder=" YYYY-MM-DD" id="startDateRight">
+			</div>
+
+			<div class="my-container">
+				<p>start date </p>
+				<input type="text" placeholder=" YYYY-MM-DD">
+			</div>		
+			<div class="my-container">
+				<button class="btn right-search">apply</button>
+			</div>
+		</div>	
+		<div class="my-container report-container">
+	
+				<h5>Month wise ticket sold</h5>
+				<div class="my-container result-container">
+					<h5 id="amount-of-ticket"></h5>
+				</div>			
+
+		</div>		
+	</div>
+
+	{% endif %}
 </div>
 
 
