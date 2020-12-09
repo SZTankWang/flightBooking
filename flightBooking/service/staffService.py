@@ -6,9 +6,9 @@ def view_my_flights(staffID,startDate="",endDate="",departure_city="",arrival_ci
     sql_statement =  'SELECT airline_name,flight_num,departure_airport,return_city(departure_airport) as departure_city, departure_time,arrival_airport,return_city(arrival_airport) as arrival_city,arrival_time, status, price FROM flight NATURAL JOIN airline_staff WHERE username = (:staffID)'
     if startDate == "" and endDate == "" and departure_city =="" and arrival_city == "" and status == "":
         sql_statement += " AND (datediff(DATE(departure_time),DATE(now())) between 0 and 30)"
-    elif startDate == "":
+    elif startDate == "" and endDate != "":
         sql_statement += " AND (DATE(departure_time) <= (:endDate))"
-    elif endDate == "":
+    elif endDate == "" and startDate != "":
         sql_statement += " AND (DATE(departure_time) >= (:startDate))"
     if departure_city != "":
         sql_statement += " AND ((:departure_city) like CONCAT('%',return_city(departure_airport),'%') OR ((:departure_city) like CONCAT('%',departure_airport,'%')))"
