@@ -24,5 +24,5 @@ def create_new_flights(staffID,departure_airport,departure_time,arrival_airport,
     db.session.commit()
     return result
 
-def change_status(staffID,flight_number,status):
-    pass
+#def change_status(staffID,flight_number,status):
+def view_frequent_customer(staffID):

@@ -242,6 +242,14 @@ def viewTopCustomer():
     result_ticket,result_commission = agentService.view_top_customer(agentID)
     return jsonify(ticket=result_ticket,commission=result_commission)
 
+@app.route('/eFlight/viewFrequentCustomer')
+@login_required
+def viewFrequentCustomer():
+    staffID = current_user.get_id()
+    resultproxy = db.session.execute(text("CALL eflight.most_frequent_customer(:p1)"),{"p1":staffID})
+    result = [{column: float(value) if type(value) == decimal.Decimal else value for column, value in rowproxy.items()} for rowproxy in resultproxy][0]
+    return jsonify(result)
+
 @app.route('/eFlight/trackSpending')
 @login_required
 def trackSpending():
