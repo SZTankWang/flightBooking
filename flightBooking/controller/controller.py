@@ -271,16 +271,30 @@ def viewRecord():
         results = agentService.view_record(current_id,customer_email,purchase_id,departDate,arriveDate,status)
         return jsonify(results)
 
-#customer
-@app.route('/eFlight/trackSpending')
+@app.route('/eFlight/customerSpending')
 @login_required
-def trackSpending():
+def customerSpending():
+    username = current_user.get_id()
+    return render_template('view.html',pageType="report",username=username)
+#customer
+@app.route('/eFlight/trackDateSpending')
+@login_required
+def trackDateSpending():
+    customerID = current_user.get_id()
+    startDate = request.args.get("startDate")
+    endDate = request.args.get("endDate")
+    result_month = customerService.date_spending(customerID,startDate,endDate)
+    return jsonify(result_month)
+
+#customer
+@app.route('/eFlight/trackMonthSpending')
+@login_required
+def trackMonthSpending():
     customerID = current_user.get_id()
     startMonth = request.args.get("startMonth")
     endMonth = request.args.get("endMonth")
-    result_total = total_spending(customerID)
-    result_month = month_spending(customerID,startMonth,endMonth)
-    return jsonify(result_total = result_total, result_month = result_month)
+    result_month = customerService.month_spending(customerID,startMonth,endMonth)
+    return jsonify(result_month)
 
 #agent
 @app.route('/eFlight/viewCommission')
