@@ -40,6 +40,49 @@ def publicInfo():
     except:
         return render_template('publicInfo.html',pageType="publicView")
 
+@app.route('/eFlight/register/<type>')
+def register(type):
+    return render_template('register.html',type=type)
+
+@app.route('/eFlight/doRegister',methods=['POST'])
+def doregister():
+    type = request.form["type"]
+    if type == "customer":
+        email = request.form["email"]
+        name = request.form["name"]
+        password = request.form["password"]
+        building_number = request.form['building_number']
+        street = request.form['street']
+        city = request.form['city']
+        state = request.form['state']
+        phone_number = request.form['phone_number']
+        passport_number = request.form['passport_number']
+        passport_expiration = request.form['passport_expiration']
+        passport_country = reuqest.form["passport_country"]
+        date_of_birth = reuqest.form["date_of_birth"]
+        #email name password building_number street city state phone_number passport_number passport_expiration passport_country date_of_birth
+        msg = db.session.execute(text("CALL eflight.create_user(:email,:name,:password,:building_number,:street,:city,:state,:phone_number,:passport_number,:passport_expiration,:passport_country,:date_of_birth)"),
+                                        {"email":email, "name":name, "password":password,"building_number":building_number,"street":street,"city":city,"state":state,"phone_number":phone_number,"passport_number":passport_number,"passport_expiration":passport_expiration,"passport_country":passport_country,"date_of_birth":date_of_birth})
+    elif type == "agent":
+        email = request.form["email"]
+        booking_agent_id = request.form["booking_agent_id"]
+        password = request.form["password"]
+        msg = db.session.execute(text("CALL eflight.create_agent(:email,:password,:id)"),{"email":email,"password":password,"id":booking_agent_id}
+    elif type == "staff":
+        username = request.form["username"]
+        password = request.form["password"]
+        first_name = request.form["first_name"]
+        last_name = request.form["last_name"]
+        date_of_birth = request.form["date_of_birth"]
+        airline_name = request.form["airline_name"]
+        msg = db.session.execute(text("CALL eflight.create_staff(:username,:password,:first_name,:last_name,:birth,:airline)"),{"username":username,"password":password,"first_name":first_name,"last_name":last_name,"birth":date_of_birth,"airline":airline_name})
+    if msg == "registered successfully":
+        db.session.commit()
+        code = 0
+    else:
+        db.session.rollback()
+        code = -1
+    return jsonify(response = msg, code = code)
 
 @app.route('/eFlight/login/<type>')
 def gologin(type):
@@ -396,13 +439,22 @@ def changeStatus():
         db.session.commit()
     return jsonify(response=msg,code=code)
 
+@app.route('/eFlight/getInfo')
+@login_required
+def getInfo():
+    staffID = current_user.get_id()
+    flight_number = request.args.get("flight_number")
+    resultproxy = db.session.execute(text("CALL eflight.get_passengers_by_flight(:p1,:p2)"),{"p1":staffID,"p2":flight_number})
+    result = [{column: float(value) if type(value) == decimal.Decimal else value for column, value in rowproxy.items()} for rowproxy in resultproxy]
+    return jsonify(result)
+
 @app.route("/eFlight/addNewAirplane")
 @login_required
 def addNewAirplane():
     seats = request.args.get("seats")
     staffID = current_user.get_id()
     msg,code = db.session.execute(text("CALL eflight.create_airplane(:p1,:p2)"),{"p1":staffID,"p2":seats}).fetchone()
-    if code == '0':
+    if code == 0:
         db.session.commit()
     return jsonify(response=msg,code=code)
 
@@ -412,6 +464,6 @@ def addNewAirport():
     airport_name = request.args.get("airport_name")
     airport_city = request.args.get("airport_city")
     msg,code = db.session.execute(text("CALL eflight.create_airport(:p1,:p2)"),{"p1":airport_name,"p2":airport_city}).fetchone()
-    if code == '0':
+    if code == 0:
         db.session.commit()
     return jsonify(response=msg,code=code)
