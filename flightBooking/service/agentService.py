@@ -24,3 +24,22 @@ def view_record(current_id,customerEmail,purchaseID,departDate,arriveDate,flight
 
     resultproxy = db.session.execute(text(sql_statement),{"current_id":current_id,"customerEmail":customerEmail,"purchaseID":purchaseID,"departDate":departDate,"arriveDate":arriveDate,"status":flight_status})
     return [{column: value for column, value in rowproxy.items()} for rowproxy in resultproxy]
+
+# def view_commission(agentID,startDate,endDate):
+#     result = db.session.execute(text("CALL eflight.get_commission(:p1,:p2,:p3)"),{"p1":agentID,"p2":startDate,"p3":endDate}).fetchone()
+#     return result
+
+def view_commission(agentID,startDate,endDate):
+    sql_statement = 'SELECT sum(0.1*price),avg(0.1*price) FROM purchases NATURAL JOIN ticket NATURAL JOIN flight WHERE booking_agent_id = (:agentID) AND DATE(purchase_date) <= (:endDate)'
+    group_by = 'GROUP BY booking_agent_id'
+    if startDate != "":
+        sql_statement += "AND DATE(purchase_date) >= (:startDate)"
+    result = db.session.execute(text(sql_statement+group_by),{"agentID":agentID,"startDate":startDate,"endDate":endDate}).fetchone()
+    return result
+
+def view_top_customer(agentID):
+    ticket = db.session.execute(text("CALL eflight.get_top_ticket_customer(:p1)"),{"p1":agentID})
+    commission = db.session.execute(text("CALL eflight.get_top_commission_customer(:p1)"),{"p1":agentID}).fetchall()
+    result1 = [{column: value for column, value in rowproxy.items()} for rowproxy in ticket]
+    result2 = [{column: value if type(value) == str else float(value) for column, value in rowproxy.items()} for rowproxy in commission]
+    return result1, result2

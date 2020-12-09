@@ -96,7 +96,8 @@ def confirmOrder():
     username = current_user.get_id()
     airline_name = request.args.get('airline_name')
     flight_num = request.args.get('flight_num')
-    return render_template('confirmOrder.html',username=username ,type=current_user.type, airline_name=airline_name , flight_num = flight_num)
+    result = customerService.view_record('','')
+    return render_template('confirmOrder.html',username=username ,type=current_user.type)
 
 
 # home 页 search入口
@@ -207,10 +208,41 @@ def viewRecord():
         results = agentService.view_record(current_id,customer_email,purchase_id,departDate,arriveDate,status)
         return jsonify(results)
 
+#agent
+@app.route('/eFlight/viewCommission')
+@login_required
+def viewCommission():
+    #startDate指小日期，默认应该为空
+    #endDate指大日期，默认应该为今天
+    startDate = request.args.get('startDate')
+    endDate = request.args.get('endDate')
+    agentID = current_user.get_id()
+    if startDate:
+        startDate = datetime.datetime.strftime(startDate,"%Y-%m-%d")
+    else:
+        startDate = datetime.datetime.strftime(endDate,"%Y-%m-%d")-timedelta(days = 30)
+    endDate = datetime.datetime.strftime(endDate,"%Y-%m-%d")
+    total, average = agentService.view_commission(agentID,startDate,endDate)
+    return jsonify(total = float(total), average = float(average))
 
-##staff route : create things template
-## <type> : airplane / flight / airport
+@app.route('/eFlight/viewTopCustomer')
+@login_required
+def viewTopCustomer():
+    agentID = current_user.get_id()
+    result_ticket,result_commission = agentService.view_top_customer(agentID)
+    return jsonify(ticket=result_ticket,commission=result_commission)
 
+@app.route('/eFlight/trackSpending')
+@login_required
+def trackSpending():
+    customerID = current_user.get_id()
+    startMonth = request.args.get("startMonth")
+    endMonth = request.args.get("endMonth")
+    result_total = total_spending(customerID)
+    result_month = month_spending(customerID,startMonth,endMonth)
+    return jsonify(result_total = result_total, result_month = result_month)
+
+#staff
 @app.route('/eFlight/create/<type>')
 @login_required
 def create(type):
@@ -220,12 +252,3 @@ def create(type):
         return render_template('create.html',type=type,username=username)
     else:
         return url_for('renderHome')
-
-
-##staff route: view information
-@app.route('/eFlight/view/<type>')
-@login_required
-def view(type):
-    username = current_user.get_id()
-    userType = current_user.type
-    return render_template('view.html',username=username,userType=userType,pageType=type)
