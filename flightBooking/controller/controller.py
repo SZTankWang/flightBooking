@@ -2,6 +2,7 @@ from sqlalchemy import text
 
 from flightBooking import app,db,login
 import collections
+import decimal
 from datetime import timedelta
 from itertools import count
 from time import strftime

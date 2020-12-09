@@ -58,12 +58,33 @@
 <div class="my-container view-container">
 	{% if pageType == 'customer' %}
 	<div class="my-container">
-		<p>Most frequent customer:</p>
+		<p>Most frequent customer:&nbsp &nbsp</p>
 		<h5 id="top-customer"></h5>
 	</div>
 
+	<div class="my-container">
+		<p>Bought&nbsp&nbsp</p>
+		<h5 id="top-ticket-count"></h5>
+		<p>&nbsp&nbsp tickets</p>
+	</div>
 	{% endif %}
 	
+
+	{% if pageType == 'bookingAgent' %}
+
+	<div class="my-container agent-view-container">
+		<p>Top 5 agents last month</p>
+		<div class="my-container booking-agent-list-container">
+			<div class="my-container agent-container">
+				<p>agent id</p>
+			</div>
+
+			<div class="my-container agent-container">
+				<p>agent id</p>
+			</div>			
+		</div>
+	</div>
+	{% endif %}
 
 </div>
 

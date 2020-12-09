@@ -1,3 +1,21 @@
 .view-container{
 	padding-left:3rem;
+	flex-direction: row;
+}
+
+.agent-view-container{
+	flex-direction: column;
+	padding-left:2rem;
+	width:fit-content;
+}
+
+.booking-agent-list-container{
+	flex-direction: column;
+	width:10rem;
+	min-height:17rem;
+	background: grey;
+}
+
+.agent-container{
+	height:2rem;
 }
