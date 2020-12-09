@@ -96,8 +96,8 @@ def confirmOrder():
     username = current_user.get_id()
     airline_name = request.args.get('airline_name')
     flight_num = request.args.get('flight_num')
-    result = customerService.view_record('','')
-    return render_template('confirmOrder.html',username=username ,type=current_user.type)
+    result = customerService.view_flight(airline_name,flight_num)
+    return render_template('confirmOrder.html',username=username ,type=current_user.type,result = result)
 
 
 # home 页 search入口
@@ -160,8 +160,16 @@ def record(pageType):
 @app.route('/eFlight/queryPurchaseRecord')
 @login_required
 def queryPurchaseRecord():
-    userName = request.args.get('userName')
-
+    type = current_user.type
+    if type == 'customer':
+        userName = current_user.get_id()
+        purchase_id = request.args.get('purchase_id')
+        departure_time = request.args.get('departure_time')
+        arrival_time = request.args.get('arrival_time')
+        status = request.args.get('status')
+        result = customerService.view_record(current_id=userName,purchaseID=purchase_id,departDate=departure_time,
+                                             arriveDate=arrival_time,flight_status=status)
+    return jsonify(result)
 
 
 
@@ -179,16 +187,18 @@ def viewMyFlights():
 def purchaseTicket():
     passenger_name_list = request.args.get('passenger_name_list')
     passenger_id_list = request.args.get('passenger_id_list')
-    passgener_phone_list = request.args.get('passenger_phone_list')
+    passenger_phone_list = request.args.get('passenger_phone_list')
     customer_email = request.args.get('customer_email')
     airline_name = request.args.get('airline_name')
     flight_number = request.args.get('flight_number')
 
     if current_user.type == 'agent':
         result,code = agentService.purchase_ticket(passenger_name_list,passenger_id_list,passenger_phone_list,customer_email,airline_name,flight_number,agentService.get_id_by_email(current_user.get_id()))
+        db.session.commit()
         return jsonify(result = result, code = code)
     elif current_user.type == 'customer':
         result,code = agentService.purchase_ticket(passenger_name_list,passenger_id_list,passenger_phone_list,customer_email,airline_name,flight_number,0)
+        db.session.commit
         return jsonify(result = result, code = code)
 
 
@@ -252,3 +262,12 @@ def create(type):
         return render_template('create.html',type=type,username=username)
     else:
         return url_for('renderHome')
+
+#staff
+@app.route('/eFlight/view/<type>')
+@login_required
+def view(type):
+    userType = current_user.type
+    username = current_user.get_id()
+    if userType == 'staff':
+        return render_template('view.html',pageType=type,username=username)
