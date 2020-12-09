@@ -1,5 +1,11 @@
+var queryResult = null;
+
 $(document).ready(function(){
 	console.log('hello eFlight');
+
+	//订票
+	
+
 
 	//公共信息搜索页 初始化搜索类型为航班号
 	$('#search-type').val(0);
@@ -69,7 +75,9 @@ function loadData(){
 		data:data,
 		type:'GET',
 		success:function(data){
-			console.log(data);
+			// console.log(data);
+			queryResult = data;
+			console.log(queryResult);
 			if(data.length >0){
 				for(var i=0;i<data.length;i++){
 					var html = purchaseListTemplate(data[i])
@@ -106,6 +114,7 @@ function getData(){
 
 //购票搜索页模板
 function purchaseListTemplate(data){
+	var count  = $('.flight-card').length;
 	var html = "";
 	html += '<div class="flight-card-wrapper"><form class="flight-info-form" style="display:none;"><input class="flightNum" name="flightNum" value='+data['flight_num']+'><input class="airline" name="airline_name" value= '+data['airline_name']+'></form><div class="flight-card">';
 	html += '<div class="card-flight-info">';
@@ -124,7 +133,8 @@ function purchaseListTemplate(data){
 	html += data['arrival_airport'];
 	html += '</div></div><div class=" card-flight-info card-flight-price-info">';
 	html += data['price'];
-	html += '</div><div class="card-flight-info card-flight-book"><button class="ui-button ui-widget ui-corner-all book-btn" onclick="goConfirmOrder(this)" airline='+data['airline_name']+' flightNum='+data['flight_num']+'>';
+	html += '</div><div class="card-flight-info card-flight-book"><button class="ui-button ui-widget ui-corner-all book-btn" onclick="goConfirmOrder(this)"';  
+	html += `id = `+count+`>`;
 	html += 'Book</button></div></div></div>';
 	return html
 
@@ -133,9 +143,11 @@ function purchaseListTemplate(data){
 }
 
 function goConfirmOrder(th){
-	console.log($(th).attr('flightnum'));
-	var flight_num = $(th).attr('flightnum');
-	var airline_name = $(th).attr('airline');
+	var i = $(th).attr('id');
+	console.log($(th).attr('id'));
+	console.log(queryResult[i]);
+	var flight_num = queryResult[i]['flight_num']
+	var airline_name = queryResult[i]['airline_name']
 	window.location.href = 'http://127.0.0.1:5000/eFlight/confirmOrder?flight_num='+flight_num+'&airline_name='+airline_name;
 
 }

@@ -94,7 +94,10 @@ def viewFlight():
 @login_required
 def confirmOrder():
     username = current_user.get_id()
-    return render_template('confirmOrder.html',username=username,type = current_user.type)
+    airline_name = request.args.get('airline_name')
+    flight_num = request.args.get('flight_num')
+    result = customerService.view_record('','')
+    return render_template('confirmOrder.html',username=username ,type=current_user.type)
 
 
 # home 页 search入口
