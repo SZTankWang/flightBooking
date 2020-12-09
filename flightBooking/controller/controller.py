@@ -58,7 +58,7 @@ def doregister():
         phone_number = request.form['customerPhone']
         passport_number = request.form['passport_number']
         passport_expiration = request.form['passport_expiration']
-        passport_country = reuqest.form["passport_country"]
+        passport_country = request.form["passport_country"]
         date_of_birth = reuqest.form["date_of_birth"]
         #email name password building_number street city state phone_number passport_number passport_expiration passport_country date_of_birth
         msg = db.session.execute(text("CALL eflight.create_user(:email,:name,:password,:building_number,:street,:city,:state,:phone_number,:passport_number,:passport_expiration,:passport_country,:date_of_birth)"),
