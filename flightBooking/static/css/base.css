@@ -11,6 +11,13 @@ body{
 	overflow-x: hidden;
 }
 
+label{
+	margin:0;
+	float:left;
+	margin-right: 0.5rem;	
+	color:#225DA3;
+}
+
 a:hover{
 	text-decoration: none;
 

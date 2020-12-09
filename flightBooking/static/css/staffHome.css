@@ -1,0 +1,120 @@
+.switch-panel{
+	flex-direction: row;
+    height: fit-content;
+    padding-left: 2rem;
+    padding: 1rem;
+    background: #f1f1f1;
+}
+
+
+.content-wrapper{
+	min-width:10rem;
+	flex-direction: row;
+}
+
+.select-wrapper{
+	font-size:0.5rem;
+}
+
+.select-container{
+	width:12.8rem;
+}
+
+.view-container{
+	width:100%;
+	height:fit-content;
+	padding-left:3rem;
+	padding-right:3rem;
+	background:grey;
+	flex-direction: column;
+}
+
+.list-container-comp{
+	flex-direction: row;
+	min-height:4rem;
+	background: #f1f1f1;
+	margin-top:2rem;
+	min-width:fit-content;
+}
+
+.filter-container{
+
+}
+
+.list-container{
+	min-height:30rem;
+	flex-direction: column;
+	padding-top: 1rem;
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+
+.filter{
+	font-size:0.6rem;
+}
+
+.flight-card{
+	flex-direction: row;
+	min-width:40rem;
+	width:75%;
+	box-sizing: border-box;
+	padding:0.8rem;
+	background: wheat;
+	padding-left:2rem;
+	justify-content: space-between;
+}
+
+.card-column{
+    flex-direction: column;
+    max-width: 25%;
+    width: fit-content;
+}
+
+
+.button-column{
+	flex-direction: row;
+	width:fit-content;
+}
+
+.btn-container{
+	width:fit-content;
+	font-size:0.7rem;
+}
+
+.icon-column{
+	width:fit-content;
+}
+
+.icon{
+	width: 2.2rem;
+    height: 0.9rem;
+	background-size: cover;
+}
+
+.arrow{
+	background-image: url(/static/svg/arrow.svg);
+}
+
+.strong-text{
+	font-weight: 500;
+}
+
+.in-dialog{
+	z-index: 999;
+}
+
+.ui-dialog {
+	overflow: visible;
+}
+
+.dialog-btn{
+    position: absolute;
+    bottom: 0;
+    margin-left: 7.5rem;
+}
+
+.passenger-container{
+	overflow-y: scroll;
+	min-height: 10rem;
+	overflow-x: hidden;
+}

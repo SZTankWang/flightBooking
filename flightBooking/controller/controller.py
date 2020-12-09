@@ -148,7 +148,7 @@ def publicSearch():
 def record(pageType):
     if current_user.type == "customer" or current_user.type == "agent":
         userName = current_user.get_id()
-        return render_template('record.html',type=current_user.type,pageType=type)
+        return render_template('record.html',type=current_user.type,pageType=pageType)
     else:
         return redirect(url_for('renderHome'))
 
@@ -204,3 +204,17 @@ def viewRecord():
         customer_email = request.args.get('customer_email')
         results = agentService.view_record(current_id,customer_email,purchase_id,departDate,arriveDate,status)
         return jsonify(results)
+
+
+##staff route : create things template
+## <type> : airplane / flight / airport
+
+@app.route('/eFlight/create/<type>')
+@login_required
+def create(type):
+    username = current_user.get_id()
+    userType = current_user.type
+    if userType == 'staff':
+        return render_template('create.html',type=type,username=username)
+    else:
+        return url_for('renderHome')

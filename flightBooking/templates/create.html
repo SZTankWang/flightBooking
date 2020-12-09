@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+{% block title %}homePage{% endblock %}
+{% block head %}
+{{super()}}
+<link rel="stylesheet" href="/static/css/create.css">
+{% endblock %}
+
+{% block header %}
+<form style="display: none;">
+	<input type="text" id= "createType" value = {{ type }}>
+	<input type="text">
+</form>
+
+
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+	    <span class="navbar-toggler-icon"></span>
+	  </button>
+
+	  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+	    <ul class="navbar-nav ml-auto">
+	    	{%if username%}
+	      	<li class="nav-item">
+	      	
+	        <a class="nav-link" href="#">{{username}} </span></a>
+		    </li>
+
+	      	<li class="nav-item">
+	      	
+	        <a class="nav-link" href="http://127.0.0.1:5000/eFlight/logout">log out</span></a>
+		    </li>		    
+	        {%else%}
+	        <li class="nav-item">
+		        <a class="nav-link" href="http://127.0.0.1:5000/eFlight/login/customer">您好请登录 </a>
+	        	
+	        </li>
+
+	        <li class="nav-item">
+		        <a class="nav-link" href="http://127.0.0.1:5000/eFlight/register/customer">注册</a>
+        	
+	        </li>
+
+			{%endif%}
+	      
+
+
+	    </ul>
+
+	  </div>
+	</nav>
+
+
+
+
+{{super()}}
+{% endblock %}
+
+{% block content %}
+<div class="my-container create-panel">
+	<div class="my-container create-type-title">
+		<h4>create {{ type }}</h4>
+	</div>
+
+
+	<div class="my-container form-container">
+		{% if type == 'flight' %}
+		<form action="" class="my-container form flight-form">
+			<div class="my-container form-row">
+				<div class="text-wrapper">
+					<p>departure</p>
+				</div>
+				<input type="text" id="departure">
+			</div>
+			<div class="my-container form-row">
+				<div class="text-wrapper">
+					<p>arrival</p>	
+				</div>
+				<input type="text" id="arrival">
+			</div>
+			<div class="my-container form-row">
+				<div class="text-wrapper">
+					<p>departure date</p>
+				</div>
+				<input type="text" class="date-input" id="departure-time">
+				
+				<div class="text-wrapper">
+					<p>departure time</p>
+				</div>
+				<input type="text" class="time-input" id="departure-time">
+
+			</div>
+			<div class="my-container form-row">
+				<div class="text-wrapper">
+					<p>arrival date</p>
+				</div>
+
+				<input type="text" class="date-input" id="arrival-time">
+				<div class="text-wrapper">
+					<p>arrival time</p>
+				</div>
+
+				<input type="text" class="time-input" id="arrival-time">
+
+			</div>
+			<div class="my-container form-row">
+				<div class="text-wrapper">
+					<p>price</p>
+				</div>
+				<input type="text" id="price">
+			</div>
+			
+<!-- 			<div class="my-container form-row">
+				<div class="text-wrapper">
+					<p>airplane id</p>
+				</div>
+				
+			</div> -->
+
+		</form>
+
+		{% endif %}
+
+		{% if type == "airplane" %}
+
+		<form action="" class="my-container form plane-form">
+			<div class="my-container form-row">
+				<div class="text-wrapper">
+					<p>capability</p>
+				</div>
+				<input type="text" id="capability">
+			</div>
+<!-- 			<div class="my-container form-row">
+				<div class="text-wrapper">
+					<p>airplane id</p>
+				</div>
+				
+			</div> -->
+
+		</form>
+
+		{% endif %}
+
+	</div>
+	<div class="my-container btn-container">
+		<button class="btn submit-btn">submit</button>
+	</div>
+	
+
+
+</div>
+<script type="text/javascript" src="/static/js/create.js"></script>
+
+{% endblock %}

@@ -1,0 +1,36 @@
+.create-panel{
+	height:100%;
+	margin-top:2rem;
+	padding:3rem;
+	background:#f1f1f1;
+	flex-direction: column;
+
+}
+
+.form-container{
+	min-height:20rem;
+	padding:1rem;
+}
+
+.form{
+	flex-direction: column;
+	height:100%;
+}
+
+.form-row{
+	height:3rem;
+}
+
+input{
+	height:2rem;
+}
+
+.text-wrapper{
+	width:9rem;
+	margin-left:1rem;
+}
+
+.btn-container{
+	flex-direction: row;
+	justify-content: center;
+}
