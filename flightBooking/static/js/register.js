@@ -1,9 +1,13 @@
 $(document).ready(function(){
 	$('#back-to-login').button();
 
-	$('#passport_expiration').datepicker();
+	$('#passport_expiration').datepicker({
+		dateFormat: "yy-mm-dd"
+	});
 
-	$('#date_of_birth').datepicker();
+	$('#date_of_birth').datepicker({
+		dateFormat: "yy-mm-dd"
+	});
 
 	$('#register-btn').button();
 
@@ -40,6 +44,12 @@ function register(th){
 		processData:false,
 		success:function(res){
 			console.log(res);
+			if(res['code']==0){
+				window.location.href = 'http://127.0.0.1:5000/eFlight/login/'+userType;
+			}
+			else if(res['code']==-1){
+				window.location.href = 'http://127.0.0.1:5000/eFlight/home';
+			}
 		}
 	})
 }

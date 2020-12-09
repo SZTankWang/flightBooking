@@ -59,15 +59,15 @@ def doregister():
         passport_number = request.form['passport_number']
         passport_expiration = request.form['passport_expiration']
         passport_country = request.form["passport_country"]
-        date_of_birth = reuqest.form["date_of_birth"]
+        date_of_birth = request.form["date_of_birth"]
         #email name password building_number street city state phone_number passport_number passport_expiration passport_country date_of_birth
         msg = db.session.execute(text("CALL eflight.create_user(:email,:name,:password,:building_number,:street,:city,:state,:phone_number,:passport_number,:passport_expiration,:passport_country,:date_of_birth)"),
-                                        {"email":email, "name":name, "password":password,"building_number":building_number,"street":street,"city":city,"state":state,"phone_number":phone_number,"passport_number":passport_number,"passport_expiration":passport_expiration,"passport_country":passport_country,"date_of_birth":date_of_birth})
+                                        {"email":email, "name":name, "password":password,"building_number":building_number,"street":street,"city":city,"state":state,"phone_number":phone_number,"passport_number":passport_number,"passport_expiration":passport_expiration,"passport_country":passport_country,"date_of_birth":date_of_birth}).fetchone()[0]
     elif type == "agent":
         email = request.form["email"]
         booking_agent_id = request.form["booking_agent_id"]
         password = request.form["password"]
-        msg = db.session.execute(text("CALL eflight.create_agent(:email,:password,:id)"),{"email":email,"password":password,"id":booking_agent_id})
+        msg = db.session.execute(text("CALL eflight.create_agent(:email,:password,:id)"),{"email":email,"password":password,"id":booking_agent_id}).fetchone()[0]
     elif type == "staff":
         username = request.form["username"]
         password = request.form["password"]
@@ -75,7 +75,7 @@ def doregister():
         last_name = request.form["last_name"]
         date_of_birth = request.form["date_of_birth"]
         airline_name = request.form["airline_name"]
-        msg = db.session.execute(text("CALL eflight.create_staff(:username,:password,:first_name,:last_name,:birth,:airline)"),{"username":username,"password":password,"first_name":first_name,"last_name":last_name,"birth":date_of_birth,"airline":airline_name})
+        msg = db.session.execute(text("CALL eflight.create_staff(:username,:password,:first_name,:last_name,:birth,:airline)"),{"username":username,"password":password,"first_name":first_name,"last_name":last_name,"birth":date_of_birth,"airline":airline_name}).fetchone()[0]
     if msg == "registered successfully":
         db.session.commit()
         code = 0
