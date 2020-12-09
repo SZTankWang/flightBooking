@@ -96,8 +96,7 @@ def confirmOrder():
     username = current_user.get_id()
     airline_name = request.args.get('airline_name')
     flight_num = request.args.get('flight_num')
-    result = customerService.view_record('','')
-    return render_template('confirmOrder.html',username=username ,type=current_user.type)
+    return render_template('confirmOrder.html',username=username ,type=current_user.type, airline_name=airline_name , flight_num = flight_num)
 
 
 # home 页 search入口
@@ -221,3 +220,12 @@ def create(type):
         return render_template('create.html',type=type,username=username)
     else:
         return url_for('renderHome')
+
+
+##staff route: view information
+@app.route('/eFlight/view/<type>')
+@login_required
+def view(type):
+    username = current_user.get_id()
+    userType = current_user.type
+    return render_template('view.html',username=username,userType=userType,pageType=type)
