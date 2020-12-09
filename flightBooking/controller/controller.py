@@ -364,3 +364,48 @@ def staffViewFlights():
     staffID =current_user.get_id()
     result = staffService.view_my_flights(staffID,startDate=startDate,endDate=endDate,departure_city=departure,arrival_city=arrival,status=status)
     return jsonify(result)
+
+@app.route('/eFlight/addNewFlight')
+@login_required
+def addNewFlight():
+    staffID = current_user.get_id()
+    departure_airport = request.args.get("departure_airport")
+    arrival_airport = request.args.get("arrival_airport")
+    departure_time = request.args.get("departure_time")
+    arrival_airport = request.args.get("arrival_time")
+    price = request.args.get("price")
+    status = request.args.get("status")
+    result = create_new_flights(staffID,departure_airport,departure_time,arrival_airport,arrival_time,price,status)
+    return result
+
+@app.route('/eFlight/returnAirport')
+@login_required
+def returnAirport():
+    resultproxy = db.session.execute(text("SELECT airport_name FROM airport"))
+    result = [{column: float(value) if type(value) == decimal.Decimal else value for column, value in rowproxy.items()} for rowproxy in resultproxy]
+    return result
+
+@app.route('/eFlight/changeStatus')
+@login_required
+def changeStatus():
+    staffID = current_user.get_id()
+    new_status = request.args.get("new_status")
+    flight_number = request.args.get("flight_number")
+    msg,code = db.session.execute(text("CALL eflight.change_status(:p1,:p2,:p3)"),{"p1":staffID,"p2":flight_number,"p3":new_status}).fetchone()
+    return jsonify(response=msg,code=code)
+
+@app.route("/eFlight/addNewAirplane")
+@login_required
+def addNewAirplane():
+    seats = request.args.get("seats")
+    staffID = current_user.get_id()
+    msg,code = db.session.execute(text("CALL eflight.create_airplane(:p1,:p2)"),{"p1":staffID,"p2":seats}).fetchone()
+    return jsonify(response=msg,code=code)
+
+@app.route("/eFlight/addNewAirport")
+@login_required
+def addNewAirplane():
+    airport_name = request.args.get("airport_name")
+    airport_city = request.args.get("airport_city")
+    msg,code = db.session.execute(text("CALL eflight.create_airport(:p1,:p2)"),{"p1":airport_name,"p2":airport_city}).fetchone()
+    return jsonify(response=msg,code=code)
