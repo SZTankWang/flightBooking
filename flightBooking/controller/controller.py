@@ -235,6 +235,7 @@ def viewCommission():
     total, average = agentService.view_commission(agentID,startDate,endDate)
     return jsonify(total = float(total), average = float(average))
 
+#agent
 @app.route('/eFlight/viewTopCustomer')
 @login_required
 def viewTopCustomer():
@@ -242,6 +243,7 @@ def viewTopCustomer():
     result_ticket,result_commission = agentService.view_top_customer(agentID)
     return jsonify(ticket=result_ticket,commission=result_commission)
 
+#staff
 @app.route('/eFlight/viewFrequentCustomer')
 @login_required
 def viewFrequentCustomer():
@@ -250,6 +252,7 @@ def viewFrequentCustomer():
     result = [{column: float(value) if type(value) == decimal.Decimal else value for column, value in rowproxy.items()} for rowproxy in resultproxy][0]
     return jsonify(result)
 
+#staff
 @app.route('/eFlight/viewBookingAgent')
 @login_required
 def viewBookingAgent():
@@ -262,6 +265,28 @@ def viewBookingAgent():
     year_ticket_result = [{column: float(value) if type(value) == decimal.Decimal else value for column, value in rowproxy.items()} for rowproxy in resultproxy3]
     return jsonify(year_commission_result=year_commission_result,month_ticket_result=month_ticket_result,year_ticket_result=year_ticket_result)
 
+#staff
+@app.route('/eFlight/viewMonthReport')
+@login_required
+def viewMonthReport():
+    staffID = current_user.get_id()
+    startMonth = request.args.get("startMonth")
+    endMonth = request.args.get("endMonth")
+    resultproxy = db.session.execute(text("CALL eflight.get_month_report(:p1,:p2,:p3)"),{"p1":staffID,"p2":startMonth,"p3":endMonth})
+    result [{column: float(value) if type(value) == decimal.Decimal else value for column, value in rowproxy.items()} for rowproxy in resultproxy]
+    return jsonify(result)
+
+@app.route('/eFlight/viewMonthReport')
+@login_required
+def viewMonthReport():
+    staffID = current_user.get_id()
+    startDate = request.args.get("startDate")
+    endDate = request.args.get("endDate")
+    resultproxy = db.session.execute(text("CALL eflight.get_date_report(:p1,:p2,:p3)"),{"p1":staffID,"p2":startDate,"p3":endDate})
+    result = [{column: float(value) if type(value) == decimal.Decimal else value for column, value in rowproxy.items()} for rowproxy in resultproxy][0]
+    return jsonify(result)
+
+#customer
 @app.route('/eFlight/trackSpending')
 @login_required
 def trackSpending():
