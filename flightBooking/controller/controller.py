@@ -64,7 +64,7 @@ def doregister():
         msg = db.session.execute(text("CALL eflight.create_user(:email,:name,:password,:building_number,:street,:city,:state,:phone_number,:passport_number,:passport_expiration,:passport_country,:date_of_birth)"),
                                         {"email":email, "name":name, "password":password,"building_number":building_number,"street":street,"city":city,"state":state,"phone_number":phone_number,"passport_number":passport_number,"passport_expiration":passport_expiration,"passport_country":passport_country,"date_of_birth":date_of_birth}).fetchone()[0]
     elif type == "agent":
-        email = request.form["email"]
+        email = request.form["customerEmail"]
         booking_agent_id = request.form["booking_agent_id"]
         password = request.form["password"]
         msg = db.session.execute(text("CALL eflight.create_agent(:email,:password,:id)"),{"email":email,"password":password,"id":booking_agent_id}).fetchone()[0]

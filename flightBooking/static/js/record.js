@@ -43,6 +43,7 @@ $(document).ready(function(){
 })
 
 function search(pageNumber,pageSize,callback){
+	$('.record-list-container').empty();
 	var purchase_id = $('#purchaseID').val();
 	var departure_time = $('#departureTime').val();
 	if(departure_time != ''){
