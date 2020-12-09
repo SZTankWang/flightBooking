@@ -1,5 +1,5 @@
 from sqlalchemy import text
-
+import
 from flightBooking import app,db,login
 import collections
 import decimal
@@ -250,6 +250,18 @@ def viewFrequentCustomer():
     resultproxy = db.session.execute(text("CALL eflight.most_frequent_customer(:p1)"),{"p1":staffID})
     result = [{column: float(value) if type(value) == decimal.Decimal else value for column, value in rowproxy.items()} for rowproxy in resultproxy][0]
     return jsonify(result)
+
+@app.route('/eFlight/viewBookingAgent')
+@login_required
+def viewBookingAgent():
+    staffID = current_user.get_id()
+    resultproxy1 = db.session.execute(text("CALL eflight.get_top_commission_agent(:p1,365)"),{"p1":staffID})
+    year_commission_result = [{column: float(value) if type(value) == decimal.Decimal else value for column, value in rowproxy.items()} for rowproxy in resultproxy1][0]
+    resultproxy2 = db.session.execute(text("CALL eflight.get_top_ticket_agent(:p1,30)"),{"p1":staffID})
+    month_ticket_result = [{column: float(value) if type(value) == decimal.Decimal else value for column, value in rowproxy.items()} for rowproxy in resultproxy2][0]
+    resultproxy3 = db.session.execute(text("CALL eflight.get_top_ticket_agent(:p1,365)"),{"p1":staffID})
+    year_ticket_result = [{column: float(value) if type(value) == decimal.Decimal else value for column, value in rowproxy.items()} for rowproxy in resultproxy3][0]
+    return jsonify(year_commission_result=year_commission_result,month_ticket_result=month_ticket_result,year_ticket_result=year_ticket_result)
 
 @app.route('/eFlight/trackSpending')
 @login_required
