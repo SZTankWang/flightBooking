@@ -23,6 +23,3 @@ def create_new_flights(staffID,departure_airport,departure_time,arrival_airport,
     result = db.session.execute(text("CALL eflight.create_flight(staffID,departure_airport,departure_time,arrival_airport,arrival_time,price,status,airplane_id)"),{"staffID":staffID,"departure_airport":departure_airport,"departure_time":departure_time,"arrival_airport":arrival_airport,"arrival_time":arrival_time,"price":price,"status":status,"airplane_id":airplane_id}).fetchone()
     db.session.commit()
     return result
-
-#def change_status(staffID,flight_number,status):
-def view_frequent_customer(staffID):

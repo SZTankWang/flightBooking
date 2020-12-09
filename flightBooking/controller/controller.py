@@ -1,5 +1,4 @@
 from sqlalchemy import text
-import
 from flightBooking import app,db,login
 import collections
 from datetime import timedelta
@@ -12,7 +11,7 @@ from flask_login import login_user, logout_user, current_user, login_required
 from numpy.core.arrayprint import TimedeltaFormat
 from numpy.lib.function_base import select
 from sqlalchemy.util.langhelpers import methods_equivalent
-from flightBooking.service import customerService,agentService
+from flightBooking.service import customerService,agentService,staffService
 import datetime
 from flightBooking.models.model import *
 
@@ -312,7 +311,7 @@ def viewDateReport():
 @login_required
 def compareRevenue():
     staffID = current_user.get_id()
-    resultproxy1 = db.session.execute(text("CALL eflight.revenue(30,:p1)"),{"p1":number})
+    resultproxy1 = db.session.execute(text("CALL eflight.revenue(30,:p1)"),{"p1":staffID})
     month_result = [{column: float(value) if type(value) == decimal.Decimal else value for column, value in rowproxy.items()} for rowproxy in resultproxy1]
     resultproxy2 = db.session.execute(text("CALL eflight.revenue(365,:p1)"),{"p1":staffID})
     year_result = [{column: float(value) if type(value) == decimal.Decimal else value for column, value in rowproxy.items()} for rowproxy in resultproxy2]
@@ -326,7 +325,7 @@ def viewTopDestinations():
         number = request.args.get("number")
     except:
         number = 3
-    resultproxy = db.session.execute(text("CALL eflight.get_top_destinations(30,:p1)"),{"p1":staffID,"p2":number})
+    resultproxy = db.session.execute(text("CALL eflight.get_top_destinations(30,:p1)"),{"p1":number})
     result = [{column: float(value) if type(value) == decimal.Decimal else value for column, value in rowproxy.items()} for rowproxy in resultproxy]
     return jsonify(result)
 
@@ -351,5 +350,14 @@ def view(type):
     if userType == 'staff':
         return render_template('view.html',pageType=type,username=username)
 
-
-#agent
+@app.route('/eFlight/staffViewFlights')
+@login_required
+def staffViewFlights():
+    startDate = request.args.get("startDate")
+    endDate = request.args.get("endDate")
+    departure = request.args.get("departure")
+    arrival = request.args.get("arrival")
+    status = request.args.get("status")
+    staffID =current_user.get_id()
+    result = staffService.view_my_flights(staffID,startDate=startDate,endDate=endDate,departure_city=departure,arrival_city=arrival,status=status)
+    return jsonify(result)
