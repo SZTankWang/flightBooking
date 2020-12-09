@@ -48,14 +48,14 @@ def register(type):
 def doregister():
     type = request.form["type"]
     if type == "customer":
-        email = request.form["email"]
-        name = request.form["name"]
+        email = request.form["customerEmail"]
+        name = request.form["customerName"]
         password = request.form["password"]
         building_number = request.form['building_number']
         street = request.form['street']
         city = request.form['city']
         state = request.form['state']
-        phone_number = request.form['phone_number']
+        phone_number = request.form['customerPhone']
         passport_number = request.form['passport_number']
         passport_expiration = request.form['passport_expiration']
         passport_country = reuqest.form["passport_country"]

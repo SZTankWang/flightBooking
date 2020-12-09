@@ -11,8 +11,8 @@ def check_login(type,userName,password):
     return result
 
 def get_airlines():
-    results = db.session.execute(text("SELECT * FROM eflight.airline")).fetchall()
-    return [result[0] for result in results]
+    results = db.session.execute(text("SELECT airline_name FROM eflight.airline"))
+    return [{column: float(value) if type(value) == decimal.Decimal else value for column, value in rowproxy.items()} for rowproxy in resultproxy]
 
 def search_by_num(flight_num,date):
     resultproxy = db.session.execute(text("CALL eflight.search_by_num(:p1,:p2)"),{"p1":flight_num,"p2":date})
