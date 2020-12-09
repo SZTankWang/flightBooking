@@ -274,7 +274,7 @@ def viewMonthReport():
     startMonth = request.args.get("startMonth")
     endMonth = request.args.get("endMonth")
     resultproxy = db.session.execute(text("CALL eflight.get_month_report(:p1,:p2,:p3)"),{"p1":staffID,"p2":startMonth,"p3":endMonth})
-    result [{column: float(value) if type(value) == decimal.Decimal else value for column, value in rowproxy.items()} for rowproxy in resultproxy]
+    result = [{column: float(value) if type(value) == decimal.Decimal else value for column, value in rowproxy.items()} for rowproxy in resultproxy]
     return jsonify(result)
 
 #staff

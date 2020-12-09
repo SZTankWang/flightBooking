@@ -65,11 +65,30 @@ $(document).ready(function(){
 				data:{'startDate':startDate,'endDate':endDate},
 				success:function(data){
 					console.log(data);
+					$('#amount-of-ticket').html(data['ticket_number']);
 				}
 
 			})
 
 
+		})
+
+		$('.right-search').click(function(){
+			var startMonth = $('#startDateRight').val();
+			var endMonth = $('#endDateRight').val();
+
+
+			$.ajax({
+				url:'http://127.0.0.1:5000/eFlight/viewMonthReport',
+				data:{'startMonth':startMonth,'endMonth':endMonth},
+				success:function(data){
+					console.log(data);
+					var mychart = echarts.init(document.getElementById('barchart'));
+
+					drawBarChartForReport(data,mychart);
+				}
+
+			})
 		})
 
 		}
@@ -99,4 +118,35 @@ function agentCommissionTemplate(data){
 	return html;
 }
 
+function drawBarChartForReport(data,mychart){
+	var months = [];
+	var tickets = [];
+
+
+	for(var i =0; i<data.length;i++){
+		var month = data[i]['month'];
+		var number = data[i]['ticket_number'];
+		months.push(month);
+		tickets.push(number);
+	}
+
+
+	option = {
+	    xAxis: {
+	        data: months
+	    },
+	    yAxis: {
+	    },
+	    series: [{
+	        data: tickets,
+	        type: 'bar',
+	        showBackground: true,
+	        backgroundStyle: {
+	            color: 'rgba(220, 220, 220, 0.8)'
+	        }
+	    }]
+	};
+
+	mychart.setOption(option);
+}
 
