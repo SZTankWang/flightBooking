@@ -277,9 +277,9 @@ def viewMonthReport():
     return jsonify(result)
 
 #staff
-@app.route('/eFlight/viewMonthReport')
+@app.route('/eFlight/viewDateReport')
 @login_required
-def viewMonthReport():
+def viewDateReport():
     staffID = current_user.get_id()
     startDate = request.args.get("startDate")
     endDate = request.args.get("endDate")
