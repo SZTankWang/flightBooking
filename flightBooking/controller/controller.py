@@ -64,7 +64,7 @@ def doregister():
         msg = db.session.execute(text("CALL eflight.create_user(:email,:name,:password,:building_number,:street,:city,:state,:phone_number,:passport_number,:passport_expiration,:passport_country,:date_of_birth)"),
                                         {"email":email, "name":name, "password":password,"building_number":building_number,"street":street,"city":city,"state":state,"phone_number":phone_number,"passport_number":passport_number,"passport_expiration":passport_expiration,"passport_country":passport_country,"date_of_birth":date_of_birth}).fetchone()[0]
     elif type == "agent":
-        email = request.form["email"]
+        email = request.form["customerEmail"]
         booking_agent_id = request.form["booking_agent_id"]
         password = request.form["password"]
         msg = db.session.execute(text("CALL eflight.create_agent(:email,:password,:id)"),{"email":email,"password":password,"id":booking_agent_id}).fetchone()[0]
@@ -272,15 +272,24 @@ def viewRecord():
         return jsonify(results)
 
 #customer
-@app.route('/eFlight/trackSpending')
+@app.route('/eFlight/trackDateSpending')
 @login_required
-def trackSpending():
+def trackDateSpending():
+    customerID = current_user.get_id()
+    startDate = request.args.get("startDate")
+    endDate = request.args.get("endDate")
+    result_month = customerService.date_spending(customerID,startDate,endDate)
+    return jsonify(result_month)
+
+#customer
+@app.route('/eFlight/trackMonthSpending')
+@login_required
+def trackMonthSpending():
     customerID = current_user.get_id()
     startMonth = request.args.get("startMonth")
     endMonth = request.args.get("endMonth")
-    result_total = total_spending(customerID)
-    result_month = month_spending(customerID,startMonth,endMonth)
-    return jsonify(result_total = result_total, result_month = result_month)
+    result_month = customerService.month_spending(customerID,startMonth,endMonth)
+    return jsonify(result_month)
 
 #agent
 @app.route('/eFlight/viewCommission')
