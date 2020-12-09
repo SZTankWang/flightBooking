@@ -40,7 +40,46 @@ def publicInfo():
     except:
         return render_template('publicInfo.html',pageType="publicView")
 
+@app.route('/eFlight/register/<type>')
+def register(type):
+    return render_template('register.html',type=type)
 
+@app.route('/eFlight/doRegister',methods=['POST'])
+def doregister():
+    type = request.form["type"]
+    if type == "customer":
+        email = request.form["email"]
+        name = request.form["name"]
+        password = request.form["password"]
+        building_number = request.form['building_number']
+        street = request.form['street']
+        city = request.form['city']
+        state = request.form['state']
+        phone_number = request.form['phone_number']
+        passport_number = request.form['passport_number']
+        passport_expiration = request.form['passport_expiration']
+        passport_country = reuqest.form["passport_country"]
+        date_of_birth = reuqest.form["date_of_birth"]
+        #email name password building_number street city state phone_number passport_number passport_expiration passport_country date_of_birth
+        msg = db.session.execute(text("CALL eflight.create_user(:email,:name,:password,:building_number,:street,:city,:state,:phone_number,:passport_number,:passport_expiration,:passport_country,:date_of_birth)"),
+                                        {"email":email, "name":name, "password":password,"building_number":building_number,"street":street,"city":city,"state":state,"phone_number":phone_number,"passport_number":passport_number,"passport_expiration":passport_expiration,"passport_country":passport_country,"date_of_birth":date_of_birth})
+    elif type == "agent":
+        email = request.form["email"]
+        booking_agent_id = request.form["booking_agent_id"]
+        password = request.form["password"]
+        msg = db.session.execute(text("CALL eflight.create_agent(:email,:password,:id)"),{"email":email,"password":password,"id":booking_agent_id}
+    elif type == "staff":
+        username = request.form["username"]
+        password = request.form["password"]
+        first_name = request.form["first_name"]
+        last_name = request.form["last_name"]
+        date_of_birth = request.form["date_of_birth"]
+        airline_name = request.form["airline_name"]
+        msg = db.session.execute(text("CALL eflight.create_staff(:username,:password,:first_name,:last_name,:birth,:airline)"),{"username":username,"password":password,"first_name":first_name,"last_name":last_name,"birth":date_of_birth,"airline":airline_name})
+    if msg == "registered successfully":
+        db.session.commit()
+    return jsonify(response = msg, code = 0)
+    
 @app.route('/eFlight/login/<type>')
 def gologin(type):
     # next = request.args.get('next')
