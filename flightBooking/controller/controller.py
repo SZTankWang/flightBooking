@@ -276,6 +276,7 @@ def viewMonthReport():
     result [{column: float(value) if type(value) == decimal.Decimal else value for column, value in rowproxy.items()} for rowproxy in resultproxy]
     return jsonify(result)
 
+#staff
 @app.route('/eFlight/viewMonthReport')
 @login_required
 def viewMonthReport():
