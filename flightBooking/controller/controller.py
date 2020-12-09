@@ -392,6 +392,8 @@ def changeStatus():
     new_status = request.args.get("new_status")
     flight_number = request.args.get("flight_number")
     msg,code = db.session.execute(text("CALL eflight.change_status(:p1,:p2,:p3)"),{"p1":staffID,"p2":flight_number,"p3":new_status}).fetchone()
+    if code == '0':
+        db.session.commit()
     return jsonify(response=msg,code=code)
 
 @app.route("/eFlight/addNewAirplane")
@@ -400,6 +402,8 @@ def addNewAirplane():
     seats = request.args.get("seats")
     staffID = current_user.get_id()
     msg,code = db.session.execute(text("CALL eflight.create_airplane(:p1,:p2)"),{"p1":staffID,"p2":seats}).fetchone()
+    if code == '0':
+        db.session.commit()
     return jsonify(response=msg,code=code)
 
 @app.route("/eFlight/addNewAirport")
@@ -408,4 +412,6 @@ def addNewAirport():
     airport_name = request.args.get("airport_name")
     airport_city = request.args.get("airport_city")
     msg,code = db.session.execute(text("CALL eflight.create_airport(:p1,:p2)"),{"p1":airport_name,"p2":airport_city}).fetchone()
+    if code == '0':
+        db.session.commit()
     return jsonify(response=msg,code=code)
