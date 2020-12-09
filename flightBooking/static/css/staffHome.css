@@ -117,4 +117,10 @@
 	overflow-y: scroll;
 	min-height: 10rem;
 	overflow-x: hidden;
+	flex-direction: column;
+}
+
+.passenger{
+	height:1.2rem;
+	padding-left:0.8rem;
 }

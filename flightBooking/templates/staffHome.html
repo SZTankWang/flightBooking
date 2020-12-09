@@ -8,6 +8,9 @@
 {% block header %}
 <form style="display: none;">
 	<input type="text" id="select-status">
+	<input type="text" id="selected-flightNum">
+	<input type="text" id="selected-airlineName">
+	<input type="text" id="update-status">
 </form>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -131,7 +134,7 @@
 					      <option value=2><a href="">arrived</a></option>
 
 					      <option value=3><a href="">delayed</a></option>
-					      <option value=4><a href="">delayed</a></option>
+					      <option value=4><a href="">cancelled</a></option>
 
 				    </select>				
 				</div>	
@@ -199,18 +202,18 @@
 		<label for="change-state">change-state</label>
 		<div class="select-wrapper">
 		    <select class="status-select " name="change-state" id="change-state">
-			      <option class="in-dialog"><a href="">delayed</a></option>
-			      <option class="in-dialog"><a href="">arrived</a></option>
-			      <option class="in-dialog"><a href="">cancelled</a></option>
+			      <option class="in-dialog" value=3><a href="">delayed</a></option>
+			      <option class="in-dialog" value=2><a href="">arrived</a></option>
+			      <option class="in-dialog" value=4><a href="">cancelled</a></option>
 
-			      <option class="in-dialog"><a href="">on time</a></option>
+			      <option class="in-dialog" value=1><a href="">departured</a></option>
 
 		    </select>				
 		</div>
 	</div>
 
 	<div class="my-container btn-container dialog-btn">
-		<button class="btn">update</button>
+		<button class="btn do-update" onclick="doUpdate(this)">update</button>
 	</div>
 </div>
 
@@ -229,7 +232,13 @@
 		<p>passengers</p>
 	</div>
 
-	<div class="my-container info-dialog-container passenger-container"></div>
+	<div class="my-container info-dialog-container passenger-container">
+<!-- 		<div class="my-container passenger">
+			<p>passenger</p>
+		</div>
+ -->
+
+	</div>
 </div>
 
 <script type="text/javascript" src="/static/js/staffHome.js"></script>
