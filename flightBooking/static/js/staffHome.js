@@ -212,6 +212,11 @@ function getPassengers(){
 		data:{'flight_number':flight_num},
 		success:function(res){
 			console.log(res);
+			$('.passenger-container').empty();
+			for(var i=0;i<res.length;i++){
+				var html = renderPassenger(res[i]);
+				$('.passenger-container').append(html);
+			}
 		}
 	})
 }

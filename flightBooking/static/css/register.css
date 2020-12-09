@@ -41,6 +41,7 @@ a{
 .back-btn-wrapper{
 	position:absolute;
 	right:0;
+	width: fit-content;
 }
 
 .switch-panel > p{
@@ -76,4 +77,8 @@ a{
 	width: 100%;
 	background:orange;
 	color:white;
+}
+
+#register-form{
+	width:100%;
 }

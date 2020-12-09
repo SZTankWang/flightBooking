@@ -12,8 +12,34 @@ $(document).ready(function(){
 	$('#airline_name').autocomplete({
 		source:availAirlines
 	});
+
+	$('#register-btn').click(function(){
+		loadFormToData();
+	})
 })
 
 function backToLogin(th){
-	window.location.replace("http://localhost:5000/eFlight/login/customer")
+	window.location.replace("http://127.0.0.1:5000/eFlight/login/customer")
+}
+
+function loadFormToData(){
+	var form= document.getElementById('register-form');
+	var data = new FormData(form);
+	return data;	
+}
+
+function register(th){
+	var userType = $('#type').val();
+	var data = loadFormToData();
+	data.append('type',userType);
+	$.ajax({
+		url:'http://127.0.0.1:5000/eFlight/doRegister',
+		type:'POST',
+		data:data,
+		contentType:false,
+		processData:false,
+		success:function(res){
+			console.log(res);
+		}
+	})
 }

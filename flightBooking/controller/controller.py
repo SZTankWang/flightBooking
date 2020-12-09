@@ -67,7 +67,7 @@ def doregister():
         email = request.form["email"]
         booking_agent_id = request.form["booking_agent_id"]
         password = request.form["password"]
-        msg = db.session.execute(text("CALL eflight.create_agent(:email,:password,:id)"),{"email":email,"password":password,"id":booking_agent_id}
+        msg = db.session.execute(text("CALL eflight.create_agent(:email,:password,:id)"),{"email":email,"password":password,"id":booking_agent_id})
     elif type == "staff":
         username = request.form["username"]
         password = request.form["password"]

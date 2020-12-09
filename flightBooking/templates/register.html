@@ -7,6 +7,9 @@
 
 
 {% block content %}
+<form style="display: none">
+	<input type="text" id="type" value= {{ type }}>
+</form>
 <div class="my-container outer-container">
 	<div class="my-container input-fields-container">
 		<div class="my-container switch-panel">
@@ -36,6 +39,7 @@
 
 
 		<div class="my-container input-row-wrapper">
+			<form id="register-form">
 			{% if type != 'staff' %}
 			<div class="my-container input-field-row">
 			
@@ -152,10 +156,10 @@
 
 		{% endif %}
 		</div>
-
+		</form>
 	</div>
 
-	<div class="my-container register-btn-wrapper"><button id="register-btn">register</button></div>
+	<div class="my-container register-btn-wrapper"><button id="register-btn" onclick="register(this)">register</button></div>
 </div>
 
 <script type="text/javascript" src="/static/js/register.js"></script>
