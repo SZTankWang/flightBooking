@@ -4,7 +4,7 @@ from flightBooking import db
 
 
 def get_id_by_email(email):
-    result = db.session.execute(text("SELECT eflight.agent_get_id_by_email(:p1)"),{"p1":email}).fetchone()
+    result = db.session.execute(text("SELECT eflight.agent_get_id_by_email(:p1)"),{"p1":email}).fetchone()[0]
     return result
 def purchase_ticket(passenger_name_list,passenger_id_list,passenger_phone_list,customer_email,airline_name,flight_number,agent_id):
     result = db.session.execute(text("CALL eflight.insert_ticket(:p1,:p2,:p3,:p4,:p5,:p6,:p7)"),
@@ -24,7 +24,7 @@ def view_record(current_id,customerEmail,purchaseID,departDate,arriveDate,flight
     if flight_status != "":
         sql_statement += "AND status = (:flight_status)"
 
-    resultproxy = db.session.execute(text(sql_statement),{"current_id":current_id,"customerEmail":customerEmail,"purchaseID":purchaseID,"departDate":departDate,"arriveDate":arriveDate,"status":flight_status})
+    resultproxy = db.session.execute(text(sql_statement),{"current_id":get_id_by_email(current_id),"customerEmail":customerEmail,"purchaseID":purchaseID,"departDate":departDate,"arriveDate":arriveDate,"status":flight_status})
     return [{column: value for column, value in rowproxy.items()} for rowproxy in resultproxy]
 
 # def view_commission(agentID,startDate,endDate):
