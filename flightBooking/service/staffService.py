@@ -2,7 +2,19 @@ from sqlalchemy import text
 
 from flightBooking import db
 
-def view_my_flights(staffID,startDate,endDate,departure_city,arrival_city,status):
-    sql_statement =  'SELECT airline_name,flight_num,departure_airport,return_city(departure_airport) as departure_city, departure_time,arrival_airport,return_city(arrival_airport) as arrival_city,arrival_time, status, price FROM flight NATURAL JOIN airline_staff WHERE username = staffID'
-    resultproxy = db.session.execute(text("CALL eflight.staff_view_flights(:p1)"),{"staffID":staffID,"purchaseID":purchaseID,"startDate":startDate,"endDate":endDate,"status":status})
-    return [{column: value for column, value in rowproxy.items()} for rowproxy in resultproxy]
+def view_my_flights(staffID,startDate="",endDate="",departure_city="",arrival_city="",status=""):
+    sql_statement =  'SELECT airline_name,flight_num,departure_airport,return_city(departure_airport) as departure_city, departure_time,arrival_airport,return_city(arrival_airport) as arrival_city,arrival_time, status, price FROM flight NATURAL JOIN airline_staff WHERE username = (:staffID)'
+    if startDate == "" and endDate == "":
+        sql_statement += " AND (datediff(DATE(departure_time),DATE(now())) between 0 and 30)"
+    elif startDate == "":
+        sql_statement += " AND (DATE(departure_time) <= (:endDate))"
+    elif endDate == "":
+        sql_statement += " AND (DATE(departure_time) >= (:startDate))"
+    if departure_city != "":
+        sql_statement += " AND ((:departure_city) like CONCAT('%',return_city(departure_airport),'%') OR ((:departure_city) like CONCAT('%',departure_airport,'%')))"
+    if arrival_city != "":
+        sql_statement += " AND ((:arrival_city) like CONCAT('%',return_city(arrival_airport),'%') OR ((:arrival_city) like CONCAT('%',arrival_airport,'%')))"
+    if status != "":
+        sql_statement += " AND status = (:status)"
+    resultproxy = db.session.execute(text(sql_statement),{"staffID":staffID,"startDate":startDate,"endDate":endDate,"departure_city":departure_city,"arrival_city":arrival_city,"status":status})
+    return [{column: float(value) if type(value) == decimal.Decimal else value for column, value in rowproxy.items()} for rowproxy in resultproxy]
