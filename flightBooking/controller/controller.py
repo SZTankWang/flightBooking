@@ -271,3 +271,4 @@ def view(type):
     username = current_user.get_id()
     if userType == 'staff':
         return render_template('view.html',pageType=type,username=username)
+

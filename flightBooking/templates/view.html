@@ -55,6 +55,19 @@
 {{super()}}
 {% endblock %}
 {% block content %}
-<div class="my-container view-container"></div>
+<div class="my-container view-container">
+	{% if pageType == 'customer' %}
+	<div class="my-container">
+		<p>Most frequent customer:</p>
+		<h5 id="top-customer"></h5>
+	</div>
+
+	{% endif %}
+	
+
+</div>
+
+
+<script type="text/javascript" src="/static/js/view.js"></script>
 
 {% endblock %}
