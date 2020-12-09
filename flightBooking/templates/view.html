@@ -8,7 +8,7 @@
 {% block header %}
 <form style="display: none;">
 	<input type="text" id= "viewType" value = {{ pageType }}>
-	<input type="text">
+	<input type="text" id="userType" value ={{ userType }}>
 </form>
 
 
@@ -130,7 +130,11 @@
 		</div>	
 
 		<div class="my-container report-container">
+			{% if userType=='staff' %}
 			<h5>total amount of ticket sold</h5>
+			{% elif userType == 'customer' %}
+			<h5>my spending in a range</h5>
+			{% endif %}			
 			<div class="my-container result-container">
 				<h5 id="amount-of-ticket"></h5>
 			</div>
@@ -153,8 +157,11 @@
 			</div>
 		</div>	
 		<div class="my-container report-container">
-	
+				{% if userType=='staff' %}
 				<h5>Month wise ticket sold</h5>
+				{% elif userType=='customer' %}
+				<h5>Month wise spending</h5>
+				{% endif %}
 				<div class="my-container" id="barchart">
 					
 				</div>			
@@ -207,7 +214,10 @@
 	{% endif %}	
 </div>
 
-
+{% if userType == 'staff' %}
 <script type="text/javascript" src="/static/js/view.js"></script>
+{% elif userType=='customer' %}
+<script type="text/javascript" src="/static/js/customerSpending.js"></script>
 
+{% endif %}
 {% endblock %}

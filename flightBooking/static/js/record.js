@@ -1,7 +1,7 @@
 
 $(document).ready(function(){
 	//页面初始化 搜索
-	// search();
+	search();
 
 	$('#search-btn').button();
 
@@ -10,40 +10,90 @@ $(document).ready(function(){
 
 	var type = $('#pageType').val();
 	var userName = $('#userName').val();
+	var pageType = $('#viewType').val();
 
-	var pagination = $('.pagination-wrapper');
-	$('.pagination-wrapper').pagination({
-		dataSource:function(done){
-			search(1,5,done);
+	// var pagination = $('.pagination-wrapper');
 
-		},
-		ajax:{data:{userName: userName}},
-		pageSize:5,
-		totalNumberLocator:function(response){
-			return response['total_number'];
-		},
-		afterPageOnClick:function(){
-			//获取当前页
+	
+	// 	$('.pagination-wrapper').pagination({
+	// 		dataSource:function(done){
+	// 			search(1,5,done);
 
-			var currPage = pagination.pagination("getSelectedPageNum");
-			$('#pageNumber').val(currPage);
-			var pageSize = $('#pageSize').val();
-			search(currPage,pageSize);
-		},
-		callback:function(data,pagination){
-			$('.record-list-container').empty();
-			for(var i =0;i<data.length;i++){
-				var html = recordTemplate(data[i]);
-				$('.record-list-container').append(html);
-			}
+	// 		},
+	// 		ajax:{data:{userName: userName}},
+	// 		pageSize:5,
+	// 		totalNumberLocator:function(response){
+	// 			return response['total_number'];
+	// 		},
+	// 		afterPageOnClick:function(){
+	// 			//获取当前页
+
+	// 			var currPage = pagination.pagination("getSelectedPageNum");
+	// 			$('#pageNumber').val(currPage);
+	// 			var pageSize = $('#pageSize').val();
+	// 			search(currPage,pageSize);
+	// 		},
+	// 		callback:function(data,pagination){
+	// 			$('.record-list-container').empty();
+	// 			for(var i =0;i<data.length;i++){
+	// 				var html = recordTemplate(data[i]);
+	// 				$('.record-list-container').append(html);
+	// 			}
+	// 		}
+
+	// })
+
+	
+
+
+	if(pageType == 'report'){
+		console.log('hi');
+		$('.btn').button();
+
+		$('.left-search').click(function(){
+			var startDate = $('#leftStartDate').val();
+			var endDate = $('#leftEndDate').val();
+
+
+			$.ajax({
+				url:'http://127.0.0.1:5000/eFlight/trackDateSpending',
+				data:{'startDate':startDate,'endDate':endDate},
+				success:function(data){
+					console.log(data);
+					$('#amount-of-ticket').html(data['ticket_number']);
+				}
+
+			})
+
+
+		})
+
+		$('.right-search').click(function(){
+			var startMonth = $('#startDateRight').val();
+			var endMonth = $('#endDateRight').val();
+
+
+			$.ajax({
+				url:'http://127.0.0.1:5000/eFlight/trackMonthSpending',
+				data:{'startMonth':startMonth,'endMonth':endMonth},
+				success:function(data){
+					console.log(data);
+					var mychart = echarts.init(document.getElementById('barchart'));
+
+					drawBarChartForReport(data,mychart);
+				}
+
+			})
+		})
+
 		}
 
-})
 
 })
 
-function search(pageNumber,pageSize,callback){
+function search(){
 	$('.record-list-container').empty();
+
 	var purchase_id = $('#purchaseID').val();
 	var departure_time = $('#departureTime').val();
 	if(departure_time != ''){
@@ -57,13 +107,27 @@ function search(pageNumber,pageSize,callback){
 	var userType = $('#userType').val();
 	var pageNumber = pageNumber;
 	var pageSize = pageSize;
-	var data = {'purchase_id':purchase_id,'departure_time':departure_time,'arrival_time':arrival_time,'status':status,'userType':userType};
+	var customer_email = $('#customer_email').val();
+	var data = null;
+	if(userType == 'agent'){
+		 data = {'customer_email':customer_email,'purchase_id':purchase_id,'departure_time':departure_time,'arrival_time':arrival_time,'status':status,'userType':userType};
+	
+	}
+	if(userType == 'customer'){
+		 data = {'purchase_id':purchase_id,'departure_time':departure_time,'arrival_time':arrival_time,'status':status,'userType':userType};
+
+
+	}
 
 	$.ajax({
 		url:'http://127.0.0.1:5000/eFlight/queryPurchaseRecord',
 		data:data,
-		success:function(response){
-			callback(response);
+		success:function(res){
+				for(var i =0;i<res.length;i++){
+				var html = recordTemplate(res[i]);
+				$('.record-list-container').append(html);
+		}
+
 		}
 	})
 	
@@ -136,4 +200,37 @@ function flightStatusParser(status){
 	if(status == "4"){
 		return "已取消";
 	}
+}
+
+
+function drawBarChartForReport(data,mychart){
+	var months = [];
+	var tickets = [];
+
+
+	for(var i =0; i<data.length;i++){
+		var month = data[i]['month'];
+		var number = data[i]['ticket_number'];
+		months.push(month);
+		tickets.push(number);
+	}
+
+
+	option = {
+	    xAxis: {
+	        data: months
+	    },
+	    yAxis: {
+	    },
+	    series: [{
+	        data: tickets,
+	        type: 'bar',
+	        showBackground: true,
+	        backgroundStyle: {
+	            color: 'rgba(220, 220, 220, 0.8)'
+	        }
+	    }]
+	};
+
+	mychart.setOption(option);
 }

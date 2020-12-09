@@ -271,11 +271,12 @@ def viewRecord():
         results = agentService.view_record(current_id,customer_email,purchase_id,departDate,arriveDate,status)
         return jsonify(results)
 
-@app.route('/eFlight/customerSpending')
+@app.route('/eFlight/record/customerSpending')
 @login_required
 def customerSpending():
     username = current_user.get_id()
-    return render_template('view.html',pageType="report",username=username)
+    userType = current_user.type
+    return render_template('view.html',pageType="report",username=username,userType = userType)
 #customer
 @app.route('/eFlight/trackDateSpending')
 @login_required

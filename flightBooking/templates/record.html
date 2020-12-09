@@ -33,6 +33,16 @@
 		<div class="my-container record-content  record-filter-header">
 
 			{% if pageType == "purchaseRecord" %}
+				{% if type == 'agent' %}
+					<div class="my-container record-filter-container">
+						<div class="my-container filter-text-wrapper">
+							<p>customer email</p>
+						</div>
+						<input type="text" name="customer_email" id="customer_email">
+					</div>
+
+
+				{% endif %}
 			<!--查看购买记录  -->
 			<div class="my-container record-filter-container">
 				<div class="my-container filter-text-wrapper">

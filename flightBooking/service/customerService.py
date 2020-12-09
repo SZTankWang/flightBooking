@@ -51,7 +51,7 @@ def view_record(current_id,purchaseID='',departDate='',arriveDate='',flight_stat
 
 def date_spending(current_id,startDate,endDate):
     result = db.session.execute(text("CALL eflight.get_date_spending(:p1,:p2,:p3)"),{"p1":current_id,"p2":startDate,"p3":endDate}).fetchone()[0]
-    return result
+    return float(result)
 
 def month_spending(current_id,startMonth,endMonth):
     resultproxy = db.session.execute(text("CALL eflight.get_month_spending(:p1,:p2,:p3)"),{"p1":current_id,"p2":startMonth,"p3":endMonth})

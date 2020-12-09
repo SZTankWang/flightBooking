@@ -188,7 +188,7 @@ function doSearch(){
 				for(var i=0;i<data.length;i++){
 					var html = listItemTemplate(data[i]);
 					$('.search-result-list').append(html);
-				}
+				};
 				$('.outer-wrapper').LoadingOverlay("hide");
 	
 			}
@@ -200,8 +200,15 @@ function doSearch(){
 			url:'http://127.0.0.1:5000/eFlight/search',
 			data:data,
 			success:function(data){
+
 				console.log(data);
 				$('.list-item').empty();
+				for(var i=0;i<data.length;i++){
+					var html = listItemTemplate(data[i]);
+					$('.search-result-list').append(html);
+				};
+
+				$('.outer-wrapper').LoadingOverlay("hide");
 
 			}
 		})
