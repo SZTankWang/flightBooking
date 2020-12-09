@@ -60,3 +60,25 @@
 	width: 600px;
 	height:400px;
 }
+
+.chart-container{
+	height:50rem;
+	width:100%;
+}
+
+.destination-view-container{
+	flex-direction: column;
+	align-items: unset;
+	padding-left:2rem;
+	padding-top:2rem;
+}
+
+.destination-container{
+	flex-direction: row;
+	justify-content: space-around;
+	padding-top:5rem;
+}
+.strong-text-container{
+	font-size:4rem;
+	font-weight: 500;
+}

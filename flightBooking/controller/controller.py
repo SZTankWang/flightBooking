@@ -294,7 +294,7 @@ def viewMonthReport():
     startMonth = request.args.get("startMonth")
     endMonth = request.args.get("endMonth")
     resultproxy = db.session.execute(text("CALL eflight.get_month_report(:p1,:p2,:p3)"),{"p1":staffID,"p2":startMonth,"p3":endMonth})
-    result [{column: float(value) if type(value) == decimal.Decimal else value for column, value in rowproxy.items()} for rowproxy in resultproxy]
+    result = [{column: float(value) if type(value) == decimal.Decimal else value for column, value in rowproxy.items()} for rowproxy in resultproxy]
     return jsonify(result)
 
 #staff
@@ -313,7 +313,7 @@ def viewDateReport():
 @login_required
 def compareRevenue():
     staffID = current_user.get_id()
-    resultproxy1 = db.session.execute(text("CALL eflight.revenue(30,:p1)"),{"p1":number})
+    resultproxy1 = db.session.execute(text("CALL eflight.revenue(30,:p1)"),{"p1":staffID})
     month_result = [{column: float(value) if type(value) == decimal.Decimal else value for column, value in rowproxy.items()} for rowproxy in resultproxy1]
     resultproxy2 = db.session.execute(text("CALL eflight.revenue(365,:p1)"),{"p1":staffID})
     year_result = [{column: float(value) if type(value) == decimal.Decimal else value for column, value in rowproxy.items()} for rowproxy in resultproxy2]
@@ -323,11 +323,11 @@ def compareRevenue():
 @app.route('/eFlight/viewTopDestinations')
 @login_required
 def viewTopDestinations():
-    try:
+    if request.args.get('number'):
         number = request.args.get("number")
-    except:
+    else:
         number = 3
-    resultproxy = db.session.execute(text("CALL eflight.get_top_destinations(30,:p1)"),{"p1":staffID,"p2":number})
+    resultproxy = db.session.execute(text("CALL eflight.get_top_destinations(30,:p1)"),{"p1":number})
     result = [{column: float(value) if type(value) == decimal.Decimal else value for column, value in rowproxy.items()} for rowproxy in resultproxy]
     return jsonify(result)
 

@@ -93,10 +93,60 @@ $(document).ready(function(){
 
 		}
 
-	
+		if(pageType == 'revenue'){
+			$.ajax({
+				url:'http://127.0.0.1:5000/eFlight/compareRevenue',
+				success:function(data){
+					console.log(data);
+					var mychart1 = echarts.init(document.getElementById('chart1'));
+					var mychart2 = echarts.init(document.getElementById('chart2'));
+					drawPieChartForRevenue(data,mychart1,mychart2);
+				}
 
+			})
+		}
+
+		
+		if(pageType == 'topDestination'){
+			$.ajax({
+				url:'http://127.0.0.1:5000/eFlight/viewTopDestinations',
+				success:function(data){
+					console.log(data);
+					var destination = '';
+					var count = '';
+					for(var i =0;i<data.length;i++){
+						dest = strongTextTemplate1(data[i]);
+						cnt = strongTextTemplate2(data[i]);
+						destination += dest;
+						count+= cnt;
+					}	
+					$('.dst-container').append(destination);
+					$('.count-container').append(count);
+				}
+
+			})
+		}
 
 })
+function strongTextTemplate1(data){
+	var html = '';
+	html += '<div class="strong-text-container">';
+	html += '<p>' + data['airport_city'] + '</p>';
+	html += '</div>';
+	return html;
+
+}
+
+function strongTextTemplate2(data){
+	var html = '';
+	html += '<div class="strong-text-container">';
+	html += '<p>' + data['count(ticket_id)'] + '</p>';
+	html += '</div>';
+	return html;
+
+}
+
+
 function agentMonthTemplate(data){
 	var html ='';
 	html += '<div class="my-container agent-container">';
@@ -149,4 +199,140 @@ function drawBarChartForReport(data,mychart){
 
 	mychart.setOption(option);
 }
+
+
+function drawPieChartForRevenue(data,mychart1,mychart2){
+
+	var data1 = data['month_result'][0];
+	var data2 = data['year_result'][0];	
+
+	dataChart1 = [{value:data1['agent_num_ticket'],name:'agent revenue'},{value:data1['customer_num_ticket'],name:'customer revenue'}];
+	dataChart2 = [{value:data2['agent_num_ticket'],name:'agent revenue'},{value:data2['customer_num_ticket'],name:'customer revenue'}];
+
+
+	option1 = {
+    backgroundColor: '#f1f1f1',
+
+    title: {
+        text: 'revenue comparison for last month',
+        left: 'center',
+        top: 20,
+        textStyle: {
+            color: '#225DA3',
+            weight:500
+        }
+    },
+
+    tooltip: {
+        trigger: 'item',
+        formatter: '{a} <br/>{b} : {c} ({d}%)'
+    },
+
+    visualMap: {
+        show: false,
+        min: 80,
+        max: 600,
+        inRange: {
+            colorLightness: [0, 1]
+        }
+    },
+    series: [
+        {
+            name: 'buyer type',
+            type: 'pie',
+            radius: '55%',
+            center: ['50%', '50%'],
+            data: dataChart1.sort(function (a, b) { return a.value - b.value; }),
+            roseType: 'radius',
+            label: {
+                color: 'rgba(23, 111, 211, 0.3)'
+            },
+            labelLine: {
+                lineStyle: {
+                    color: 'rgba(23, 111, 211, 0.3)'
+                },
+                smooth: 0.2,
+                length: 10,
+                length2: 20
+            },
+            itemStyle: {
+                color: '#225DA3',
+                shadowBlur: 200,
+                shadowColor: 'rgba(0, 0, 0, 0.5)'
+            },
+
+            animationType: 'scale',
+            animationEasing: 'elasticOut',
+            animationDelay: function (idx) {
+                return Math.random() * 200;
+            }
+        }
+    ]
+};
+
+option2 = {
+    backgroundColor: '#f1f1f1',
+
+    title: {
+        text: 'revenue comparison for last year',
+        left: 'center',
+        top: 20,
+        textStyle: {
+            color: '#225DA3',
+            weight:500
+        }
+    },
+
+    tooltip: {
+        trigger: 'item',
+        formatter: '{a} <br/>{b} : {c} ({d}%)'
+    },
+
+    visualMap: {
+        show: false,
+        min: 80,
+        max: 600,
+        inRange: {
+            colorLightness: [0, 1]
+        }
+    },
+    series: [
+        {
+            name: 'buyer type',
+            type: 'pie',
+            radius: '55%',
+            center: ['50%', '50%'],
+            data:dataChart2.sort(function (a, b) { return a.value - b.value; }),
+            roseType: 'radius',
+            label: {
+                color: 'rgba(23, 111, 211, 0.3)',
+                weight:600
+            },
+            labelLine: {
+                lineStyle: {
+                    color: 'rgba(23, 111, 211, 0.3)'
+                },
+                smooth: 0.2,
+                length: 10,
+                length2: 20
+            },
+            itemStyle: {
+                color: '#225DA3',
+                shadowBlur: 200,
+                shadowColor: 'rgba(0, 0, 0, 0.5)'
+            },
+
+            animationType: 'scale',
+            animationEasing: 'elasticOut',
+            animationDelay: function (idx) {
+                return Math.random() * 200;
+            }
+        }
+    ]
+};
+			mychart1.setOption(option1);
+			mychart2.setOption(option2);
+}
+
+
 
