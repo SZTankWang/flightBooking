@@ -1,5 +1,5 @@
 from sqlalchemy import text
-import
+
 from flightBooking import app,db,login
 import collections
 import decimal
