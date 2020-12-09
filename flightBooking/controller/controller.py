@@ -13,7 +13,7 @@ from flask_login import login_user, logout_user, current_user, login_required
 from numpy.core.arrayprint import TimedeltaFormat
 from numpy.lib.function_base import select
 from sqlalchemy.util.langhelpers import methods_equivalent
-from flightBooking.service import customerService,agentService
+from flightBooking.service import customerService,agentService,staffService
 import datetime
 from flightBooking.models.model import *
 
@@ -351,3 +351,6 @@ def view(type):
     username = current_user.get_id()
     if userType == 'staff':
         return render_template('view.html',pageType=type,username=username)
+
+
+#agent
