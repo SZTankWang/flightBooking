@@ -438,7 +438,7 @@ def addNewFlight():
     price = request.form["price"]
     status = 0
     msg,code = staffService.create_new_flights(staffID,departure_airport,departure_datetime,arrival_airport,arrival_datetime,price,status)
-    return msg,code
+    return jsonify(msg=msg,code=code)
 
 @app.route('/eFlight/returnAirport')
 @login_required
