@@ -427,13 +427,17 @@ def staffViewFlights():
 @login_required
 def addNewFlight():
     staffID = current_user.get_id()
-    departure_airport = request.args.get("departure_airport")
-    arrival_airport = request.args.get("arrival_airport")
-    departure_time = request.args.get("departure_time")
-    arrival_time = request.args.get("arrival_time")
-    price = request.args.get("price")
-    status = request.args.get("status")
-    result = staffService.create_new_flights(staffID,departure_airport,departure_time,arrival_airport,arrival_time,price,status)
+    departure_airport = request.form["departure_airport"]
+    arrival_airport = request.form["arrival_airport"]
+    departure_date = request.form["departure_date"]
+    arrival_date = request.form["arrival_date"]
+    departure_time = request.form["departure_time"]
+    arrival_time = request.form["arrival_time"]
+    departure_datetime = datetime.datetime.strptime(departure_date+" "+departure_time,"%Y-%m-%d %H:%M%p")
+    arrival_datetime = datetime.datetime.strptime(arrival_date+" "+arrival_time,"%Y-%m-%d %H:%M%p")
+    price = request.form["price"]
+    status = 0
+    result = staffService.create_new_flights(staffID,departure_airport,departure_datetime,arrival_airport,arrival_datetime,price,status)
     return result
 
 @app.route('/eFlight/returnAirport')
