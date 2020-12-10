@@ -1,6 +1,8 @@
 $(document).ready(function(){
 	$('.btn').button();
-	$('.date-input').datepicker();
+	$('.date-input').datepicker({
+		dateFormat:'yy-mm-dd'
+	});
 
 
    		var dateFormat = "mm/dd/yy",
@@ -8,7 +10,7 @@ $(document).ready(function(){
         .datepicker({
           defaultDate: "+1w",
           changeMonth: true,
-          numberOfMonths: 3
+          numberOfMonths: 1
         })
         .on( "change", function() {
           to.datepicker( "option", "minDate", getDate( this ) );
@@ -16,7 +18,7 @@ $(document).ready(function(){
       to = $( "#arrival-date" ).datepicker({
         defaultDate: "+1w",
         changeMonth: true,
-        numberOfMonths: 3
+        numberOfMonths: 1
       })
       .on( "change", function() {
         from.datepicker( "option", "maxDate", getDate( this ) );
