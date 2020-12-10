@@ -92,6 +92,7 @@ $(document).ready(function(){
 })
 
 function search(){
+	$('.outer-wrapper').LoadingOverlay('show');
 	$('.record-list-container').empty();
 
 	var purchase_id = $('#purchaseID').val();
@@ -126,10 +127,12 @@ function search(){
 				for(var i =0;i<res.length;i++){
 				var html = recordTemplate(res[i]);
 				$('.record-list-container').append(html);
+
 		}
 
 		}
 	})
+	$('.outer-wrapper').LoadingOverlay('hide');
 	
 }
 

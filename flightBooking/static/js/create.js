@@ -54,6 +54,19 @@ $(document).ready(function(){
     		createFlight();
     	})
     }
+
+    if(pageType == 'airplane'){
+     	$('.submit-btn').click(function(){
+    		createPlane();
+    	})   	
+    }
+
+    if(pageType == 'airport'){
+     	$('.submit-btn').click(function(){
+    		createAirport();
+    	})   	
+    }
+
 })
 
 function createFlight(){
@@ -68,6 +81,79 @@ function createFlight(){
 	  	contentType: false,
 	  	success:function(data){
 	  		console.log(data);
+	  		if(data == "flight created successfully!"){
+				var height = $(window).height();
+				var width = $(window).width();
+	  			$('.success').dialog({
+					width:width*0.5,
+					height:height*0.4,
+					open:function(event,ui){
+						setTimeout(function(){
+							window.location.href = 'http://127.0.0.1:5000/eFlight/home';
+						},1500);
+					}
+
+				});
+	  		}
 	  	}
 	})
+}
+
+function createPlane(){
+	var form = document.getElementById("plane-form");
+	var data = new FormData(form);
+	$.ajax({
+		url:'http://127.0.0.1:5000/eFlight/addNewAirplane',
+		data:data,
+		type:'POST',
+	  	processData: false,
+	  	contentType: false,
+	  	success:function(data){
+	  		console.log(data);
+	  		if(data['code'] ==0){
+				var height = $(window).height();
+				var width = $(window).width();
+	  			$('.success').dialog({
+					width:width*0.5,
+					height:height*0.4,
+					open:function(event,ui){
+						setTimeout(function(){
+							window.location.href = 'http://127.0.0.1:5000/eFlight/home';
+						},1500);
+					}
+
+				});
+	  		}
+	  	}
+	})	
+}
+
+function createAirport(){
+	var form = document.getElementById("airport-form");
+	var data = new FormData(form);
+	$.ajax({
+		url:'http://127.0.0.1:5000/eFlight/addNewAirport',
+		data:data,
+		type:'POST',
+	  	processData: false,
+	  	contentType: false,
+	  	success:function(data){
+	  		console.log(data);
+	  		if(data['code'] ==0){
+				var height = $(window).height();
+				var width = $(window).width();
+	  			$('.success').dialog({
+					width:width*0.5,
+					height:height*0.4,
+					open:function(event,ui){
+						setTimeout(function(){
+							window.location.href = 'http://127.0.0.1:5000/eFlight/home';
+						},1500);
+					}
+
+				});
+	  		}
+	  	}
+	})	
+
 }

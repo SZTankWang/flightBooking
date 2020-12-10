@@ -25,14 +25,14 @@
 	height:fit-content;
 	padding-left:3rem;
 	padding-right:3rem;
-	background:grey;
+	background:#f1f1f1;
 	flex-direction: column;
 }
 
 .list-container-comp{
 	flex-direction: row;
 	min-height:4rem;
-	background: #f1f1f1;
+	background: white;
 	margin-top:2rem;
 	min-width:fit-content;
 }
@@ -62,6 +62,7 @@
 	background: wheat;
 	padding-left:2rem;
 	justify-content: space-between;
+	margin-top:0.8rem;
 }
 
 .card-column{

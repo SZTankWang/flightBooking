@@ -408,7 +408,7 @@ def view(type):
     userType = current_user.type
     username = current_user.get_id()
     if userType == 'staff':
-        return render_template('view.html',pageType=type,username=username)
+        return render_template('view.html',pageType=type,username=username,userType = userType)
 
 
 @app.route('/eFlight/staffViewFlights')
@@ -467,21 +467,21 @@ def getInfo():
     result = [{column: float(value) if type(value) == decimal.Decimal else value for column, value in rowproxy.items()} for rowproxy in resultproxy]
     return jsonify(result)
 
-@app.route("/eFlight/addNewAirplane")
+@app.route("/eFlight/addNewAirplane",methods=["POST"])
 @login_required
 def addNewAirplane():
-    seats = request.args.get("seats")
+    seats = request.form["seats"]
     staffID = current_user.get_id()
     msg,code = db.session.execute(text("CALL eflight.create_airplane(:p1,:p2)"),{"p1":staffID,"p2":seats}).fetchone()
     if code == 0:
         db.session.commit()
     return jsonify(response=msg,code=code)
 
-@app.route("/eFlight/addNewAirport")
+@app.route("/eFlight/addNewAirport",methods=["POST"])
 @login_required
 def addNewAirport():
-    airport_name = request.args.get("airport_name")
-    airport_city = request.args.get("airport_city")
+    airport_name = request.form["airport_name"]
+    airport_city = request.form["airport_city"]
     msg,code = db.session.execute(text("CALL eflight.create_airport(:p1,:p2)"),{"p1":airport_name,"p2":airport_city}).fetchone()
     if code == 0:
         db.session.commit()

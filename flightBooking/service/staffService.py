@@ -21,6 +21,6 @@ def view_my_flights(staffID,startDate="",endDate="",departure_city="",arrival_ci
     return [{column: float(value) if type(value) == decimal.Decimal else value for column, value in rowproxy.items()} for rowproxy in resultproxy]
 
 def create_new_flights(staffID,departure_airport,departure_time,arrival_airport,arrival_time,price,status):
-    result = db.session.execute(text("CALL eflight.create_flight(staffID,departure_airport,departure_time,arrival_airport,arrival_time,price,status)"),{"staffID":staffID,"departure_airport":departure_airport,"departure_time":departure_time,"arrival_airport":arrival_airport,"arrival_time":arrival_time,"price":price,"status":status}).fetchone()
+    result = db.session.execute(text("CALL eflight.create_flight(:staffID,:departure_airport,:departure_time,:arrival_airport,:arrival_time,:price,:status)"),{"staffID":staffID,"departure_airport":departure_airport,"departure_time":departure_time,"arrival_airport":arrival_airport,"arrival_time":arrival_time,"price":price,"status":status}).fetchone()[0]
     db.session.commit()
     return result

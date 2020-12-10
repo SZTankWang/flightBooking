@@ -96,6 +96,7 @@ function getRecord(){
 	var arrival = $('#arrival').val();
 	var status = $('#select-status').val();
 	var data = {'startDate':startDate,'endDate':endDate,'departure':departure,'arrival':arrival,'status':status};
+	$('.view-container').LoadingOverlay("show");
 	$.ajax({
 		url:'http://127.0.0.1:5000/eFlight/staffViewFlights',
 		data:data,
@@ -109,6 +110,7 @@ function getRecord(){
 				
 			}
 			$('.btn').button();
+			$('.view-container').LoadingOverlay("hide");
 			var height = $(window).height();
 			var width = $(window).width();
 

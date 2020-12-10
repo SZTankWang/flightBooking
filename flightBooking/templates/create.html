@@ -122,12 +122,12 @@
 
 		{% if type == "airplane" %}
 
-		<form action="" class="my-container form plane-form">
+		<form action="" class="my-container form plane-form" id= "plane-form">
 			<div class="my-container form-row">
 				<div class="text-wrapper">
 					<p>capability</p>
 				</div>
-				<input type="text" id="capability">
+				<input type="text" id="capability" name="seats">
 			</div>
 <!-- 			<div class="my-container form-row">
 				<div class="text-wrapper">
@@ -140,6 +140,28 @@
 
 		{% endif %}
 
+
+		{% if type == "airport" %}
+
+		<form action="" class="my-container form airport-form" id= "airport-form">
+			<div class="my-container form-row">
+				<div class="text-wrapper">
+					<p>airport city</p>
+				</div>
+				<input type="text" id="airport_city" name="airport_city">
+			</div>
+			<div class="my-container form-row">
+				<div class="text-wrapper">
+					<p>airport code</p>
+				</div>
+				<input type="text" id="airport_code" name="airport_name">
+
+			</div>
+
+		</form>
+
+		{% endif %}		
+
 	</div>
 	<div class="my-container btn-container">
 		<button class="btn submit-btn">submit</button>
@@ -149,7 +171,7 @@
 
 </div>
 
-<div class="my-container dialog success">
+<div class="my-container dialog success" style="display: none;">
 	<div class="my-container"><p>Success</p></div>
 	<div class="my-container"><p>taking you back to home page</p></div>
 </div>
