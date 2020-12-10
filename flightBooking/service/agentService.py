@@ -24,7 +24,7 @@ def view_record(current_id,customerEmail,purchaseID,departDate,arriveDate,flight
     if flight_status != "":
         sql_statement += "AND status = (:flight_status)"
 
-    resultproxy = db.session.execute(text(sql_statement),{"current_id":get_id_by_email(current_id),"customerEmail":customerEmail,"purchaseID":purchaseID,"departDate":departDate,"arriveDate":arriveDate,"status":flight_status})
+    resultproxy = db.session.execute(text(sql_statement),{"current_id":get_id_by_email(current_id),"customerEmail":customerEmail,"purchaseID":purchaseID,"departDate":departDate,"arriveDate":arriveDate,"flight_status":flight_status})
     return [{column: value for column, value in rowproxy.items()} for rowproxy in resultproxy]
 
 # def view_commission(agentID,startDate,endDate):
