@@ -37,10 +37,12 @@ $(document).ready(function(){
 })
 
 function deleteUser(th){
-	
+	var price = $("#price_arg").val();
+	var prev_price = $('.passenger-info-box').length * price;
 	var id = th.id;
 	console.log(id);
 	$(th).parents('.passenger-info-box').remove();
+	$('#show-price').html(prev_price-price);
 	// $('.passenger-info-box').each(function(index){
 	// 	if(index+1 == id){
 	// 		console.log(index);
@@ -54,8 +56,36 @@ function purchase(){
 	$.ajax({
 		url:'http://127.0.0.1:5000/eFlight/purchaseTicket',
 		data:data,
-		success:function(data){
-			console.log(data);
+		success:function(rsp){
+			console.log(rsp);
+			if(rsp['code']==0){
+				var height = $(window).height();
+				var width = $(window).width();
+				$('.success').dialog({
+					width:width*0.5,
+					height:height*0.4,
+					open:function(event,ui){
+						setTimeout(function(){
+							window.location.href = 'http://127.0.0.1:5000/eFlight/record/purchaseRecord';
+						},1500);
+					}
+
+				});
+			}else if(rsp['code']== -1){
+				var height = $(window).height();
+				var width = $(window).width();
+				$('.failure').dialog({
+					width:width*0.5,
+					height:height*0.4,
+					open:function(event,ui){
+						setTimeout(function(){
+							window.location.href = 'http://127.0.0.1:5000/eFlight/home';
+						},1500);
+					}
+
+				});
+
+			}
 		}
 	})
 }

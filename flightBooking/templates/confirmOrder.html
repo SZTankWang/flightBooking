@@ -6,12 +6,13 @@
 
 {% block header %}
 	<form action="" style="display: none;">
-		<input type="text" id="customerEmail" value= {{ username }}>
+		<input type="text" id="customerEmail_input" value= {{ username }}>
 		<input type="text" id="flight_num" value= "{{result['flight_num']}}">
 		<input type="text" id="airline_name" value= "{{ result['airline_name'] }}">
 		<input type="text" id="departure_time_arg" value={{ result['departure_time'] }}>
 		<input type="text" id="arrival_time_arg" value= {{ result['arrival_time'] }}>
 		<input type="text" id="price_arg" value= {{ result['price'] }}>
+		<input type="text" id= "userType" value={{ type }}>
 	</form>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -127,10 +128,23 @@
 			</div>
 			<div class="flight-info flight-price"><p>￥</p><h4 id="show-price">{{result['price']}}</h4></div>			
 	</div>
-
+	{% if type == 'agent' %}
+	<div class="my-container customer-input"><p>customer email<input type="text" id="customerEmail" placeholder="enter the email of your customer"></p></div>
+	{% endif %}
 </div>
 </div>
 <div class="action-btn-container" id="confirm-btn">下一步</div>
+
+<div class="my-container info-dialog success" style="display: none;">
+	<div class="my-container info-text"><h4>Success!</h4></div>
+	<div class="my-container info-text"><h4>bringing you to purchase record... </h4></div>
+
+</div>
+<div class="my-container info-dialog failure" style="display: none;">
+	<div class="my-container info-text"><h4>operation failed</h4></div>
+	<div class="my-container info-text"><h4>bringing you to home page... </h4></div>
+
+</div>
 
 <script type="text/javascript" src="/static/js/confirmOrder.js"></script>
 {% endblock %}

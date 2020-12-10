@@ -149,4 +149,15 @@ body{
 	align-items: center;
 	color:white;
 	margin-top: 2rem;
+}	
+
+.customer-input{
+	margin-top:3rem;
+	font-size:1.5rem;
 }
+
+input{
+    height: 2.5rem;
+    width: 13rem;
+    font-size: 0.8rem;
+ }
