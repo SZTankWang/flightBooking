@@ -244,12 +244,13 @@ def purchaseTicket():
     customer_email = request.args.get('customer_email')
     airline_name = request.args.get('airline_name')
     flight_number = request.args.get('flight_number')
-
     if current_user.type == 'agent':
+        customer_email = request.args.get('customer_email')
         result,code = agentService.purchase_ticket(passenger_name_list,passenger_id_list,passenger_phone_list,customer_email,airline_name,flight_number,agentService.get_id_by_email(current_user.get_id()))
         db.session.commit()
         return jsonify(result = result, code = code)
     elif current_user.type == 'customer':
+        customer_email = current_user.get_id()
         result,code = agentService.purchase_ticket(passenger_name_list,passenger_id_list,passenger_phone_list,customer_email,airline_name,flight_number,0)
         db.session.commit
         return jsonify(result = result, code = code)
@@ -408,7 +409,7 @@ def view(type):
     userType = current_user.type
     username = current_user.get_id()
     if userType == 'staff':
-        return render_template('view.html',pageType=type,username=username)
+        return render_template('view.html',pageType=type,username=username,userType=userType)
 
 
 @app.route('/eFlight/staffViewFlights')
@@ -433,8 +434,8 @@ def addNewFlight():
     arrival_date = request.form["arrival_date"]
     departure_time = request.form["departure_time"]
     arrival_time = request.form["arrival_time"]
-    departure_datetime = datetime.datetime.strptime(departure_date+" "+departure_time,"%Y-%m-%d %H:%M%p")
-    arrival_datetime = datetime.datetime.strptime(arrival_date+" "+arrival_time,"%Y-%m-%d %H:%M%p")
+    departure_datetime = datetime.datetime.strptime(departure_date+" "+departure_time,"%Y-%m-%d %I:%M%p")
+    arrival_datetime = datetime.datetime.strptime(arrival_date+" "+arrival_time,"%Y-%m-%d %I:%M%p")
     price = request.form["price"]
     status = 0
     msg,code = staffService.create_new_flights(staffID,departure_airport,departure_datetime,arrival_airport,arrival_datetime,price,status)
