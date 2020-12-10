@@ -408,7 +408,7 @@ def view(type):
     userType = current_user.type
     username = current_user.get_id()
     if userType == 'staff':
-        return render_template('view.html',pageType=type,username=username,userType = userType)
+        return render_template('view.html',pageType=type,username=username)
 
 
 @app.route('/eFlight/staffViewFlights')
@@ -437,8 +437,8 @@ def addNewFlight():
     arrival_datetime = datetime.datetime.strptime(arrival_date+" "+arrival_time,"%Y-%m-%d %H:%M%p")
     price = request.form["price"]
     status = 0
-    result = staffService.create_new_flights(staffID,departure_airport,departure_datetime,arrival_airport,arrival_datetime,price,status)
-    return result
+    msg,code = staffService.create_new_flights(staffID,departure_airport,departure_datetime,arrival_airport,arrival_datetime,price,status)
+    return msg,code
 
 @app.route('/eFlight/returnAirport')
 @login_required
@@ -470,7 +470,7 @@ def getInfo():
 @app.route("/eFlight/addNewAirplane",methods=["POST"])
 @login_required
 def addNewAirplane():
-    seats = request.form["seats"]
+    seats = request.args.get("seats")
     staffID = current_user.get_id()
     msg,code = db.session.execute(text("CALL eflight.create_airplane(:p1,:p2)"),{"p1":staffID,"p2":seats}).fetchone()
     if code == 0:
@@ -480,8 +480,8 @@ def addNewAirplane():
 @app.route("/eFlight/addNewAirport",methods=["POST"])
 @login_required
 def addNewAirport():
-    airport_name = request.form["airport_name"]
-    airport_city = request.form["airport_city"]
+    airport_name = request.args.get("airport_name")
+    airport_city = request.args.get("airport_city")
     msg,code = db.session.execute(text("CALL eflight.create_airport(:p1,:p2)"),{"p1":airport_name,"p2":airport_city}).fetchone()
     if code == 0:
         db.session.commit()
