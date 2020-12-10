@@ -213,6 +213,18 @@ function doUpdate(th){
 		data:{'flight_number':flight_num,'new_status':new_state},
 		success:function(data){
 			console.log(data);
+			var width = $(window).width();
+			var height = $(window).height();
+			$('.success-info').dialog({
+				width:width*0.4,
+				height:height*0.4,
+				open:function(event,ui ){
+					setTimeout(function(){
+						window.location.href = "http://127.0.0.1:5000/eFlight/home";
+					},1500);
+				}
+
+			})
 		}
 
 	})
