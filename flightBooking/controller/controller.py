@@ -423,7 +423,7 @@ def staffViewFlights():
     result = staffService.view_my_flights(staffID,startDate=startDate,endDate=endDate,departure_city=departure,arrival_city=arrival,status=status)
     return jsonify(result)
 
-@app.route('/eFlight/addNewFlight')
+@app.route('/eFlight/addNewFlight',methods=["POST"])
 @login_required
 def addNewFlight():
     staffID = current_user.get_id()
