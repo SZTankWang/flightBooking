@@ -81,7 +81,7 @@ function createFlight(){
 	  	contentType: false,
 	  	success:function(data){
 	  		console.log(data);
-	  		if(data == "flight created successfully!"){
+	  		if(data['code'] ==0){
 				var height = $(window).height();
 				var width = $(window).width();
 	  			$('.success').dialog({
