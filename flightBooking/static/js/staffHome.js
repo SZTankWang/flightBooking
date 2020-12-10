@@ -15,6 +15,16 @@ $(document).ready(function(){
 
 	});
 
+
+	$('#create').selectmenu({
+	    select: function() {
+        if($(this).val() != '') {
+            window.location.href = $(this).val();
+        }
+    }
+
+	});	
+
 	$('.date-input').datepicker({
 		dateFormat:"yy-mm-dd"
 	}
@@ -70,6 +80,8 @@ $(document).ready(function(){
 
 		  }		
 	})
+
+
 
 	$('#apply').click(function(){
 		getRecord();

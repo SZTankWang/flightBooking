@@ -80,8 +80,10 @@ function loadData(){
 			console.log(queryResult);
 			if(data.length >0){
 				for(var i=0;i<data.length;i++){
-					var html = purchaseListTemplate(data[i])
-					$('.flight-card-container').append(html);
+					if(data[i]['status']==0){
+						var html = purchaseListTemplate(data[i])
+						$('.flight-card-container').append(html);
+					}
 				}				
 			}else{
 

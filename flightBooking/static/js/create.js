@@ -4,7 +4,7 @@ $(document).ready(function(){
 
 
    		var dateFormat = "mm/dd/yy",
-      from = $( "#departure-time" )
+      from = $( "#departure-date" )
         .datepicker({
           defaultDate: "+1w",
           changeMonth: true,
@@ -13,7 +13,7 @@ $(document).ready(function(){
         .on( "change", function() {
           to.datepicker( "option", "minDate", getDate( this ) );
         }),
-      to = $( "#arrival-time" ).datepicker({
+      to = $( "#arrival-date" ).datepicker({
         defaultDate: "+1w",
         changeMonth: true,
         numberOfMonths: 3
@@ -45,4 +45,27 @@ $(document).ready(function(){
 
 
     });
+
+    var pageType = $('#createType').val();
+    if(pageType == 'flight'){
+    	$('.submit-btn').click(function(){
+    		createFlight();
+    	})
+    }
 })
+
+function createFlight(){
+	var form = document.getElementById('flight-form');
+	var data = new FormData(form);
+
+	$.ajax({
+		url:'http://127.0.0.1:5000/eFlight/addNewFlight',
+		data:data,
+		type:'POST',
+	  	processData: false,
+	  	contentType: false,
+	  	success:function(data){
+	  		console.log(data);
+	  	}
+	})
+}
