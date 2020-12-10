@@ -475,6 +475,8 @@ def addNewAirplane():
     msg,code = db.session.execute(text("CALL eflight.create_airplane(:p1,:p2)"),{"p1":staffID,"p2":seats}).fetchone()
     if code == 0:
         db.session.commit()
+    else:
+        db.session.rollback()
     return jsonify(response=msg,code=code)
 
 @app.route("/eFlight/addNewAirport",methods=["POST"])
@@ -485,4 +487,6 @@ def addNewAirport():
     msg,code = db.session.execute(text("CALL eflight.create_airport(:p1,:p2)"),{"p1":airport_name,"p2":airport_city}).fetchone()
     if code == 0:
         db.session.commit()
+    else:
+        db.session.rollback()
     return jsonify(response=msg,code=code)
