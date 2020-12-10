@@ -6,6 +6,12 @@ $(document).ready(function(){
 		doLogin();
 	})
 
+	document.onkeydown=function(event){
+		var code = event.keyCode;
+		if(code ==13){
+			doLogin();
+		}
+	}
 
 
 
