@@ -307,12 +307,12 @@ def viewCommission():
     endDate = request.args.get('endDate')
     agentID = current_user.get_id()
     if startDate:
-        startDate = datetime.datetime.strftime(startDate,"%Y-%m-%d")
+        startDate = datetime.datetime.strptime(startDate,"%Y-%m-%d")
     else:
-        startDate = datetime.datetime.strftime(endDate,"%Y-%m-%d")-timedelta(days = 30)
-    endDate = datetime.datetime.strftime(endDate,"%Y-%m-%d")
-    total, average = agentService.view_commission(agentID,startDate,endDate)
-    return jsonify(total = float(total), average = float(average))
+        startDate = datetime.datetime.strptime(endDate,"%Y-%m-%d")-timedelta(days = 30)
+    endDate = datetime.datetime.strptime(endDate,"%Y-%m-%d")
+    result = agentService.view_commission(agentID,startDate,endDate)
+    return jsonify(result)
 
 #agent
 @app.route('/eFlight/viewTopCustomer')
@@ -408,7 +408,9 @@ def view(type):
     userType = current_user.type
     username = current_user.get_id()
     if userType == 'staff':
-        return render_template('view.html',pageType=type,username=username)
+        return render_template('view.html',pageType=type,username=username,userType=userType)
+    elif userType == 'agent':
+        return render_template('view.html',pageType=type,username=username,userType=userType)
 
 
 @app.route('/eFlight/staffViewFlights')

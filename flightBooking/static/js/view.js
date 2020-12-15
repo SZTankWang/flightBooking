@@ -127,7 +127,73 @@ $(document).ready(function(){
 			})
 		}
 
+		if(pageType == "agentCommission"){
+			$('#commission-search').button();
+			$('.commission-date-input').datepicker({
+				dateFormat: "yy-mm-dd"
+
+
+			})
+
+			var today = moment().format('YYYY-MM-DD');
+			queryAgentCommission('',today);
+
+			$('#commission-search').click(function(){
+				var startDate = $('#commission-start').datepicker( "getDate" );
+				start = moment(startDate).format('YYYY-MM-DD');
+				var endDate  =  $('#commission-end').datepicker( "getDate");
+				end = moment(endDate).format('YYYY-MM-DD');
+
+				queryAgentCommission(start,end);
+
+			})
+
+		}
+
+		if(pageType == "topCustomer"){
+			drawBarCharForAgent();
+		}
+
 })
+
+function queryAgentCommission(start,end){
+	$('#start').html(start);
+	$('#end').html(end);
+
+	$.ajax({
+		url:'http://127.0.0.1:5000/eFlight/viewCommission',
+		data:{'startDate':start,'endDate':end},
+		success:function(res){
+			console.log(res);
+
+
+			$('.commission-result-sum').empty();
+			$('.commission-result-avg').empty();
+			if(res.length >0){
+				var sum = '<p>'+res[0]['sum']+'</p>';
+				var avg = '<p>'+res[0]['avg']+'</p>';
+
+
+				$('.commission-result-sum').html(sum);
+				$('.commission-result-avg').html(avg);			
+			}
+			else{
+				var sum = '<p>no ticket bought within this range</p>';
+				var avg = '<p>no ticket bought within this range</p>';
+
+
+				$('.commission-result-sum').html(sum);
+				$('.commission-result-avg').html(avg);		
+			}
+
+		}
+
+	})
+}
+
+
+
+
 function strongTextTemplate1(data){
 	var html = '';
 	html += '<div class="strong-text-container">';
@@ -168,6 +234,102 @@ function agentCommissionTemplate(data){
 	return html;
 }
 
+function drawBarCharForAgent(){
+	$.ajax({
+		url:'http://127.0.0.1:5000/eFlight/viewTopCustomer',
+		success:function(res){
+			console.log(res);
+			var mychart1 = echarts.init(document.getElementById('agentchart1'));
+			var mychart2 = echarts.init(document.getElementById('agentchart2'));
+	          var height= $(window).height();//浏览器的高度 
+	          mychart1.getDom().style.height = height*0.2;
+	          mychart1.resize(); 
+			agentBarChartYear(res['commission'],mychart1);
+			agentBarMonth(res['ticket'],mychart2);
+		}
+	})
+
+
+
+}
+
+function agentBarChartYear(data,mychart){
+	var emails = [];
+	var commissions = [];
+	for(var i=0;i<data.length;i++){
+		emails.push(data[i]['customer_email']);
+		commissions.push(data[i]['total_commission']);
+	}
+
+	option = {
+    title: {
+        text: 'commission for last year',
+        left: 'center',
+        top: 20,
+        textStyle: {
+            color: '#225DA3',
+            weight:500
+        }
+    },
+    xAxis: {
+        type: 'category',
+        data: emails
+            },
+    yAxis: {
+        type: 'value'
+    },
+    series: [{
+        data: commissions,
+        type: 'bar',
+        showBackground: true,
+        backgroundStyle: {
+            color: 'rgba(220, 220, 220, 0.8)'
+        }
+    }]
+};
+	mychart.setOption(option);
+
+}
+
+
+function agentBarMonth(data,mychart){
+		var emails = [];
+	var commissions = [];
+	for(var i=0;i<data.length;i++){
+		emails.push(data[i]['customer_email']);
+		commissions.push(data[i]['count']);
+	}
+
+	option = {
+    title: {
+        text: 'commission for last 6 month',
+        left: 'center',
+        top: 20,
+        textStyle: {
+            color: '#225DA3',
+            weight:500
+        }
+    },
+    xAxis: {
+        type: 'category',
+        data: emails
+            },
+    yAxis: {
+        type: 'value'
+    },
+    series: [{
+        data: commissions,
+        type: 'bar',
+        showBackground: true,
+        backgroundStyle: {
+            color: 'rgba(220, 220, 220, 0.8)'
+        }
+    }]
+};
+	mychart.setOption(option);
+
+}
+
 function drawBarChartForReport(data,mychart){
 	var months = [];
 	var tickets = [];
@@ -182,6 +344,7 @@ function drawBarChartForReport(data,mychart){
 
 
 	option = {
+
 	    xAxis: {
 	        data: months
 	    },

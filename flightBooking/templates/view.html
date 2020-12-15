@@ -186,6 +186,21 @@
 	</div>
 	{% endif %}
 
+	{% if pageType == "topCustomer" %}
+	<div class="my-container view-container">
+		<div class="my-container view-sub-part">
+
+				<div class="my-container chart-container agent-chart-container" id="agentchart1"></div>
+
+		</div>
+	
+		<div class="my-container view-sub-part">
+			<div class="my-container chart-container agent-chart-container" id="agentchart2"></div>
+		</div>
+
+	</div>
+	{% endif %}
+
 
 	{% if pageType == 'topDestination' %}
 	<div class="my-container destination-view-container ">
@@ -211,10 +226,43 @@
 		</div>		
 
 	</div>
-	{% endif %}	
+	{% endif %}
+
+	{% if pageType == "agentCommission"%}
+		<div class="my-container commission-page-container">
+			<div class="my-container commission-filter">
+				<p>start date<input type="text" class="commission-date-input date-input" id="commission-start"></p>
+				<p>end date<input type="text" class="commission-date-input date-input" id="commission-end"></p>
+				<button id="commission-search">apply</button>
+			</div>
+			<div class="my-container commission-view">
+				<div class="my-container commission-title">
+				<p>my commission from&nbsp</p>
+				<p id="start"></p>
+				<p>&nbsp to &nbsp</p>
+				<p id="end"></p>
+				</div>
+				<div class="my-container commission-info-wrapper">
+					<div class="my-container commission-info-column">
+						<p>sum of commission</p>
+						<div class="my-container commission-result commission-result-sum">
+							
+						</div>
+					</div>
+					<div class="my-container commission-info-column">
+						<p>average of commission</p>
+						<div class="my-container commission-result commission-result-avg">
+							
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	{% endif %}
 </div>
 
-{% if userType == 'staff' %}
+{% if userType != 'customer'  %}
 <script type="text/javascript" src="/static/js/view.js"></script>
 {% elif userType=='customer' %}
 <script type="text/javascript" src="/static/js/customerSpending.js"></script>

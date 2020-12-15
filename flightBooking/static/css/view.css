@@ -82,3 +82,46 @@
 	font-size:4rem;
 	font-weight: 500;
 }
+
+.commission-page-container{
+	flex-direction: column;
+	align-items: unset;
+}
+
+.commission-view{
+	padding-top:2rem;
+	padding-left:1rem;
+	flex-direction: column;
+}
+
+.commission-info-wrapper{
+	flex-direction: row;
+	padding-top:3rem;
+
+}
+
+.commission-filter{
+	width:60%;
+	position: relative;
+}
+
+.commission-info-column{
+	height:20rem;
+	background: #f1f1f1;
+	flex-direction: column;
+}
+
+#commission-search{
+	position: absolute;
+	right:0;
+}
+
+.commission-result{
+	width:fit-content;
+	font-weight: 500;
+}
+
+.agent-chart-container{
+	height:400px;
+	width: 400px;
+}
