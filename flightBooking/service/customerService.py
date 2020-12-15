@@ -40,9 +40,9 @@ def view_record(current_id,purchaseID='',departDate='',arriveDate='',flight_stat
     if purchaseID != "":
         sql_statement += "AND purchase_id = (:purchaseID)"
     if departDate != "":
-        sql_statement += "AND DATE(departure_time) = (:departDate)"
+        sql_statement += "AND DATE(departure_time) >= (:departDate)"
     if arriveDate != "":
-        sql_statement += "AND DATE(arrival_time) = (:arriveDate)"
+        sql_statement += "AND DATE(arrival_time) <= (:arriveDate)"
     if flight_status != "":
         sql_statement += "AND status = (:flight_status)"
 
