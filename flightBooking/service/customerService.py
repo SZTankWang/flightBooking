@@ -26,9 +26,7 @@ def view_my_flights(id):
     resultproxy = db.session.execute(text("CALL eflight.customer_view_flights(:p1)"),{"p1":id})
     return [{column: value for column, value in rowproxy.items()} for rowproxy in resultproxy]
 
-def purchase_ticket():
-    result = db.session.execute(text("CALL eflight.customer_purchase_ticket(:p1)"),{"p1":id}).fetchone()
-    return result
+
 
 def purchase_ticket(passenger_name_list,passenger_id_list,passenger_phone_list,customer_email,airline_name,flight_number):
     result = db.session.execute(text("CALL eflight.insert_ticket(:p1,:p2,:p3,:p4,:p5,:p6,:p7)"),

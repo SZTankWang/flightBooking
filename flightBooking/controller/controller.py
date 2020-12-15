@@ -244,7 +244,6 @@ def purchaseTicket():
     customer_email = request.args.get('customer_email')
     airline_name = request.args.get('airline_name')
     flight_number = request.args.get('flight_number')
-
     if current_user.type == 'agent':
         customer_email = request.args.get('customer_email')
         result,code = agentService.purchase_ticket(passenger_name_list,passenger_id_list,passenger_phone_list,customer_email,airline_name,flight_number,agentService.get_id_by_email(current_user.get_id()))
@@ -252,8 +251,8 @@ def purchaseTicket():
         return jsonify(result = result, code = code)
     elif current_user.type == 'customer':
         customer_email = current_user.get_id()
-        result,code = agentService.purchase_ticket(passenger_name_list,passenger_id_list,passenger_phone_list,customer_email,airline_name,flight_number,0)
-        db.session.commit
+        result,code = customerService.purchase_ticket(passenger_name_list,passenger_id_list,passenger_phone_list,customer_email,airline_name,flight_number)
+        db.session.commit()
         return jsonify(result = result, code = code)
 
 #customer/agent
