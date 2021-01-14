@@ -9,3 +9,4 @@ python runserver.py即可
 db file: https://docs.google.com/document/d/1gEv6GZ5u-IMvp1OosebRKsxZy8FSZ2lH3R2EBz9xfuE/edit
 
 #### 做完了，效果nice nice。~~就是人很困。~~
+#### 现在它完成自己的任务了 😄
